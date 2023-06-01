@@ -1,5 +1,9 @@
 package nl.rug.ai.oop.rpg.model.players;
 
+import nl.rug.ai.oop.rpg.model.inventory.Inventory;
+import nl.rug.ai.oop.rpg.model.location.*;
+import nl.rug.ai.oop.rpg.model.location.LocationManager;
+
 public abstract class Player {
 
     private int intelligence;
@@ -7,6 +11,8 @@ public abstract class Player {
     private int energy;
     private int wellbeing;
     private int money;
+    private Room currentRoom;
+    private Inventory inventory;
 
     public Player(int intelligence, int social, int energy, int wellbeing, int money) {
         this.intelligence = intelligence;
