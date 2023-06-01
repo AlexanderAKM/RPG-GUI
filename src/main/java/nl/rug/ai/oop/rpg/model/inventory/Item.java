@@ -1,5 +1,7 @@
 package nl.rug.ai.oop.rpg.model.inventory;
 
+import nl.rug.ai.oop.rpg.model.players.Player;
+
 public abstract class Item {
     private String name;
     // Constructor
@@ -13,6 +15,6 @@ public abstract class Item {
     }
 
     // Common method
-    public abstract void use();
+    public abstract void use(Player player);
 
 }

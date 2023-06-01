@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.model.inventory.items;
 
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.players.Player;
 
 public class Books extends Item {
     private int intelligenceIncrease;
@@ -19,9 +20,9 @@ public class Books extends Item {
     public void changeWellbeing(int change) {
         wellbeingIncrease += change;
     }
-    public void use() {
-        intelligence.increase(intelligenceIncrease);
-        wellbeing.increase(wellbeingIncrease);
+    public void use(Player player) {
+        player.changeIntelligence(intelligenceIncrease);
+        player.changeWellbeing(wellbeingIncrease);
     }
 }
 

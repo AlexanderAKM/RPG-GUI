@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.model.inventory.items;
 
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.players.Player;
 
 public class Alcohol extends Item {
     private int intelligenceDecrease;
@@ -20,9 +21,9 @@ public class Alcohol extends Item {
         socialIncrease += change;
     }
 
-    public void use() {
-        intelligence.decrease(intelligenceDecrease);
-        social.increase(socialIncrease);
+    public void use(Player player) {
+        player.changeIntelligence(intelligenceDecrease);
+        player.changeSocial(socialIncrease);
     }
 }
 
