@@ -43,4 +43,24 @@ public abstract class Player {
     public void changeMoney(int change){
         this.money += change;
     }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public int getSocial() {
+        return social;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getWellbeing() {
+        return wellbeing;
+    }
+
+    public int getMoney() {
+        return money;
+    }
 }
