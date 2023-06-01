@@ -45,14 +45,15 @@ public interface LocationInterface {
     /**
      * Returns all the available rooms the player can access/ go to.
      * @param currentRoom The room the player resides.
+     * @return An arrayList of all the rooms you can access from the current room
      */
-    public void roomsAvailable(Room currentRoom);
+    public ArrayList<Room> roomsAvailable(Room currentRoom);
 
     /**
      * Moves the player to the chosen room.
      * @param chosenRoom The players chosen room.
      */
-    public void goToChosenRoom(Room chosenRoom);
+    public void movePlayer(Room chosenRoom);
 
     /**
      * Returns all the items you can interact with that are present in the room.
