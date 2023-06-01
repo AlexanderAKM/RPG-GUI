@@ -40,6 +40,22 @@ public class Room {
         return this.roomDescription;
     }
 
+    public void setNorth(int north){
+        this.n = north;
+    }
+
+    public void setEast(int east){
+        this.n = east;
+    }
+
+    public void setSouth(int south){
+        this.n = south;
+    }
+
+    public void setWest(int west){
+        this.n = west;
+    }
+
     /**
      * A constructor for a room (location).
      * @param name The name of the room.
@@ -49,8 +65,13 @@ public class Room {
      * @param s South direction.
      * @param w West direction
      */
-    public void createRoom(String name, String description, int n, int e, int s, int w){
-
+    public Room(String name, String description, int n, int e, int s, int w){
+        this.setName(name);
+        this.setDescription(description);
+        this.setNorth(n);
+        this.setEast(e);
+        this.setSouth(s);
+        this.setWest(w);
     }
 
 }
