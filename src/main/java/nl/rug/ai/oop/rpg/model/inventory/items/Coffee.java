@@ -22,6 +22,6 @@ public class Coffee extends Item {
     }
     public void use(Player player) {
         player.changeIntelligence(intelligenceIncrease);
-        player.changeWellbeing.increase(wellbeingIncrease);
+        player.changeWellbeing(wellbeingIncrease);
     }
 }
