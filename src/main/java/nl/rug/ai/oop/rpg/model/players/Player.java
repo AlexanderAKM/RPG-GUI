@@ -11,7 +11,7 @@ public abstract class Player {
     private int energy;
     private int wellbeing;
     private int money;
-    public LocationManager locationManager;
+    //public LocationManager locationManager;
     private Room currentRoom;
     private generalInventory inventory;
 
@@ -21,7 +21,7 @@ public abstract class Player {
         this.energy = energy;
         this.wellbeing = wellbeing;
         this.money = money;
-        this.currentRoom = locationManager.getPlayerRoom();
+        //this.currentRoom = locationManager.getPlayerRoom();
     }
 
     public void changeIntelligence(int change){
@@ -62,5 +62,13 @@ public abstract class Player {
 
     public int getMoney() {
         return money;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }
