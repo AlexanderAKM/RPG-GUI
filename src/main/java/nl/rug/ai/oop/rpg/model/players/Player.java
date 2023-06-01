@@ -2,7 +2,6 @@ package nl.rug.ai.oop.rpg.model.players;
 
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.location.*;
-import nl.rug.ai.oop.rpg.model.location.LocationManager;
 
 public abstract class Player {
 
@@ -22,23 +21,23 @@ public abstract class Player {
         this.money = money;
     }
 
-    public void ChangeIntelligence(int change){
+    public void changeIntelligence(int change){
         this.intelligence += change;
     }
 
-    public void ChangeSocial(int change){
+    public void changeSocial(int change){
         this.social += change;
     }
 
-    public void ChangeEnergy(int change){
+    public void changeEnergy(int change){
         this.energy += change;
     }
 
-    public void ChangeWellbeing(int change){
+    public void changeWellbeing(int change){
         this.wellbeing += change;
     }
 
-    public void ChangeMoney(int change){
+    public void changeMoney(int change){
         this.money += change;
     }
 }
