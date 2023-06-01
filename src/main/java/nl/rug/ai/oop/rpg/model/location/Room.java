@@ -1,5 +1,7 @@
 package nl.rug.ai.oop.rpg.model.location;
 
+import java.util.ArrayList;
+
 /**
  * A class that  defines locations within the game
  */
@@ -7,6 +9,9 @@ public class Room {
     private String roomName;
     private String roomDescription;
     private int n, e, s, w;
+    private ArrayList<Item> availableItems;
+    private ArrayList<NPC> availableNPC;
+    private boolean isLocked;
 
     /**
      * setter for the location name.
@@ -40,20 +45,29 @@ public class Room {
         return this.roomDescription;
     }
 
+
     public void setNorth(int north){
         this.n = north;
     }
 
     public void setEast(int east){
-        this.n = east;
+        this.e = east;
     }
 
     public void setSouth(int south){
-        this.n = south;
+        this.s = south;
     }
 
     public void setWest(int west){
-        this.n = west;
+        this.w = west;
+    }
+
+    /**
+     * sets the status of the room.
+     * @param x Whether its locked or unlocked.
+     */
+    public void setIsLocked(boolean x){
+        this.isLocked = x;
     }
 
     /**
@@ -65,13 +79,14 @@ public class Room {
      * @param s South direction.
      * @param w West direction
      */
-    public Room(String name, String description, int n, int e, int s, int w){
+    public Room(String name, String description, int n, int e, int s, int w, boolean status){
         this.setName(name);
         this.setDescription(description);
         this.setNorth(n);
         this.setEast(e);
         this.setSouth(s);
         this.setWest(w);
+        this.setIsLocked(status);
     }
 
 }
