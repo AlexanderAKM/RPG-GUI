@@ -1,5 +1,7 @@
 package nl.rug.ai.oop.rpg.model.location;
 
+import nl.rug.ai.oop.rpg.model.inventory.Item;
+
 import java.util.ArrayList;
 
 public interface LocationInterface {
