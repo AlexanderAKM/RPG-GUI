@@ -15,5 +15,4 @@ public abstract class Item {
     // Common method
     public abstract void use();
 
-
 }
