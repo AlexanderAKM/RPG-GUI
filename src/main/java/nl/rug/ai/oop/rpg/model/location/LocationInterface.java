@@ -5,11 +5,11 @@ import nl.rug.ai.oop.rpg.model.inventory.Item;
 import java.util.ArrayList;
 
 public interface LocationInterface {
-    /**
-     * Gets the room the player is currently in.
-     * @return The current room the player is in.
-     */
-    public Room getPlayerRoom();
+    ///**
+    // * Gets the room the player is currently in.
+     //* @return The current room the player is in.
+     //*/
+    //public Room getPlayerRoom();
 
     /**
      * Method that sets up the location feature; rooms, starting room and map.
