@@ -1,5 +1,8 @@
 package nl.rug.ai.oop.rpg.model.location;
 
+import nl.rug.ai.oop.rpg.model.players.Player;
+import nl.rug.ai.oop.rpg.model.players.students.AIStudent;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -8,6 +11,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        LocationManager manager = new LocationManager();
+        Player pplayer = new AIStudent();
+        LocationManager manager = new LocationManager(pplayer);
     }
 }

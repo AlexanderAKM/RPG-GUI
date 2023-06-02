@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.model.location;
 
+import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
@@ -9,11 +10,13 @@ import java.util.ArrayList;
 public class LocationManager implements LocationInterface{
     public ArrayList<Room> map;
     public ArrayList<Room> availableRooms;
+    public Player player;
 
-    public LocationManager(){
+    public LocationManager(Player currentPlayer){
         map = new ArrayList<Room>();
         availableRooms = new ArrayList<Room>();
         locationSetUp();
+        player = currentPlayer;
     }
 
     public Room getRoom(int index){
@@ -38,12 +41,22 @@ public class LocationManager implements LocationInterface{
     }
 
     @Override
-    public void addNpcs(NPC npcName, Room roomName) {
+    public void addNpcs(Npc npcName, Room roomName) {
 
     }
 
     @Override
-    public void removeNpcs(NPC npcName, Room roomName) {
+    public void addNpcs(Npc npcName, Room roomName) {
+
+    }
+
+    @Override
+    public void removeNpcs(Npc npcName, Room roomName) {
+
+    }
+
+    @Override
+    public void removeNpcs(Npc npcName, Room roomName) {
 
     }
 
@@ -60,36 +73,36 @@ public class LocationManager implements LocationInterface{
     @Override
     public ArrayList<Room> roomsAvailable(Room currentRoom) {
         availableRooms.clear();
-        if (Player.getCurrentRoom().n >= 0){
-            availableRooms.add(getRoom(Player.getCurrentRoom().n);
+        if (player.getCurrentRoom().getNorth() >= 0){
+            availableRooms.add(getRoom(player.getCurrentRoom().getNorth()));
         }
-        if (Player.getCurrentRoom().e >= 0){
-            availableRooms.add(getRoom(Player.getCurrentRoom().e));
+        if (player.getCurrentRoom().getEast() >= 0){
+            availableRooms.add(getRoom(player.getCurrentRoom().getEast())));
         }
-        if (Player.getCurrentRoom().s >= 0){
-            availableRooms.add(getRoom(Player.getCurrentRoom().s));
+        if (player.getCurrentRoom().getSouth() >= 0){
+            availableRooms.add(getRoom(player.getCurrentRoom().getSouth()));
         }
-        if (Player.getCurrentRoom().w >= 0){
-            availableRooms.add(getRoom(Player.getCurrentRoom().w));
+        if (player.getCurrentRoom().getWest() >= 0){
+            availableRooms.add(getRoom(player.getCurrentRoom().getWest()));
         }
         return availableRooms;
     }
 
     @Override
     public void movePlayer(Room chosenRoom) {
-        Player.setCurrentRoom = chosenRoom;
-        System.out.println("You are now in " + Player.getCurrentRoom().roomName);
-        System.out.println("You are now in " + Player.getCurrentRoom().roomDescription);
+        player.setCurrentRoom(chosenRoom);
+        System.out.println("You are now in " + player.getCurrentRoom().getRoomName());
+        System.out.println("You are now in " + player.getCurrentRoom().getRoomDescription());
     }
 
     @Override
     public ArrayList<Item> getAvailableItems(Room currentRoom) {
-        return getCurrentRoom().availableItems;
+        return player.getCurrentRoom().availableItems;
     }
 
     @Override
     public ArrayList<NPC> getAvailableNPCs(Room currentRoom) {
-        return getCurrentRoom().availableNPCs;
+        return player.getCurrentRoom().availableNPCs;
     }
 
 }

@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.model.location;
 
+import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 
 import java.util.ArrayList;
@@ -21,14 +22,14 @@ public interface LocationInterface {
      * @param npcName The name of the NPC.
      * @param roomName The room in which the NPC should be in.
      */
-    public void addNpcs(NPC npcName, Room roomName);
+    public void addNpcs(Npc npcName, Room roomName);
 
     /**
      * Removes a specific NPC from a room.
      * @param npcName The name of the NPC.
      * @param roomName The room in which the NPC remains.
      */
-    public void removeNpcs(NPC npcName, Room roomName);
+    public void removeNpcs(Npc npcName, Room roomName);
 
     /**
      * Adds an item to the room.
@@ -69,6 +70,6 @@ public interface LocationInterface {
      * @param currentRoom The room the player is in.
      * @return An ArrayList of all the available NPCs.
      */
-    public ArrayList<NPC> getAvailableNPCs(Room currentRoom);
+    public ArrayList<Npc> getAvailableNPCs(Room currentRoom);
 
 }

@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.model.location;
 
+import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Room {
     private String roomDescription;
     private int n, e, s, w;
     private ArrayList<Item> availableItems;
-    private ArrayList<NPC> availableNPC;
+    private ArrayList<Npc> availableNPC;
     private boolean isLocked;
 
     /**
@@ -35,7 +36,7 @@ public class Room {
      * getter for the locations name.
      * @return The name of the location.
      */
-    public String getName(){
+    public String getRoomName(){
         return this.roomName;
     }
 
@@ -43,7 +44,7 @@ public class Room {
      * getter for the location description.
      * @return The description of the location.
      */
-    public String getDescription(){
+    public String getRoomDescription(){
         return this.roomDescription;
     }
 
@@ -62,6 +63,22 @@ public class Room {
 
     public void setWest(int west){
         this.w = west;
+    }
+
+    public int getNorth(){
+        return this.n;
+    }
+
+    public int getEast(){
+        return this.e;
+    }
+
+    public int getSouth(){
+        return this.s;
+    }
+
+    public int getWest(){
+        return this.w;
     }
 
     /**
