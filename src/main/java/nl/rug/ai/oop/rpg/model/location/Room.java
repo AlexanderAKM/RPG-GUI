@@ -96,7 +96,7 @@ public class Room {
      * @param n North direction.
      * @param e East direction.
      * @param s South direction.
-     * @param w West direction
+     * @param w West direction.
      */
     public Room(String name, String description, int n, int e, int s, int w, boolean status){
         this.setName(name);
