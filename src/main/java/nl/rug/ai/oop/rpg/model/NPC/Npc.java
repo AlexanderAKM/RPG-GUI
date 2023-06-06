@@ -7,6 +7,9 @@ public abstract class Npc {
     private String name;
     private int money;
 
+    private ArrayList<Interactions> npcInteractions;
+    private ArrayList<Interactions> playerInteractions;
+
 
     public Npc(String name, int money){
         this.name = name;
@@ -30,9 +33,9 @@ public abstract class Npc {
         money += amount;
     }
 
-    public Interactions inititateInteraction(String interactionName, Interactions.InteractionFunction function){
+    public void inititateInteraction(String interactionName, Interactions.InteractionFunction function){
         Interactions newInteraction = new NpcInitiatedInteractions(interactionName,this, function);
-        return newInteraction;
+        //npcInteractions
     }
 
     public void npcAct(){
