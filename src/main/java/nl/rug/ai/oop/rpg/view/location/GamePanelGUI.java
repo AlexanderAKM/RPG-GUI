@@ -1,18 +1,24 @@
 package nl.rug.ai.oop.rpg.view.location;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GamePanelGUI extends JFrame {
     private JFrame gamePanel;
-    JButton searchItemButton;
-    JButton interactNpcButton;
-    JButton moveRoomsButton;
+    private JLabel textLabel;
 
-    JPanel roomItemsPanel;
-    JPanel roomNpcsPanel;
-    JPanel roomsPanel;
+    private JButton searchItemButton;
+    private JPanel roomItemsPanel;
 
-    JLabel textLabel;
+    private JButton interactNpcButton;
+    private JPanel roomNpcsPanel;
+
+    private JButton moveRoomsButton;
+    private JPanel roomsPanel;
+    private JButton north;
+    private JButton east;
+    private JButton west;
+    private JButton south;
 
 
     public GamePanelGUI(){
@@ -22,10 +28,35 @@ public class GamePanelGUI extends JFrame {
         JPanel roomsPanel = new JPanel();
 
         JButton searchItemButton = new JButton("Search for items in the room");
+        //searchItemButton.setActionCommand("items");
         JButton interactNpcButton = new JButton("Interact with NPCs in the room");
+        //interactNpcButton.setActionCommand("npcs");
         JButton moveRoomsButton = new JButton("Move to a different room");
+        //moveRoomsButton.setActionCommand("rooms");
+
+        JButton north = new JButton();
+        north.setActionCommand("n");
+        JButton east = new JButton();
+        east.setActionCommand("e");
+        JButton south = new JButton();
+        south.setActionCommand("s");
+        JButton west = new JButton();
+        west.setActionCommand("w");
+
+
 
         JLabel textLabel = new JLabel("Game text goes here");
+
+        gamePanel.add(textLabel);
+        gamePanel.add(searchItemButton);
+        gamePanel.add(interactNpcButton);
+        gamePanel.add(moveRoomsButton);
+        gamePanel.setVisible(true);
+
+        roomsPanel.add(north);
+        roomsPanel.add(east);
+        roomsPanel.add(south);
+        roomsPanel.add(west);
 
     }
 
