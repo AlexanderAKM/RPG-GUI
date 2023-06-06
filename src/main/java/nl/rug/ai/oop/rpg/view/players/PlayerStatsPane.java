@@ -1,7 +1,6 @@
 package nl.rug.ai.oop.rpg.view.players;
 
 import nl.rug.ai.oop.rpg.model.players.Player;
-import nl.rug.ai.oop.rpg.model.players.students.AIStudent;
 
 import javax.swing.*;
 import java.awt.*;
