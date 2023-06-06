@@ -8,8 +8,8 @@ import nl.rug.ai.oop.rpg.model.players.Player;
 import java.util.ArrayList;
 
 public class LocationManager implements LocationInterface{
-    public ArrayList<Room> map;
-    public ArrayList<Room> availableRooms;
+    private ArrayList<Room> map;
+    private ArrayList<Room> availableRooms;
     //public Player player;
 
     public LocationManager(){
