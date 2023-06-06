@@ -4,6 +4,9 @@ import nl.rug.ai.oop.rpg.model.inventory.*;
 import nl.rug.ai.oop.rpg.model.inventory.inventories.generalInventory;
 import nl.rug.ai.oop.rpg.model.location.*;
 
+/**
+ * @author RobertHielkema
+ */
 public class Player {
 
     private int intelligence;
@@ -14,21 +17,14 @@ public class Player {
     private Room currentRoom;
     private generalInventory inventory;
 
-    public Player(int intelligence, int social, int energy, int wellbeing, int money) {
-        this.intelligence = intelligence;
-        this.social = social;
-        this.energy = energy;
-        this.wellbeing = wellbeing;
-        this.money = money;
-    }
-
-    /*private static Player player;
+    private static Player player;
 
     private Player() {
         intelligence = 0;
         social = 0;
         wellbeing = 0;
         money = 0;
+
     }
 
     public static Player getInstance(){
@@ -55,7 +51,7 @@ public class Player {
             player.changeWellbeing(100);
             player.changeMoney(0);
         }
-    }*/
+    }
 
     public void changeIntelligence(int change){
         this.intelligence += change;
@@ -63,10 +59,6 @@ public class Player {
 
     public void changeSocial(int change){
         this.social += change;
-    }
-
-    public void changeEnergy(int change){
-        this.energy += change;
     }
 
     public void changeWellbeing(int change){
@@ -83,10 +75,6 @@ public class Player {
 
     public int getSocial() {
         return social;
-    }
-
-    public int getEnergy() {
-        return energy;
     }
 
     public int getWellbeing() {
