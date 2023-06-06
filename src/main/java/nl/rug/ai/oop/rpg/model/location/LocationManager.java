@@ -42,32 +42,22 @@ public class LocationManager implements LocationInterface{
 
     @Override
     public void addNpcs(Npc npcName, Room roomName) {
-
-    }
-
-    @Override
-    public void addNpcs(Npc npcName, Room roomName) {
-
+        roomName.getAvailableNpcs().add(npcName);
     }
 
     @Override
     public void removeNpcs(Npc npcName, Room roomName) {
-
-    }
-
-    @Override
-    public void removeNpcs(Npc npcName, Room roomName) {
-
+        roomName.getAvailableNpcs().remove(npcName);
     }
 
     @Override
     public void addItemActions(Item x, Room roomName) {
-
+        roomName.getAvailableItems().add(x);
     }
 
     @Override
     public void removeItemActions(Item x, Room roomName) {
-
+        roomName.getAvailableItems().remove(x);
     }
 
     @Override
@@ -77,7 +67,7 @@ public class LocationManager implements LocationInterface{
             availableRooms.add(getRoom(player.getCurrentRoom().getNorth()));
         }
         if (player.getCurrentRoom().getEast() >= 0){
-            availableRooms.add(getRoom(player.getCurrentRoom().getEast())));
+            availableRooms.add(getRoom(player.getCurrentRoom().getEast()));
         }
         if (player.getCurrentRoom().getSouth() >= 0){
             availableRooms.add(getRoom(player.getCurrentRoom().getSouth()));
@@ -97,12 +87,12 @@ public class LocationManager implements LocationInterface{
 
     @Override
     public ArrayList<Item> getAvailableItems(Room currentRoom) {
-        return player.getCurrentRoom().availableItems;
+        return player.getCurrentRoom().getAvailableItems();
     }
 
     @Override
-    public ArrayList<NPC> getAvailableNPCs(Room currentRoom) {
-        return player.getCurrentRoom().availableNPCs;
+    public ArrayList<Npc> getAvailableNPCs(Room currentRoom) {
+        return player.getCurrentRoom().getAvailableNpcs();
     }
 
 }

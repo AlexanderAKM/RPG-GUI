@@ -13,7 +13,7 @@ public class Room {
     private String roomDescription;
     private int n, e, s, w;
     private ArrayList<Item> availableItems;
-    private ArrayList<Npc> availableNPC;
+    private ArrayList<Npc> availableNpcs;
     private boolean isLocked;
 
     /**
@@ -89,6 +89,13 @@ public class Room {
         this.isLocked = x;
     }
 
+    public ArrayList<Item> getAvailableItems(){
+        return availableItems;
+    }
+
+    public ArrayList<Npc> getAvailableNpcs(){
+        return availableNpcs;
+    }
     /**
      * A constructor for a room (location).
      * @param name The name of the room.
