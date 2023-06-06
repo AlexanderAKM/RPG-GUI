@@ -24,6 +24,7 @@ public class Player {
         social = 0;
         wellbeing = 0;
         money = 0;
+
     }
 
     public static Player getInstance(){
@@ -60,10 +61,6 @@ public class Player {
         this.social += change;
     }
 
-    public void changeEnergy(int change){
-        this.energy += change;
-    }
-
     public void changeWellbeing(int change){
         this.wellbeing += change;
     }
@@ -78,10 +75,6 @@ public class Player {
 
     public int getSocial() {
         return social;
-    }
-
-    public int getEnergy() {
-        return energy;
     }
 
     public int getWellbeing() {

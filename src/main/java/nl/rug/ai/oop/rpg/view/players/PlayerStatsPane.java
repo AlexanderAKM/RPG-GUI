@@ -6,7 +6,7 @@ import nl.rug.ai.oop.rpg.model.players.students.AIStudent;
 import javax.swing.*;
 import java.awt.*;
 
-public class PlayerStatsPane extends JPanel {
+public class PlayerStatsPane extends JPanel{
 
     Player player;
     JLabel intelligence;
@@ -17,7 +17,7 @@ public class PlayerStatsPane extends JPanel {
     public PlayerStatsPane(Player player, String language) {
         this.player = player;
         this.language = language;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         if (this.language.equals("English")){
             intelligence = new JLabel("Intelligence: " + this.player.getIntelligence());
             social = new JLabel("Social: " + this.player.getSocial());
@@ -37,7 +37,7 @@ public class PlayerStatsPane extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        PlayerStatsPane pane = new PlayerStatsPane(new AIStudent(), new String("English"));
+        PlayerStatsPane pane = new PlayerStatsPane( Player.getInstance(), new String("English"));
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(pane);
