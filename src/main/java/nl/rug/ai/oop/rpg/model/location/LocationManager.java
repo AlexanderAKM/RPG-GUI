@@ -38,6 +38,8 @@ public class LocationManager implements LocationInterface{
         map.add(bb);
         map.add(canteen);
         map.add(coverRoom);
+
+        Player.getInstance().setCurrentRoom(home);
     }
 
     @Override
