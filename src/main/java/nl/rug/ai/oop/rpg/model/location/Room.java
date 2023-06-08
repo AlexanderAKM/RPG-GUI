@@ -3,6 +3,7 @@ package nl.rug.ai.oop.rpg.model.location;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 
+import java.lang.runtime.SwitchBootstraps;
 import java.util.ArrayList;
 
 /**
@@ -81,12 +82,34 @@ public class Room {
         return this.w;
     }
 
+    public int getDirection(String direction){
+        int answer = 0;
+        switch(direction){
+            case "n" :
+                answer = getNorth();
+                break;
+            case "e" :
+                answer = getEast();
+                break;
+            case "s" :
+                answer = getSouth();
+                break;
+            case "w" :
+                answer = getWest();
+                break;
+        }
+        return answer;
+    }
     /**
      * sets the status of the room.
      * @param x Whether its locked or unlocked.
      */
     public void setIsLocked(boolean x){
         this.isLocked = x;
+    }
+
+    public boolean getIsLocked(){
+        return isLocked;
     }
 
     public ArrayList<Item> getAvailableItems(){

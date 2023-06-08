@@ -58,6 +58,33 @@ public class GamePanelGUI extends JFrame {
         roomsPanel.add(south);
         roomsPanel.add(west);
 
+        //model.addListener(evt -> {if (Objects.equals(evt.getPropertyName(), "pickSuit")) {
+        //    pickingSuit();
+        //}
+        //});
+
     }
+
+    /*
+    public void updateOptions(LocationManager manager, LocationController controller) {
+        System.out.println("updating options");
+
+        for (Card card :model.getPlayersHand()){
+            playerHand.add(hand.addCardButton(card));
+        }
+
+        for (InteractiveCard playCard : playerHand) {
+            playCard.addActionListener(controller);
+            playCard.setActionCommand("chosenCard");
+        }
+    }
+    public JButton addCardButton() {;
+        JButton newButton = new JButton(); //
+        add(newButton);
+        revalidate();
+        return newButton;
+    }
+
+     */
 
 }
