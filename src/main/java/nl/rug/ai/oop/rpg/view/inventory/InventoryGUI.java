@@ -1,9 +1,7 @@
 package nl.rug.ai.oop.rpg.view.inventory;
 
-import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
-import nl.rug.ai.oop.rpg.model.inventory.inventories.generalInventory;
-import nl.rug.ai.oop.rpg.model.inventory.inventories.generalInventory;
+import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.items.Alcohol;
 
 import javax.imageio.ImageIO;
@@ -96,7 +94,7 @@ public class InventoryGUI extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Inventory inventory = new generalInventory();
+                Inventory inventory = new Inventory();
                 Item item = new Alcohol(0, 0);
                 inventory.addItem(item);
 
