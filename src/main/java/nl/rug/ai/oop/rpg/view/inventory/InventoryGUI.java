@@ -24,9 +24,9 @@ public class InventoryGUI extends JPanel {
     private DefaultListModel<String> itemListModel;
     private JList<String> itemList;
 
-    static {
+    /*static {
         loadItemImages();
-    }
+    }*/
 
     public InventoryGUI(Inventory inventory) {
         this.inventory = inventory;
@@ -38,28 +38,51 @@ public class InventoryGUI extends JPanel {
         JScrollPane scrollPane = new JScrollPane(itemList);
         add(scrollPane, BorderLayout.CENTER);
 
+        setLayout(new GridLayout(2, 2));
         JButton addItemButton = new JButton("Add Item");
+
         addItemButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Item item = new Alcohol(0, 0);
-                String itemName = item.getName();
-                inventory.addItem(item);
-                itemListModel.addElement(itemName);
+                ImageIcon resizedIcon1 = resizeImageIcon(new ImageIcon(InventoryGUI.class.getResource("/Alcohol.png")));
+                JLabel item1 = new JLabel(resizedIcon1);
+                add(item1);
+
+                ImageIcon resizedIcon2 = resizeImageIcon(new ImageIcon(InventoryGUI.class.getResource("/Books.png")));
+                JLabel item2 = new JLabel(resizedIcon2);
+                add(item2);
+
+                ImageIcon resizedIcon3 = resizeImageIcon(new ImageIcon(InventoryGUI.class.getResource("/Coffee.png")));
+                JLabel item3 = new JLabel(resizedIcon3);
+                add(item3);
+
+                ImageIcon resizedIcon4 = resizeImageIcon(new ImageIcon(InventoryGUI.class.getResource("/Money.png")));
+                JLabel item4 = new JLabel(resizedIcon4);
+                add(item4);
+                //item = new JLabel(new ImageIcon(InventoryGUI.class.getResource("/Alcohol.png")));
+                //String itemName = item.getName();
+                //inventory.addItem(item);
+                //itemListModel.addElement(itemName);
             }
         });
         add(addItemButton, BorderLayout.SOUTH);
     }
 
-    private static void loadItemImages() {
+    private ImageIcon resizeImageIcon(ImageIcon icon) {
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(ITEM_WIDTH, ITEM_HEIGHT, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
+    }
+
+    /*private static void loadItemImages() {
         try {
-            itemImages.put("alcohol", ImageIO.read(InventoryGUI.class.getResource(ITEM_IMAGE_PATH + "alcohol.png")));
+            itemImages.put("Alcohol", ImageIO.read(InventoryGUI.class.getResource(ITEM_IMAGE_PATH + "Alcohol.png")));
             // Add more items as needed
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
         }
-    }
+    }*/
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -107,8 +130,7 @@ public class InventoryGUI extends JPanel {
                 frame.setVisible(true);
 
                 // Example of updating the inventory and view
-                inventory.addItem(new Alcohol(0, 0));
-                inventory.addItem(new Alcohol(0, 0));
+
                 inventoryGUI.setInventory(inventory);
             }
         });
