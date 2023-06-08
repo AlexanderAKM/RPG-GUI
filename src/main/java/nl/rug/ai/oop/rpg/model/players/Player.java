@@ -1,6 +1,6 @@
 package nl.rug.ai.oop.rpg.model.players;
 
-import nl.rug.ai.oop.rpg.model.inventory.inventories.generalInventory;
+import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.location.*;
 
 import java.io.*;
@@ -15,7 +15,7 @@ public class Player implements Serializable {
     private int wellbeing;
     private int money;
     private Room currentRoom;
-    private generalInventory inventory;
+    private Inventory inventory;
 
     private String programme;
     private static Player player;
