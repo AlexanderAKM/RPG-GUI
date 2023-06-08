@@ -13,8 +13,8 @@ public class PlayerStatsPane extends JPanel{
     JLabel wellbeing;
     JLabel money;
     String language;
-    public PlayerStatsPane(Player player, String language) {
-        this.player = player;
+    public PlayerStatsPane(String language) {
+        this.player = Player.getInstance();
         this.language = language;
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         if (this.language.equals("English")){
@@ -36,7 +36,7 @@ public class PlayerStatsPane extends JPanel{
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        PlayerStatsPane pane = new PlayerStatsPane( Player.getInstance(), new String("English"));
+        PlayerStatsPane pane = new PlayerStatsPane(new String("English"));
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(pane);
