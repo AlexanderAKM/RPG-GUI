@@ -16,7 +16,6 @@ public class Player implements Serializable {
     private int money;
     private Room currentRoom;
     private Inventory inventory;
-
     private String programme;
     private static Player player;
 
@@ -125,5 +124,13 @@ public class Player implements Serializable {
 
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
