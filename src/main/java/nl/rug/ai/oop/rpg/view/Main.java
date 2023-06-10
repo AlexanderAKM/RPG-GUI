@@ -1,11 +1,15 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.items.Alcohol;
+import nl.rug.ai.oop.rpg.model.inventory.items.Books;
+import nl.rug.ai.oop.rpg.model.inventory.items.Coffee;
+import nl.rug.ai.oop.rpg.model.inventory.items.Money;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.model.players.SaveFiles;
-import nl.rug.ai.oop.rpg.view.inventory.InventoryGUI;
+import nl.rug.ai.oop.rpg.view.inventory.InventoryView;
 import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
 import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
@@ -17,24 +21,31 @@ import java.awt.event.ActionListener;
 public class Main {
     //Main class for the JFrame which should include everyone's panes
 
-    /**
-     * @author Alexander Müller
-     * @param args
-     */
+
     public static void main(String[] args) {
+        // Create a player
         Player player = Player.getInstance();
+
+        // Create an inventory and add some items
         Inventory inventory = new Inventory();
-        Item item = new Alcohol(0,0);
-        inventory.addItem(item);
-        player.setInventory(inventory);
-        JFrame frame = new JFrame();
+        inventory.addItem(new Alcohol(5, 10));
+        inventory.addItem(new Books(10, 5));
+        inventory.addItem(new Coffee(5, 5));
+        inventory.addItem(new Money(100));
+
+        // Create the inventory view and controller
+        InventoryView inventoryView = new InventoryView(inventory);
+        new InventoryController(inventory, inventoryView, player);
+
+        // Create the main frame and add the inventory view
+        JFrame frame = new JFrame("RPG Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 1000);
-        frame.add(new InventoryGUI(Player.getInstance().getInventory()), BorderLayout.EAST);
-        frame.add(new PlayerStatsPane(), BorderLayout.SOUTH);
-        //frame.add(new GamePanelGUI(), BorderLayout.CENTER); // adds the game panel
+        frame.setLayout(new BorderLayout());
+        frame.add(inventoryView, BorderLayout.EAST);
+        frame.setSize(800, 600);
         frame.setVisible(true);
     }
+
 
     /**
      * @author RobertHielkema

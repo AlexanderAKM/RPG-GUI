@@ -4,8 +4,8 @@ import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 public class Alcohol extends Item {
-    private int intelligenceDecrease;
-    private int socialIncrease;
+    private final int intelligenceDecrease;
+    private final int socialIncrease;
 
     public Alcohol(int initialIntelligenceDecrease, int initialSocialIncrease) {
         super("Alcohol");
@@ -13,17 +13,9 @@ public class Alcohol extends Item {
         this.socialIncrease = initialSocialIncrease;
     }
 
-    public void changeIntelligence(int change) {
-        intelligenceDecrease += change;
-    }
-
-    public void changeSocial(int change) {
-        socialIncrease += change;
-    }
-
+    @Override
     public void use(Player player) {
-        player.changeIntelligence(intelligenceDecrease);
+        player.changeIntelligence(-intelligenceDecrease);
         player.changeSocial(socialIncrease);
     }
 }
-
