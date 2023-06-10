@@ -16,11 +16,11 @@ public class PlayerStatsPane extends JPanel{
     JLabel wellbeing;
     JLabel moneyIcon;
     JLabel money;
-    String languageIcon;
-    String language;
+    int STATHEIGHT = 80;
+    int STATWIDTH = 80;
     public PlayerStatsPane() {
         this.player = Player.getInstance();
-        this.setLayout(new GridLayout(2,4, 50, 10));
+        this.setLayout(new GridLayout(2,4, 5, 0));
         intelligenceIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/intelligence_stat.jpg"))));
         socialIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/social_stat.jpg"))));
         wellbeingIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/wellbeing_stat.png"))));
@@ -42,7 +42,7 @@ public class PlayerStatsPane extends JPanel{
 
     private ImageIcon resizeImage(ImageIcon imageIcon){
         Image image = imageIcon.getImage(); // transform it
-        Image scaledImage = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image scaledImage = image.getScaledInstance(STATWIDTH, STATHEIGHT,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         return new ImageIcon(scaledImage);
     }
 
