@@ -9,6 +9,8 @@ public abstract class Interactions {
         GIFT,
         SOCIALISE,
 
+        INTRODUCTION,
+
         WORLDCHANGE
     }
 
@@ -43,4 +45,17 @@ public abstract class Interactions {
         // The social stuff
 
     }
+
+    public void introductionInteraction(){
+        // The social stuff
+    }
+
+    public InteractionFunction getFunction(){
+        return this.chosenFunction;
+    }
+
+    public String getName(){
+        return this.interactionName;
+    }
+
 }

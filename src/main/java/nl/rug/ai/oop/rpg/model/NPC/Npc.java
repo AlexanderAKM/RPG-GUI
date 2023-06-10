@@ -7,11 +7,12 @@ public abstract class Npc {
     private String name;
     private int money;
 
-    private ArrayList<Interactions> npcInteractions;
+    private ArrayList<NpcInitiatedInteractions> npcInteractions;
     private ArrayList<Interactions> playerInteractions;
 
 
     public Npc(String name, int money){
+        npcInteractions = new ArrayList<NpcInitiatedInteractions>();
         this.name = name;
         this.money = money;
     }
@@ -34,8 +35,17 @@ public abstract class Npc {
     }
 
     public void inititateInteraction(String interactionName, Interactions.InteractionFunction function){
-        Interactions newInteraction = new NpcInitiatedInteractions(interactionName,this, function);
+        NpcInitiatedInteractions newInteraction = new NpcInitiatedInteractions(interactionName,this, function);
+        npcInteractions.add(newInteraction);
         //npcInteractions
+    }
+
+    public void findNpcInteraction(String interactionName){
+        for (NpcInitiatedInteractions interaction : npcInteractions){
+            if(interaction.getName() == interactionName){
+                interaction.doInteraction();
+            }
+        }
     }
 
     public void npcAct(){

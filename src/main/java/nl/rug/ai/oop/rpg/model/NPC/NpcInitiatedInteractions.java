@@ -5,14 +5,16 @@ public class NpcInitiatedInteractions extends Interactions{
         super(interactionName,npcSource, function);
     }
 
-    public void doInteraction(InteractionFunction function){
-        switch (function){
+    public void doInteraction(){
+        switch (this.getFunction()){
             case BATTLE:
                 this.battleInteraction();
             case GIFT:
                 this.giftInteraction();
             case SOCIALISE:
                 this.socialInteraction();
+            case INTRODUCTION:
+                this.introductionInteraction();
         }
     }
 }

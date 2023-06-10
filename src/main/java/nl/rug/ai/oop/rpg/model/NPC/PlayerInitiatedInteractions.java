@@ -15,4 +15,8 @@ public class PlayerInitiatedInteractions extends Interactions{
                 this.socialInteraction();
         }
     }
+
+    public void getInteraction(){
+
+    }
 }
