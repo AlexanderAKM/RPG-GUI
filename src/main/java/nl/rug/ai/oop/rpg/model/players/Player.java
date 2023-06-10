@@ -24,6 +24,7 @@ public class Player implements Serializable {
         social = 0;
         wellbeing = 0;
         money = 0;
+        inventory = new Inventory();
 
     }
 
@@ -61,6 +62,7 @@ public class Player implements Serializable {
             e.printStackTrace();
             System.exit(0);
         }
+        SaveFiles.getInstance().saveFileNames(filename);
     }
 
     public void loadSaveFile(String filename){
