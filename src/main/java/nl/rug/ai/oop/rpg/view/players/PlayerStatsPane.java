@@ -21,10 +21,10 @@ public class PlayerStatsPane extends JPanel{
     public PlayerStatsPane() {
         this.player = Player.getInstance();
         this.setLayout(new GridLayout(2,4, 50, 50));
-        intelligenceIcon = new JLabel(resizeImage(new ImageIcon("/Alcohol.png")));
-        socialIcon = new JLabel(resizeImage(new ImageIcon("/Alcohol.png")));
-        wellbeingIcon = new JLabel(resizeImage(new ImageIcon("/Alcohol.png")));
-        moneyIcon = new JLabel(resizeImage(new ImageIcon("/Alcohol.png")));
+        intelligenceIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/intelligence_stat.jpg"))));
+        socialIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/social_stat.jpg"))));
+        wellbeingIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/wellbeing_stat.png"))));
+        moneyIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/money_stat.png"))));
         intelligence = new JLabel(String.valueOf(this.player.getIntelligence()));
         social = new JLabel(String.valueOf(this.player.getSocial()));
         wellbeing = new JLabel(String.valueOf(this.player.getWellbeing()));
@@ -51,7 +51,7 @@ public class PlayerStatsPane extends JPanel{
         PlayerStatsPane pane = new PlayerStatsPane();
         frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(pane);
+        frame.add(pane, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
 }
