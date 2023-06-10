@@ -5,11 +5,15 @@ import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class LocationManager implements LocationInterface{
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
+    ArrayList<PropertyChangeListener> listeners;
     //public Player player;
 
     public LocationManager(){
@@ -80,9 +84,29 @@ public class LocationManager implements LocationInterface{
         return availableRooms;
     }
 
+    private void notifyListeners(  PropertyChangeEvent payload) {
+        Iterator<PropertyChangeListener> allListeners = listeners.iterator();
+
+        while (allListeners.hasNext()) {
+            allListeners.next().propertyChange(payload);
+        }
+    }
+
+    public void addListener(PropertyChangeListener listener) {
+        listeners.add(listener);
+    }
+
     @Override
-    public void movePlayer(Room chosenRoom) {
-        Player.getInstance().setCurrentRoom(chosenRoom);
+    public void movePlayer(String direction) {
+        int nextRoom = Player.getInstance().getCurrentRoom().getDirection(direction);
+        if (nextRoom == -1 || getRoom(nextRoom).getIsLocked()){
+            System.out.println("Cannot go there");
+        } else {
+            Player.getInstance().setCurrentRoom(getRoom(nextRoom));
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, null);
+            notifyListeners(payload);
+        }
+        //Player.getInstance().setCurrentRoom(chosenRoom);
         System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
         System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomDescription());
     }

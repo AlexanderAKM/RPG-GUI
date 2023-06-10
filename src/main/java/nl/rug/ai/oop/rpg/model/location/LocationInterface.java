@@ -54,9 +54,9 @@ public interface LocationInterface {
 
     /**
      * Moves the player to the chosen room.
-     * @param chosenRoom The players chosen room.
+     * @param direction compass direction chosen.
      */
-    public void movePlayer(Room chosenRoom);
+    public void movePlayer(String direction);
 
     /**
      * Returns all the items you can interact with that are present in the room.
