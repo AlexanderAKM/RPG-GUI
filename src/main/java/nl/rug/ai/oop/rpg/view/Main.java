@@ -33,6 +33,10 @@ public class Main {
         inventory.addItem(new Coffee(5, 5));
         inventory.addItem(new Money(100));
 
+        for (Item item : inventory.getItems()) {
+            System.out.println(item.getName());
+        }
+
         // Create the inventory view and controller
         InventoryView inventoryView = new InventoryView(inventory);
         new InventoryController(inventory, inventoryView, player);
