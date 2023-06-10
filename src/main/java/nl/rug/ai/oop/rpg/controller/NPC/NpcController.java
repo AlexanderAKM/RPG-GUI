@@ -2,6 +2,7 @@ package nl.rug.ai.oop.rpg.controller.NPC;
 
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
+import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,8 @@ public class NpcController implements ActionListener {
         Object npc = e.getSource();
         switch (e.getActionCommand()) {
             case "NPC Introduction":
-                model.playInteraction((Npc)npc, "");
+                //(Npc)npc
+                model.playInteraction((NpcButton)npc, "Intro");
                 break;
             case "C0o":
                 break;

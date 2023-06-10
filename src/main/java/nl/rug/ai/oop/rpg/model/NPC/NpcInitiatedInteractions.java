@@ -6,6 +6,7 @@ public class NpcInitiatedInteractions extends Interactions{
     }
 
     public void doInteraction(){
+        // Change this to have a system where text is sent out, then a specific end effect occurs, which are these
         switch (this.getFunction()){
             case BATTLE:
                 this.battleInteraction();
