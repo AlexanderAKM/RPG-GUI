@@ -24,7 +24,7 @@ public class NpcController implements ActionListener {
             case "NPC Introduction":
                 model.playInteraction((Npc)npc, "");
                 break;
-            case "COo":
+            case "C0o":
                 break;
         }
     }
