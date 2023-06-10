@@ -20,15 +20,15 @@ public class PlayerStatsPane extends JPanel{
     String language;
     public PlayerStatsPane() {
         this.player = Player.getInstance();
-        this.setLayout(new GridLayout(2,4, 50, 50));
+        this.setLayout(new GridLayout(2,4, 50, 10));
         intelligenceIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/intelligence_stat.jpg"))));
         socialIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/social_stat.jpg"))));
         wellbeingIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/wellbeing_stat.png"))));
         moneyIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/money_stat.png"))));
-        intelligence = new JLabel(String.valueOf(this.player.getIntelligence()));
-        social = new JLabel(String.valueOf(this.player.getSocial()));
-        wellbeing = new JLabel(String.valueOf(this.player.getWellbeing()));
-        money = new JLabel(String.valueOf(this.player.getMoney()));
+        intelligence = new JLabel(String.valueOf(this.player.getIntelligence()), SwingConstants.CENTER);
+        social = new JLabel(String.valueOf(this.player.getSocial()), SwingConstants.CENTER);
+        wellbeing = new JLabel(String.valueOf(this.player.getWellbeing()), SwingConstants.CENTER);
+        money = new JLabel(String.valueOf(this.player.getMoney()), SwingConstants.CENTER);
         this.add(intelligenceIcon);
         this.add(socialIcon);
         this.add(wellbeingIcon);
@@ -42,8 +42,17 @@ public class PlayerStatsPane extends JPanel{
 
     private ImageIcon resizeImage(ImageIcon imageIcon){
         Image image = imageIcon.getImage(); // transform it
-        Image scaledImage = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image scaledImage = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         return new ImageIcon(scaledImage);
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        intelligence.setText(String.valueOf(this.player.getIntelligence()));
+        social.setText(String.valueOf(this.player.getSocial()));
+        wellbeing.setText(String.valueOf(this.player.getWellbeing()));
+        money.setText(String.valueOf(this.player.getMoney()));
     }
 
     public static void main(String[] args) {
