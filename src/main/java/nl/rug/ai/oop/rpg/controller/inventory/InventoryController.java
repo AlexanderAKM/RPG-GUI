@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InventoryController {
+public class InventoryController implements ItemListener {
     private final Inventory inventory;
     private final Player player;
 
@@ -18,22 +18,16 @@ public class InventoryController {
         this.inventory = inventory;
         this.player = player;
 
-        // Add action listeners to each button in the inventory view
-        for (Component component : inventoryView.getItemsPanel().getComponents()) {
-            if (component instanceof JButton) {
-                JButton button = (JButton) component;
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String itemName = e.getActionCommand();
-                        Item item = inventory.getItemByName(itemName);
-                        if (item != null) {
-                            item.use(player);
-                            inventory.removeItemByName(itemName);
-                        }
-                    }
-                });
-            }
-        }
+        // The controller is registered as an ItemListener for the inventory view
+        inventoryView.setItemListener(this);
+    }
+
+    // When an item is clicked in the InventoryView, this method is called
+    @Override
+    public void onItemClicked(Item item) {
+        // Use the item and remove it from the inventory
+        item.use(player);
+        inventory.removeItemByName(item.getName());
     }
 }
+

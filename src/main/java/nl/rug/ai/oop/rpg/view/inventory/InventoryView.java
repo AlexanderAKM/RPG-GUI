@@ -1,10 +1,13 @@
 package nl.rug.ai.oop.rpg.view.inventory;
 
+import nl.rug.ai.oop.rpg.controller.inventory.ItemListener;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
@@ -13,6 +16,7 @@ import java.util.List;
 public class InventoryView extends JPanel implements PropertyChangeListener {
     private final Inventory inventory;
     private final JPanel itemsPanel;
+    private ItemListener itemListener;
 
     public static int ITEM_WIDTH = 150;
     public static int ITEM_LENGTH = 250;
@@ -41,6 +45,10 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
         this.setMaximumSize(size);
     }
 
+    public void setItemListener(ItemListener itemListener) {
+        this.itemListener = itemListener;
+    }
+
     // Load items into the inventory
     private void loadInventory() {
         itemsPanel.removeAll();
@@ -55,6 +63,16 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
             ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
             JButton button = new JButton(item.getName(), resizedIcon);
             button.setActionCommand(item.getName());
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String itemName = e.getActionCommand();
+                    Item item = inventory.getItemByName(itemName);
+                    if (item != null && itemListener != null) {
+                        itemListener.onItemClicked(item);
+                    }
+                }
+            });
             itemsPanel.add(button);
         }
         itemsPanel.revalidate();
