@@ -14,10 +14,17 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
     private final Inventory inventory;
     private final JPanel itemsPanel;
 
+    public static int ITEM_WIDTH = 150;
+    public static int ITEM_LENGTH = 250;
+
+    public static int VIEWWIDTH = 500;
+    public static int VIEWHEIGHT = 600;
+
+
     public InventoryView(Inventory inventory) {
         this.inventory = inventory;
         itemsPanel = new JPanel();
-        itemsPanel.setLayout(new GridLayout(0, 1));
+        itemsPanel.setLayout(new GridLayout(0, 2));
 
         // Setup GUI
         setLayout(new BorderLayout());
@@ -29,6 +36,9 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
 
         // Load initial inventory
         loadInventory();
+        Dimension size = new Dimension(VIEWWIDTH, VIEWHEIGHT);
+        this.setPreferredSize(size);
+        this.setMaximumSize(size);
     }
 
     // Load items into the inventory
@@ -42,7 +52,8 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
                 continue;
             }
             ImageIcon imageIcon = new ImageIcon(resourceUrl);
-            JButton button = new JButton(item.getName(), imageIcon);
+            ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
+            JButton button = new JButton(item.getName(), resizedIcon);
             button.setActionCommand(item.getName());
             itemsPanel.add(button);
         }
@@ -52,6 +63,12 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
 
     public JPanel getItemsPanel() {
         return itemsPanel;
+    }
+
+    public ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
+        Image img = icon.getImage();
+        Image resizedImage = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImage);
     }
 
     @Override
