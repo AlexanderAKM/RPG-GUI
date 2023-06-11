@@ -98,6 +98,20 @@ public class LocationManager implements LocationInterface{
     }
 
     @Override
+    public void movePlayer(int chosenRoom) {
+        //int nextRoom = Player.getInstance().getCurrentRoom().getDirection(direction);
+        if (getRoom(chosenRoom).getIsLocked()){
+            System.out.println("Cannot go there");
+        } else {
+            Player.getInstance().setCurrentRoom(getRoom(chosenRoom));
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
+            notifyListeners(payload);
+        }
+        //Player.getInstance().setCurrentRoom(chosenRoom);
+        System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
+        System.out.println("description : " + Player.getInstance().getCurrentRoom().getRoomDescription());
+    }
+    /*
     public void movePlayer(String direction) {
         int nextRoom = Player.getInstance().getCurrentRoom().getDirection(direction);
         if (nextRoom == -1 || getRoom(nextRoom).getIsLocked()){
@@ -109,8 +123,8 @@ public class LocationManager implements LocationInterface{
         }
         //Player.getInstance().setCurrentRoom(chosenRoom);
         System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-        System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomDescription());
-    }
+        System.out.println("description : " + Player.getInstance().getCurrentRoom().getRoomDescription());
+    } */
 
     @Override
     public ArrayList<Item> getAvailableItems(Room currentRoom) {

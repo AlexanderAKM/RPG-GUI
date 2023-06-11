@@ -12,19 +12,26 @@ public class LocationController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object card = e.getSource();
+
         switch (e.getActionCommand()) {
-            case "n":
-                model.movePlayer("n");
+            case "Home":
+                model.movePlayer(0);
                 break;
-            case "e":
-                model.movePlayer("e");
+            case "Outside":
+                System.out.println("controller for outside");
+                model.movePlayer(1);
                 break;
-            case "s":
-                model.movePlayer("s");
+            case "Aletta Jacobs Hall":
+                model.movePlayer(2);
                 break;
-            case "w":
-                model.movePlayer("w");
+            case "Bernoulliborg":
+                model.movePlayer(3);
+                break;
+            case "The BB canteen":
+                model.movePlayer(4);
+                break;
+            case "Cover room":
+                model.movePlayer(5);
                 break;
         }
     }

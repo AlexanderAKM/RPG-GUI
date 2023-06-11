@@ -2,6 +2,8 @@ package nl.rug.ai.oop.rpg.view.location;
 
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.location.Room;
+import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,11 +33,6 @@ public class GamePanelGUI {
 
 
     public GamePanelGUI(LocationManager manager, LocationController controller){
-        //frame = new JFrame();
-       // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(1000, 1000);
-        //frame.add(new GamePanelGUI(), BorderLayout.CENTER); // adds the game panel
-        //frame.setVisible(true);
         panel = new JPanel();
         gamePanel = new JPanel(new GridLayout(10, 1, 10, 5));
         gamePanel.setBackground(Color.LIGHT_GRAY);
@@ -46,22 +43,31 @@ public class GamePanelGUI {
         searchItemButton = new JButton("Search for items in the room");
         //searchItemButton.setActionCommand("items");
         interactNpcButton = new JButton("Interact with NPCs in the room");
+        interactNpcButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showRoomNpcPanel();
+            }
+        });
         //interactNpcButton.setActionCommand("npcs");
         moveRoomsButton = new JButton("Move to a different room");
         moveRoomsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                createRoomButtons(manager, controller);
                 showRoomsPanel();
             }
         });
-        //moveRoomsButton.setActionCommand("rooms");
 
         north = new JButton("North");
+        north.addActionListener(controller);
         north.setActionCommand("n");
         east = new JButton("East");
+        east.addActionListener(controller);
         east.setActionCommand("e");
         south = new JButton("South");
+        south.addActionListener(controller);
         south.setActionCommand("s");
         west = new JButton("West");
+        west.addActionListener(controller);
         west.setActionCommand("w");
 
         //getContentPane().add(gamePanel);
@@ -76,10 +82,10 @@ public class GamePanelGUI {
         gamePanel.add(moveRoomsButton);
         gamePanel.setVisible(true);
 
-        roomsPanel.add(north);
-        roomsPanel.add(east);
-        roomsPanel.add(south);
-        roomsPanel.add(west);
+        //roomsPanel.add(north);
+        //roomsPanel.add(east);
+        //roomsPanel.add(south);
+        //roomsPanel.add(west);
         //roomsPanel.setVisible(true);
 
         manager.addListener(evt -> {if (Objects.equals(evt.getPropertyName(), "direction")) {
@@ -90,8 +96,66 @@ public class GamePanelGUI {
 
     }
 
+    public void setNpcPanel(JPanel npcPanel){
+        roomNpcsPanel = npcPanel;
+    }
+
+    public JPanel returnLocationView(){
+        return panel;
+    }
+
     private void setTextLabel(String newText){
         textLabel.setText("Room Description :" + newText);
+        gamePanel.revalidate();
+    }
+
+    public void createRoomButtons(LocationManager model, LocationController controller) {
+        roomsPanel.removeAll(); // Clear the existing buttons ArrayList<Room>
+
+        for (Room room : model.roomsAvailable(Player.getInstance().getCurrentRoom())) {
+            JButton roomButton = new JButton(room.getRoomName());
+            roomButton.addActionListener(controller);
+
+            roomButton.setActionCommand(room.getRoomName()); // Set the action command as the room name
+            roomsPanel.add(roomButton);
+        }
+
+        panel.revalidate();
+        panel.repaint();
+    }
+
+
+public void showGamePanel() {
+    panel.removeAll();
+    panel.add(gamePanel);
+    gamePanel.setVisible(true);
+    roomsPanel.setVisible(false);
+    roomNpcsPanel.setVisible(false);
+    panel.revalidate();
+    panel.repaint();
+}
+
+    public void showRoomNpcPanel() {
+        panel.removeAll();
+        panel.add(roomNpcsPanel);
+        gamePanel.setVisible(false);
+        roomNpcsPanel.setVisible(true);
+        roomsPanel.setVisible(false);
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public void showRoomsPanel() {
+        panel.removeAll();
+        panel.add(roomsPanel);
+        gamePanel.setVisible(false);
+        roomNpcsPanel.setVisible(false);
+        roomsPanel.setVisible(true);
+        panel.revalidate();
+        panel.repaint();
+    }
+    public void frameSetUp(){
+
     }
 
     //public JFrame getMainFrame(){
@@ -99,31 +163,9 @@ public class GamePanelGUI {
     //}
 
     /*public void updateGamePanel(){
-    * here it updates the options in the text buttons and also the text label
-    * }
-    * */
-    public void showGamePanel(){
-        panel.removeAll();
-        panel.add(gamePanel);
-        panel.validate();
-    }
-
-    public void showRoomsPanel(){
-        panel.removeAll();
-        panel.add(roomsPanel);
-        panel.validate();
-    }
-
-    public void frameSetUp(){
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-
-        frame.add(panel, BorderLayout.CENTER); // adds the game panel
-        frame.setVisible(true);
-    }
-
-
+     * here it updates the options in the text buttons and also the text label
+     * }
+     * */
     /*
     public void updateOptions(LocationManager manager, LocationController controller) {
         System.out.println("updating options");
