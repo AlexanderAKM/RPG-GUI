@@ -1,17 +1,19 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Npc {
 
     private String name;
     private int money;
 
-    private ArrayList<Interactions> npcInteractions;
+    private ArrayList<NpcInitiatedInteractions> npcInteractions;
     private ArrayList<Interactions> playerInteractions;
 
 
     public Npc(String name, int money){
+        npcInteractions = new ArrayList<NpcInitiatedInteractions>();
         this.name = name;
         this.money = money;
     }
@@ -33,9 +35,18 @@ public abstract class Npc {
         money += amount;
     }
 
-    public void inititateInteraction(String interactionName, Interactions.InteractionFunction function){
-        Interactions newInteraction = new NpcInitiatedInteractions(interactionName,this, function);
+    public void inititateInteraction(String interactionName, String speechText,  Interactions.InteractionFunction function){
+        NpcInitiatedInteractions newInteraction = new NpcInitiatedInteractions(interactionName,this, function, speechText);
+        npcInteractions.add(newInteraction);
         //npcInteractions
+    }
+
+    public void findNpcInteraction(String interactionName){
+        for (NpcInitiatedInteractions interaction : npcInteractions){
+            if(Objects.equals(interaction.getName(), interactionName)){
+                interaction.doInteraction();
+            }
+        }
     }
 
     public void npcAct(){
