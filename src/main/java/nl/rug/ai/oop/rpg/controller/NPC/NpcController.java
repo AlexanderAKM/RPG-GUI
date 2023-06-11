@@ -6,8 +6,12 @@ import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
+
 public class NpcController implements ActionListener {
     private NpcManager model;
+
+
     public NpcController(NpcManager model) {
         this.model = model;
     }
@@ -24,9 +28,15 @@ public class NpcController implements ActionListener {
         switch (e.getActionCommand()) {
             case "NPC Introduction":
                 //(Npc)npc
-                model.playInteraction((NpcButton)npc, "Intro");
+               //model.playInteraction((NpcButton)npc, "Intro");
                 break;
-            case "C0o":
+            default:
+                // Go through each one
+                for(Npc computer : model.allNpcs){
+                    if(Objects.equals(e.getActionCommand(), computer.getName())){
+                        model.playInteraction(computer, "Intro");
+                    }
+                }
                 break;
         }
     }

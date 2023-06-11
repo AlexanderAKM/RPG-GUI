@@ -43,9 +43,9 @@ public class NpcManager {
         listeners.add(listener);
     }
 
-    public void playInteraction(NpcButton target, String interactionName){
+    public void playInteraction(Npc target, String interactionName){
         // Change this to actually return a string
-        Npc npc = target.getNpc();
+        Npc npc = target;
         String speech = npc.findNpcInteraction(interactionName);
         PropertyChangeEvent payload = new PropertyChangeEvent(this, "Speech", null, speech);
         notifyListeners(payload);

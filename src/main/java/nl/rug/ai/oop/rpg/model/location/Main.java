@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         LocationManager manager = new LocationManager();
         LocationController controller = new LocationController(manager);
         GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
         gamePanel.frameSetUp();
 
-    } */
+    }
 }
