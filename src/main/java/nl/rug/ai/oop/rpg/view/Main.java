@@ -113,7 +113,13 @@ public class Main {
         gamePanel.setNpcPanel(npcThing);
         npcPanel.setup(model, npcs, npcController, gamePanel, frame);
         //frame.add(npcThing, BorderLayout.NORTH);
-        frame.add(locationView); // adds the game panel
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridwidth = 2;
+        c.gridheight = 2;
+        c.gridx = 0;
+        c.gridy = 0;
+        frame.add(locationView, c); // adds the game panel
         //frame.setVisible(true);
 
         //gamePanel.frameSetUp();
