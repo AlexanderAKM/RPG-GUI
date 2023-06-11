@@ -58,14 +58,15 @@ public class Player implements Serializable {
     }
 
     public void save(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(dtf.format(LocalDateTime.now())))) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss");
+        String filename = dtf.format(LocalDateTime.now());
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename))) {
             output.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
         }
-        SaveFiles.getInstance().saveFileNames(dtf.format(LocalDateTime.now()));
+        SaveFiles.getInstance().saveFileNames(filename);
     }
 
     public void loadSaveFile(String filename){
