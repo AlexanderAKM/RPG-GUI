@@ -19,6 +19,7 @@ public class Player implements Serializable {
     private Room currentRoom;
     private Inventory inventory;
     private String programme;
+    private String language;
     private static Player player;
 
     private Player() {
@@ -27,7 +28,6 @@ public class Player implements Serializable {
         wellbeing = 0;
         money = 0;
         inventory = new Inventory();
-
     }
 
     public static Player getInstance(){
@@ -137,5 +137,13 @@ public class Player implements Serializable {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public String getLanguage(){
+        return language;
+    }
+
+    public void setLanguage(String language){
+        this.language = language;
     }
 }
