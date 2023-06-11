@@ -21,6 +21,10 @@ import java.awt.event.ActionListener;
 public class Main {
     //Main class for the JFrame which should include everyone's panes
 
+    /**
+     * @author Alexander Müller & Robert Hielkema
+     * @param args
+     */
 
     public static void main(String[] args) {
         // Create a player

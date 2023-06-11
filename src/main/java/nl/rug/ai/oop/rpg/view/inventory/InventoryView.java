@@ -13,6 +13,10 @@ import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.List;
 
+/**
+ * This class represents the visual display of the player's inventory in the game.
+ * @author Alexander Müller
+ */
 public class InventoryView extends JPanel implements PropertyChangeListener {
     private final Inventory inventory;
     private final JPanel itemsPanel;
@@ -20,36 +24,40 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
 
     public static int ITEM_WIDTH = 150;
     public static int ITEM_LENGTH = 250;
-
     public static int VIEWWIDTH = 500;
     public static int VIEWHEIGHT = 600;
 
-
+    /**
+     * Creates an InventoryView with the given Inventory.
+     *
+     * @param inventory the inventory to display
+     */
     public InventoryView(Inventory inventory) {
         this.inventory = inventory;
         itemsPanel = new JPanel();
         itemsPanel.setLayout(new GridLayout(0, 2));
-
-        // Setup GUI
         setLayout(new BorderLayout());
         add(new JLabel("Inventory:"), BorderLayout.NORTH);
         add(itemsPanel, BorderLayout.CENTER);
-
-        // Listen for changes in the inventory
         this.inventory.addChangeListener(this);
-
-        // Load initial inventory
         loadInventory();
         Dimension size = new Dimension(VIEWWIDTH, VIEWHEIGHT);
         this.setPreferredSize(size);
         this.setMaximumSize(size);
     }
 
+    /**
+     * Sets the ItemListener for the InventoryView.
+     *
+     * @param itemListener the item listener to set
+     */
     public void setItemListener(ItemListener itemListener) {
         this.itemListener = itemListener;
     }
 
-    // Load items into the inventory
+    /**
+     * Loads items into the inventory.
+     */
     private void loadInventory() {
         itemsPanel.removeAll();
         List<Item> items = this.inventory.getItems();
@@ -79,21 +87,36 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
         itemsPanel.repaint();
     }
 
+    /**
+     * Returns the panel of items.
+     *
+     * @return the items panel
+     */
     public JPanel getItemsPanel() {
         return itemsPanel;
     }
 
+    /**
+     * Resizes an ImageIcon to the given dimensions.
+     *
+     * @param icon the icon to resize
+     * @param width the new width
+     * @param height the new height
+     * @return the resized ImageIcon
+     */
     public ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
         Image img = icon.getImage();
         Image resizedImage = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }
 
+    /**
+     * Responds to a property change event (like the inventory changing).
+     *
+     * @param evt the event to respond to
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // When the inventory changes, reload the inventory
         loadInventory();
     }
 }
-
-
