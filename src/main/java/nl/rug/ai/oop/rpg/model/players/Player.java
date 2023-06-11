@@ -4,6 +4,8 @@ import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.location.*;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author RobertHielkema
@@ -55,14 +57,15 @@ public class Player implements Serializable {
         }
     }
 
-    public void save(String filename){
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename))) {
+    public void save(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(dtf.format(LocalDateTime.now())))) {
             output.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
         }
-        SaveFiles.getInstance().saveFileNames(filename);
+        SaveFiles.getInstance().saveFileNames(dtf.format(LocalDateTime.now()));
     }
 
     public void loadSaveFile(String filename){

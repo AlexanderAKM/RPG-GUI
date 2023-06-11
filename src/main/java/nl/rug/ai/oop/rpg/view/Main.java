@@ -41,11 +41,29 @@ public class Main {
         InventoryView inventoryView = new InventoryView(inventory);
         new InventoryController(inventory, inventoryView, player);
 
-        // Create the main frame and add the inventory view
+        // Create the main frame and add the inventory view and PlayerStatsPane
         JFrame frame = new JFrame("RPG Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.add(inventoryView, BorderLayout.EAST);
+        frame.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        //setup GridBagLayout for inventory view
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridheight = 3;
+        c.gridx = 2;
+        c.gridy = 0;
+        frame.add(inventoryView, c);
+
+        //setup GridBagLayout for PlayerStatsPane
+        PlayerStatsPane playerStatsPane = new PlayerStatsPane();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 2;
+        frame.add(playerStatsPane, c);
+
         frame.setSize(800, 600);
         frame.setVisible(true);
     }
