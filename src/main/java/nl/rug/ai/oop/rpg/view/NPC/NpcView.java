@@ -16,6 +16,7 @@ import java.util.Objects;
 
 public class NpcView {
     NpcButton testButton;
+    JButton backButton;
     private JTextArea textArea;
     private JTextField textField;
 
@@ -38,10 +39,13 @@ public class NpcView {
         textField = new JTextField();
         textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Set the border
 
+        backButton = new JButton("Go back");
+
 
         testButton = new NpcButton("Bob's Introduction", "NPC Introduction", npcManager.allNpcs.get(0));
 
         npcView = new JPanel(new GridLayout(10, 1, 10, 5));
+        npcView.add(backButton);
         npcView.add(textArea, BorderLayout.CENTER);
         //npcView.add(textField, BorderLayout.PAGE_END);
         //frame.add(centerPanel, BorderLayout.CENTER);
@@ -81,8 +85,16 @@ public class NpcView {
     public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller) {
         testButton.addActionListener(controller);
         testButton.setActionCommand("NPC Introduction");
-        textField.addActionListener(controller);
+       backButton.addActionListener(new ActionListener() {
+           @Override
+               public void actionPerformed(ActionEvent e) {
+                   npcView.removeAll();
+                   npcView.revalidate();
+                   npcView.repaint();
+               }
+           });
 
+        textField.addActionListener(controller);
         cont = controller;
 
         setUpNpcs(npcs, cont);

@@ -28,15 +28,15 @@ public class NpcController implements ActionListener {
         switch (e.getActionCommand()) {
             case "NPC Introduction":
                 //(Npc)npc
-                //model.playInteraction((NpcButton)npc, "Intro");
+                model.playInteraction((NpcButton)npc, "Intro");
                 break;
             default:
                 // Go through each one
-                for(Npc computer : model.allNpcs){
+                /**for(Npc computer : model.allNpcs){
                     if(Objects.equals(e.getActionCommand(), computer.getName())){
                         model.playInteraction(computer, "Intro");
                     }
-                }
+                }**/
                 break;
         }
     }
