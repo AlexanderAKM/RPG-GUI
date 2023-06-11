@@ -10,6 +10,7 @@ import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,8 +23,21 @@ public class Main {
         NpcManager model = new NpcManager();
         NpcController npcController = new NpcController(model);
 
+
+
+        // Test
+        Npc bob = model.getNpc("Bob");
+        manager.addNpcs("Bob", bob, manager.getRoom(0));
+
+        Npc harmen = model.getNpc("Harmen");
+        manager.addNpcs("Harmen", harmen, manager.getRoom(0));
+
+        // We get the players current room
+        Room currentRoom = player.getCurrentRoom();
+        ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
+
         NpcView npcPanel = new NpcView(model);
-        npcPanel.setup(model, npcController);
+        npcPanel.setup(model, npcs, npcController);
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,10 +45,6 @@ public class Main {
 
         JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
-
-        // Test
-        Npc test = model.getNpc("Bob");
-        manager.addNpcs("Bob", test);
 
         gamePanel.setNpcPanel(npcThing);
         //frame.add(npcThing, BorderLayout.NORTH);

@@ -28,7 +28,7 @@ public class NpcController implements ActionListener {
         switch (e.getActionCommand()) {
             case "NPC Introduction":
                 //(Npc)npc
-               //model.playInteraction((NpcButton)npc, "Intro");
+                //model.playInteraction((NpcButton)npc, "Intro");
                 break;
             default:
                 // Go through each one

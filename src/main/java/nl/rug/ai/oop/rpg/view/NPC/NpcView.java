@@ -6,6 +6,8 @@ import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.location.Room;
+import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,15 +41,25 @@ public class NpcView {
 
         testButton = new NpcButton("Bob's Introduction", "NPC Introduction", npcManager.allNpcs.get(0));
 
-        npcView = new JPanel(new BorderLayout());
+        npcView = new JPanel(new GridLayout(10, 1, 10, 5));
         npcView.add(textArea, BorderLayout.CENTER);
         //npcView.add(textField, BorderLayout.PAGE_END);
         //frame.add(centerPanel, BorderLayout.CENTER);
         //frame.setVisible(true);
     }
 
-    private void setUpNpcs(ArrayList<Npc> npcs){
+    private void setUpNpcs(ArrayList<Npc> npcs, NpcController controller){
 
+        for (Npc npc : npcs) {
+            NpcButton npcInteractionButton = new NpcButton(npc.getName(), "Intro", npc);
+            npcInteractionButton.addActionListener(controller);
+
+            npcInteractionButton.setActionCommand("NPC Introduction"); // Set the action command as the room name
+            npcView.add(npcInteractionButton);
+        }
+
+        npcView.revalidate();
+        npcView.repaint();
     }
 
     public JPanel returnNpcView(){
@@ -66,14 +78,14 @@ public class NpcView {
         textArea.append(command + "\n");
     }
 
-    public void setup(NpcManager model, LocationManager locationModel, NpcController controller) {
+    public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller) {
         testButton.addActionListener(controller);
         testButton.setActionCommand("NPC Introduction");
         textField.addActionListener(controller);
 
         cont = controller;
 
-        setUpNpcs();
+        setUpNpcs(npcs, cont);
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Speech")) {

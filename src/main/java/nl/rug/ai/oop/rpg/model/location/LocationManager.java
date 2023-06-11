@@ -132,7 +132,7 @@ public class LocationManager implements LocationInterface{
     }
 
     @Override
-    public ArrayList<Npc> getAvailableNPCs(Room currentRoom) {
+    public ArrayList<Npc> getNpcList(Room currentRoom) {
         return Player.getInstance().getCurrentRoom().getAvailableNpcs();
     }
 
