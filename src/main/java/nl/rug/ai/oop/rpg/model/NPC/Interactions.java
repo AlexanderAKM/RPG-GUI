@@ -47,7 +47,7 @@ public abstract class Interactions {
     }
 
     public void introductionInteraction(){
-        System.out.println("Hello I am");
+        System.out.println("Hehehehehehe.");
         // The social stuff
     }
 

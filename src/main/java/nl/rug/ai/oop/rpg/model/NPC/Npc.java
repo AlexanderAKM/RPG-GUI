@@ -35,8 +35,8 @@ public abstract class Npc {
         money += amount;
     }
 
-    public void inititateInteraction(String interactionName,  Interactions.InteractionFunction function){
-        NpcInitiatedInteractions newInteraction = new NpcInitiatedInteractions(interactionName,this, function);
+    public void inititateInteraction(String interactionName, String speechText,  Interactions.InteractionFunction function){
+        NpcInitiatedInteractions newInteraction = new NpcInitiatedInteractions(interactionName,this, function, speechText);
         npcInteractions.add(newInteraction);
         //npcInteractions
     }

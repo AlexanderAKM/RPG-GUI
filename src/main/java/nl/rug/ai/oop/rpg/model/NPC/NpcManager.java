@@ -30,8 +30,9 @@ public class NpcManager {
 
     public void initialiseNpcs(){
         Enemy Bob = new Enemy("Bob", 90,90,90,90);
-        Bob.inititateInteraction("Intro", Interactions.InteractionFunction.INTRODUCTION);
-        Bob.inititateInteraction("Bob battles player", Interactions.InteractionFunction.BATTLE);
+        Bob.inititateInteraction("Intro","Hehehehe I am" + Bob.getName(), Interactions.InteractionFunction.INTRODUCTION);
+        Bob.inititateInteraction("Bob battles player", "I CHALLENGE U", Interactions.InteractionFunction.BATTLE);
+
 
         allNpcs.add(Bob);
     }
