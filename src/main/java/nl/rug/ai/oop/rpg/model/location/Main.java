@@ -37,9 +37,9 @@ public class Main {
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
         NpcView npcPanel = new NpcView(model);
-        npcPanel.setup(model, npcs, npcController);
-
         JFrame frame = new JFrame();
+
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
 
@@ -47,6 +47,7 @@ public class Main {
         JPanel locationView = gamePanel.returnLocationView();
 
         gamePanel.setNpcPanel(npcThing);
+        npcPanel.setup(model, npcs, npcController, gamePanel, frame);
         //frame.add(npcThing, BorderLayout.NORTH);
         frame.add(locationView, BorderLayout.CENTER); // adds the game panel
         frame.setVisible(true);

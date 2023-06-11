@@ -8,6 +8,7 @@ import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
+import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,15 +83,17 @@ public class NpcView {
         textArea.append(command + "\n");
     }
 
-    public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller) {
+    public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller, GamePanelGUI home, JFrame frame) {
         testButton.addActionListener(controller);
         testButton.setActionCommand("NPC Introduction");
        backButton.addActionListener(new ActionListener() {
            @Override
                public void actionPerformed(ActionEvent e) {
-                   npcView.removeAll();
-                   npcView.revalidate();
-                   npcView.repaint();
+                   //npcView.removeAll();
+                   //npcView.revalidate();
+                   //npcView.repaint();
+                   home.showGamePanel();
+                   //frame.add(home);
                }
            });
 
