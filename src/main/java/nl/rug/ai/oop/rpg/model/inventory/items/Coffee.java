@@ -3,11 +3,13 @@ package nl.rug.ai.oop.rpg.model.inventory.items;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
+import java.io.Serializable;
+
 /**
  * This class represents a Coffee item, which can increase intelligence and wellbeing of a player.
  * @author Alexander Müller
  */
-public class Coffee extends Item {
+public class Coffee extends Item implements Serializable {
     private final int intelligenceIncrease;
     private final int wellbeingIncrease;
 

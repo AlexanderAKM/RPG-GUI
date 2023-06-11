@@ -2,11 +2,13 @@ package nl.rug.ai.oop.rpg.model.inventory;
 
 import nl.rug.ai.oop.rpg.model.players.Player;
 
+import java.io.Serializable;
+
 /**
  * This abstract class represents a general item in the game.
  * @author Alexander Müller
  */
-public abstract class Item {
+public abstract class Item implements Serializable {
     private String name;
 
     /**

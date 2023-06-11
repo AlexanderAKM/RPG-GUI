@@ -3,11 +3,13 @@ package nl.rug.ai.oop.rpg.model.inventory.items;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
+import java.io.Serializable;
+
 /**
  * This class represents an Alcohol item, which can decrease intelligence and increase social skills of a player.
  * @author Alexander Müller
  */
-public class Alcohol extends Item {
+public class Alcohol extends Item implements Serializable {
     private final int intelligenceDecrease;
     private final int socialIncrease;
 

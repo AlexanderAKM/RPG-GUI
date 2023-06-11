@@ -3,11 +3,13 @@ package nl.rug.ai.oop.rpg.model.inventory.items;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
+import java.io.Serializable;
+
 /**
  * This class represents a Money item, which can be used to increase a player's money.
  * @author Alexander Müller
  */
-public class Money extends Item {
+public class Money extends Item implements Serializable {
     private final int money;
 
     /**
