@@ -37,7 +37,7 @@ public class LocationManager implements LocationInterface{
         Room examHall = new Room("Aletta Jacobs Hall", "Building where students take their course exams and have lectures. ",-1, 1, -1, -1, true);
         Room home = new Room("Home", "The room you live in.",1, -1, -1, -1, false);
 
-        map.add(home);
+        map.add(home); // the order of rooms
         map.add(outside);
         map.add(examHall);
         map.add(bb);
@@ -127,7 +127,7 @@ public class LocationManager implements LocationInterface{
     } */
 
     @Override
-    public ArrayList<Item> getAvailableItems(Room currentRoom) {
+    public ArrayList<Item> getAvailableItemsList(Room currentRoom) {
         return Player.getInstance().getCurrentRoom().getAvailableItems();
     }
 

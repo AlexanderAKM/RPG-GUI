@@ -138,8 +138,8 @@ public class Room {
         this.setIsLocked(status);
     }
 
-    public void addNpc(Npc npc){
-        availableNpcs.add(npc);
+    public void setRoomItems(Room specificRoom, Item item){
+
     }
 
 }

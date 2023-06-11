@@ -63,7 +63,7 @@ public interface LocationInterface {
      * @param currentRoom The room the player is currently in.
      * @return An ArrayList of all the items in the room.
      */
-    public ArrayList<Item> getAvailableItems(Room currentRoom);
+    public ArrayList<Item> getAvailableItemsList(Room currentRoom);
 
     /**
      * Returns all the NPCs you can interact with in the current room.
