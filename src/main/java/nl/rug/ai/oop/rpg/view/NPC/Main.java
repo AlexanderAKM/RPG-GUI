@@ -13,7 +13,7 @@ public class Main {
 
         NpcController controller = new NpcController(model);
         NpcView view = new NpcView(model);
-        view.setup(model, controller);
+        //view.setup(model, controller);
     }
 
 }

@@ -7,6 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class NpcManager {
     ArrayList<PropertyChangeListener> listeners = new ArrayList<>();
@@ -35,6 +36,15 @@ public class NpcManager {
 
 
         allNpcs.add(Bob);
+    }
+
+    public Npc getNpc(String npcName){
+        for(Npc npc : allNpcs){
+            if(Objects.equals(npc.getName(), npcName)){
+                return npc;
+            }
+        }
+        return null;
     }
     public static void main(String[] args) {
     }

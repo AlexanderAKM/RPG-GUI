@@ -3,10 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
+import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
+import nl.rug.ai.oop.rpg.model.location.LocationManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NpcView {
@@ -38,9 +41,13 @@ public class NpcView {
 
         npcView = new JPanel(new BorderLayout());
         npcView.add(textArea, BorderLayout.CENTER);
-        npcView.add(textField, BorderLayout.PAGE_END);
+        //npcView.add(textField, BorderLayout.PAGE_END);
         //frame.add(centerPanel, BorderLayout.CENTER);
         //frame.setVisible(true);
+    }
+
+    private void setUpNpcs(ArrayList<Npc> npcs){
+
     }
 
     public JPanel returnNpcView(){
@@ -59,15 +66,23 @@ public class NpcView {
         textArea.append(command + "\n");
     }
 
-    public void setup(NpcManager model, NpcController controller) {
+    public void setup(NpcManager model, LocationManager locationModel, NpcController controller) {
         testButton.addActionListener(controller);
         testButton.setActionCommand("NPC Introduction");
         textField.addActionListener(controller);
 
         cont = controller;
 
+        setUpNpcs();
+
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Speech")) {
+                outputSpeech((String)evt.getNewValue());
+            }
+        });
+
+        model.addListener(evt -> {
+            if (Objects.equals(evt.getPropertyName(), "Enter Room")) {
                 outputSpeech((String)evt.getNewValue());
             }
         });

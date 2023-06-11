@@ -2,6 +2,7 @@ package nl.rug.ai.oop.rpg.model.location;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
+import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
@@ -30,6 +31,10 @@ public class Main {
 
         JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
+
+        // Test
+        Npc test = model.getNpc("Bob");
+        manager.addNpcs("Bob", test);
 
         gamePanel.setNpcPanel(npcThing);
         //frame.add(npcThing, BorderLayout.NORTH);
