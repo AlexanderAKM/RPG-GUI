@@ -22,14 +22,14 @@ public interface LocationInterface {
      * @param npcName The name of the NPC.
      * @param roomName The room in which the NPC should be in.
      */
-    public void addNpcs(Npc npcName, Room roomName);
+    public void addNpcs(String npcName, Npc npc, Room roomName);
 
     /**
      * Removes a specific NPC from a room.
      * @param npcName The name of the NPC.
      * @param roomName The room in which the NPC remains.
      */
-    public void removeNpcs(Npc npcName, Room roomName);
+    public void removeNpcs(String npcName, Npc npc, Room roomName);
 
     /**
      * Adds an item to the room.
