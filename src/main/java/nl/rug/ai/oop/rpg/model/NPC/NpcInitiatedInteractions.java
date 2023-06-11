@@ -8,10 +8,9 @@ public class NpcInitiatedInteractions extends Interactions{
         //this.npcName = npcName;
     }
 
-    public void doInteraction(){
+    public String doInteraction(){
         // Change this to have a system where text is sent out, then a specific end effect occurs, which are these
         // Output text first:
-        System.out.println(speechText);
         switch (this.getFunction()){
             case BATTLE:
                 this.battleInteraction();
@@ -22,5 +21,6 @@ public class NpcInitiatedInteractions extends Interactions{
             case INTRODUCTION:
                 this.introductionInteraction();
         }
+        return speechText;
     }
 }

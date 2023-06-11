@@ -41,12 +41,14 @@ public abstract class Npc {
         //npcInteractions
     }
 
-    public void findNpcInteraction(String interactionName){
+    public String findNpcInteraction(String interactionName){
+        String output = null;
         for (NpcInitiatedInteractions interaction : npcInteractions){
             if(Objects.equals(interaction.getName(), interactionName)){
-                interaction.doInteraction();
+                output = interaction.doInteraction();
             }
         }
+        return output;
     }
 
     public void npcAct(){

@@ -11,7 +11,6 @@ public class Main {
     public static void main(String[] args) {
         NpcManager model = new NpcManager();
 
-
         NpcController controller = new NpcController(model);
         NpcView view = new NpcView(model);
         view.setup(model, controller);

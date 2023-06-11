@@ -30,7 +30,7 @@ public class NpcManager {
 
     public void initialiseNpcs(){
         Enemy Bob = new Enemy("Bob", 90,90,90,90);
-        Bob.inititateInteraction("Intro","Hehehehe I am" + Bob.getName(), Interactions.InteractionFunction.INTRODUCTION);
+        Bob.inititateInteraction("Intro","Hehehehe I am the amazing " + Bob.getName() + ".\n Be scared. \n", Interactions.InteractionFunction.INTRODUCTION);
         Bob.inititateInteraction("Bob battles player", "I CHALLENGE U", Interactions.InteractionFunction.BATTLE);
 
 
@@ -44,7 +44,10 @@ public class NpcManager {
     }
 
     public void playInteraction(NpcButton target, String interactionName){
+        // Change this to actually return a string
         Npc npc = target.getNpc();
-        npc.findNpcInteraction(interactionName);
+        String speech = npc.findNpcInteraction(interactionName);
+        PropertyChangeEvent payload = new PropertyChangeEvent(this, "Speech", null, speech);
+        notifyListeners(payload);
     }
 }
