@@ -18,6 +18,7 @@ public class LocationManager implements LocationInterface{
 
     public LocationManager(){
         map = new ArrayList<Room>();
+        listeners = new ArrayList();
         availableRooms = new ArrayList<Room>();
         locationSetUp();
         //player = currentPlayer;
@@ -103,7 +104,7 @@ public class LocationManager implements LocationInterface{
             System.out.println("Cannot go there");
         } else {
             Player.getInstance().setCurrentRoom(getRoom(nextRoom));
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, null);
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
             notifyListeners(payload);
         }
         //Player.getInstance().setCurrentRoom(chosenRoom);

@@ -3,7 +3,6 @@ package nl.rug.ai.oop.rpg.model.location;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 
-import java.lang.runtime.SwitchBootstraps;
 import java.util.ArrayList;
 
 /**
