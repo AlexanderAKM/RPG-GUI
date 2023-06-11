@@ -48,13 +48,13 @@ public class LocationManager implements LocationInterface{
     }
 
     @Override
-    public void addNpcs(Npc npcName, Room roomName) {
-        roomName.getAvailableNpcs().add(npcName);
+    public void addNpcs(String npcName, Npc npc, Room roomName) {
+        roomName.getAvailableNpcs().add(npc);
     }
 
     @Override
-    public void removeNpcs(Npc npcName, Room roomName) {
-        roomName.getAvailableNpcs().remove(npcName);
+    public void removeNpcs(String npcName, Npc npc, Room roomName) {
+        roomName.getAvailableNpcs().remove(npc);
     }
 
     @Override
