@@ -116,10 +116,9 @@ public class GamePanelGUI {
 
     public void frameSetUp(){
         JFrame frame = new JFrame();
-        //GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
-        //GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
+
         frame.add(panel, BorderLayout.CENTER); // adds the game panel
         frame.setVisible(true);
     }
