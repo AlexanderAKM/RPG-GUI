@@ -119,6 +119,7 @@ public class Main {
         JPanel locationView = gamePanel.returnLocationView();
 
         gamePanel.setNpcPanel(npcThing);
+        gamePanel.setNpcView(npcPanel);
         npcPanel.setup(model, npcs, npcController, gamePanel, frame);
         //frame.add(npcThing, BorderLayout.NORTH);
         c.fill = GridBagConstraints.HORIZONTAL;
