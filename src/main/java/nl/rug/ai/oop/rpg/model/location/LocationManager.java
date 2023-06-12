@@ -2,6 +2,7 @@ package nl.rug.ai.oop.rpg.model.location;
 
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 
@@ -13,15 +14,17 @@ import java.util.Iterator;
 public class LocationManager implements LocationInterface{
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
+
+    private ItemManager manager;
     ArrayList<PropertyChangeListener> listeners;
     //public Player player;
 
-    public LocationManager(){
+    public LocationManager(ItemManager manager){
+        this.manager = manager;
         map = new ArrayList<Room>();
         listeners = new ArrayList();
         availableRooms = new ArrayList<Room>();
         locationSetUp();
-        //player = currentPlayer;
     }
 
     public Room getRoom(int index){
@@ -30,12 +33,20 @@ public class LocationManager implements LocationInterface{
 
     @Override
     public void locationSetUp() {
-        Room coverRoom = new Room("Cover room", "Study association room for AI students and CS students",-1, -1, 3, -1, false);
-        Room canteen = new Room("The BB canteen", "A place you can have food. Sometimes good, sometimes bad and always expensive.",3, -1, 0, 2, false);
-        Room bb = new Room("Bernoulliborg", "Building where students have lectures. Within the building, a cafeteria and an association room is located.",5, -1, 1, 4, false);
-        Room outside = new Room("Outside", "The outdoors. Nothing more I can say..",3, -1, 0, 2, false);
-        Room examHall = new Room("Aletta Jacobs Hall", "Building where students take their course exams and have lectures. ",-1, 1, -1, -1, true);
-        Room home = new Room("Home", "The room you live in.",1, -1, -1, -1, false);
+        ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
+        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student-Card");
+        ArrayList<Item> bbItems = manager.getItemsForRoom("Books","Pen");
+        ArrayList<Item> canteenItems = manager.getItemsForRoom("Coffee");
+        ArrayList<Item> outsideItems = manager.getItemsForRoom("Money", "Money");
+        ArrayList<Item> examHallItems = manager.getItemsForRoom("Books");
+
+
+        Room coverRoom = new Room("Cover room", "Study association room for AI students and CS students",-1, -1, 3, -1, false, coverItems);
+        Room canteen = new Room("The BB canteen", "A place you can have food. Sometimes good, sometimes bad and always expensive.",3, -1, 0, 2, false, canteenItems);
+        Room bb = new Room("Bernoulliborg", "Building where students have lectures. Within the building, a cafeteria and an association room is located.",5, -1, 1, 4, false, bbItems);
+        Room outside = new Room("Outside", "The outdoors. Nothing more I can say..",3, -1, 0, 2, false, outsideItems);
+        Room examHall = new Room("Aletta Jacobs Hall", "Building where students take their course exams and have lectures. ",-1, 1, -1, -1, true, examHallItems);
+        Room home = new Room("Home", "The room you live in.",1, -1, -1, -1, false, homeItems);
 
         map.add(home); // the order of rooms
         map.add(outside);
@@ -48,23 +59,23 @@ public class LocationManager implements LocationInterface{
     }
 
     @Override
-    public void addNpcs(String npcName, Npc npc, Room roomName) {
-        roomName.getAvailableNpcs().add(npc);
+    public void addNpcs(String npcName, Npc npc, Room room) {
+        room.getAvailableNpcs().add(npc);
     }
 
     @Override
-    public void removeNpcs(String npcName, Npc npc, Room roomName) {
-        roomName.getAvailableNpcs().remove(npc);
+    public void removeNpcs(String npcName, Npc npc, Room room) {
+        room.getAvailableNpcs().remove(npc);
     }
 
     @Override
-    public void addItemActions(Item x, Room roomName) {
-        roomName.getAvailableItems().add(x);
+    public void addItemActions(Item x, Room room) {
+        room.getAvailableItems().add(x);
     }
 
     @Override
-    public void removeItemActions(Item x, Room roomName) {
-        roomName.getAvailableItems().remove(x);
+    public void removeItemActions(Item x, Room room) {
+        room.getAvailableItems().remove(x);
     }
 
     @Override
@@ -107,24 +118,9 @@ public class LocationManager implements LocationInterface{
             PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
             notifyListeners(payload);
         }
-        //Player.getInstance().setCurrentRoom(chosenRoom);
         System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
         System.out.println("description : " + Player.getInstance().getCurrentRoom().getRoomDescription());
     }
-    /*
-    public void movePlayer(String direction) {
-        int nextRoom = Player.getInstance().getCurrentRoom().getDirection(direction);
-        if (nextRoom == -1 || getRoom(nextRoom).getIsLocked()){
-            System.out.println("Cannot go there");
-        } else {
-            Player.getInstance().setCurrentRoom(getRoom(nextRoom));
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
-            notifyListeners(payload);
-        }
-        //Player.getInstance().setCurrentRoom(chosenRoom);
-        System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-        System.out.println("description : " + Player.getInstance().getCurrentRoom().getRoomDescription());
-    } */
 
     @Override
     public ArrayList<Item> getAvailableItemsList(Room currentRoom) {

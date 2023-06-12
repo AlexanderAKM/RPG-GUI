@@ -1,9 +1,12 @@
 package nl.rug.ai.oop.rpg.model.location;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
+import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
+import nl.rug.ai.oop.rpg.model.inventory.Inventory;
+import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
 import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
@@ -15,8 +18,10 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         Player player = Player.getInstance();
-
-        LocationManager manager = new LocationManager();
+        Inventory inventory = new Inventory();
+        //RoomItemsController itemController = new RoomItemsController(inventory, gamePanelGUI, player);
+        ItemManager itemManager = new ItemManager();
+        LocationManager manager = new LocationManager(itemManager);
         LocationController controller = new LocationController(manager);
         GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
 
@@ -60,7 +65,6 @@ public class Main {
         frame.add(locationView, BorderLayout.CENTER); // adds the game panel
         frame.setVisible(true);
 
-        gamePanel.frameSetUp();
         frame.revalidate();
 
     }

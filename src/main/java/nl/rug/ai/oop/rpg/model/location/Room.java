@@ -127,7 +127,7 @@ public class Room {
      * @param s South direction.
      * @param w West direction.
      */
-    public Room(String name, String description, int n, int e, int s, int w, boolean status){
+    public Room(String name, String description, int n, int e, int s, int w, boolean status, ArrayList<Item> items) { //,
         availableNpcs = new ArrayList<Npc>();
         this.setName(name);
         this.setDescription(description);
@@ -136,10 +136,7 @@ public class Room {
         this.setSouth(s);
         this.setWest(w);
         this.setIsLocked(status);
-    }
-
-    public void setRoomItems(Room specificRoom, Item item){
+        this.availableItems = items;
 
     }
-
 }

@@ -102,7 +102,6 @@ public class Main {
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
         NpcView npcPanel = new NpcView(model, manager);
-        //JFrame frame = new JFrame();
 
 
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

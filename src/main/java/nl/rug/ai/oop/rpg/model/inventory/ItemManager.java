@@ -29,8 +29,8 @@ public class ItemManager {
         items.put("Money", new Money(100));
     }
 
-    public List<Item> getItemsForRoom(String... itemNames) {
-        List<Item> itemsForRoom = new ArrayList<>();
+    public ArrayList<Item> getItemsForRoom(String... itemNames) {
+        ArrayList<Item> itemsForRoom = new ArrayList<>();
         for (String itemName : itemNames) {
             if (items.containsKey(itemName)) {
                 itemsForRoom.add(items.get(itemName));
