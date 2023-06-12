@@ -25,7 +25,15 @@ public class NpcButton extends JButton {
 
         init(this.text, null);
     }
+
+    public String getText(){
+        return text;
+    }
     public Npc getNpc(){
         return interactingNpc;
+    }
+
+    public String getInteractionName(){
+        return interactionName;
     }
 }

@@ -101,7 +101,7 @@ public class Main {
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
-        NpcView npcPanel = new NpcView(model);
+        NpcView npcPanel = new NpcView(model, manager);
         //JFrame frame = new JFrame();
 
 

@@ -1,36 +1,27 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
-import nl.rug.ai.oop.rpg.model.players.Player;
-
-public abstract class Interactions {
-
-    public enum InteractionFunction {
-        BATTLE,
-        GIFT,
-        SOCIALISE,
-
-        INTRODUCTION,
-
-        WORLDCHANGE
-    }
-
+public abstract class Events {
     private String interactionName;
     private Npc npcSource;
 
     //private Player playerSource;
 
-    private InteractionFunction chosenFunction;
+    //private InteractionFunction chosenFunction;
 
-    public Interactions(String interactionName, Npc npcSource, InteractionFunction function){
-        this.interactionName = interactionName;
+    public Events(String eventName, Npc npcSource){
+        this.interactionName = eventName;
         this.npcSource = npcSource;
-        this.chosenFunction = function;
+        //this.chosenFunction = function;
         //this.playerSource = playerSource;
     }
 
     // Ideally an object that posses all text should be passed to below
     public void battleInteraction(){
+        // This should get the battle view to open
         // The fighting stuff
+
+        // Multiple choice
+
 
     }
 
@@ -51,9 +42,9 @@ public abstract class Interactions {
         // The social stuff
     }
 
-    public InteractionFunction getFunction(){
+    /*public InteractionFunction getFunction(){
         return this.chosenFunction;
-    }
+    }*/
 
     public String getName(){
         return this.interactionName;
