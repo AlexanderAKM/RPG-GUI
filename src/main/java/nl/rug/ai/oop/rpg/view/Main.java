@@ -7,6 +7,7 @@ import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.inventory.items.Alcohol;
 import nl.rug.ai.oop.rpg.model.inventory.items.Books;
 import nl.rug.ai.oop.rpg.model.inventory.items.Coffee;
@@ -38,7 +39,7 @@ public class Main {
     //Main class for the JFrame which should include everyone's panes
 
     /**
-     * @author Alexander Müller & Robert Hielkema
+     * @author Alexander Müller & Robert Hielkema & Kikis Hjikakou & Victoria Polaka
      * @param args
      */
 
@@ -83,7 +84,8 @@ public class Main {
         c.gridy = 2;
         frame.add(playerStatsPane, c);
 
-        LocationManager manager = new LocationManager();
+        ItemManager itemManager = new ItemManager();
+        LocationManager manager = new LocationManager(itemManager);
         LocationController controller = new LocationController(manager);
         GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
 
@@ -102,7 +104,7 @@ public class Main {
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
         NpcView npcPanel = new NpcView(model);
-        //JFrame frame = new JFrame();
+
 
 
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,9 +123,7 @@ public class Main {
         c.gridx = 0;
         c.gridy = 0;
         frame.add(locationView, c); // adds the game panel
-        //frame.setVisible(true);
 
-        //gamePanel.frameSetUp();
         frame.revalidate();
 
         frame.setSize(800, 600);
@@ -157,47 +157,5 @@ public class Main {
         frame.revalidate();
     }
 
-    /*
-    // the gamepanel
-    public void gamePanelSetUp(JFrame frame) {
-        LocationManager manager = new LocationManager();
-        LocationController controller = new LocationController(manager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
-
-        NpcManager model = new NpcManager();
-        NpcController npcController = new NpcController(model);
-
-        // Test
-        Npc bob = model.getNpc("Bob");
-        manager.addNpcs("Bob", bob, manager.getRoom(0));
-
-        Npc harmen = model.getNpc("Harmen");
-        manager.addNpcs("Harmen", harmen, manager.getRoom(0));
-
-        // We get the players current room
-        Room currentRoom = player.getCurrentRoom();
-        ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
-
-        NpcView npcPanel = new NpcView(model);
-        //JFrame frame = new JFrame();
-
-
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(500, 500);
-
-        JPanel npcThing = npcPanel.returnNpcView();
-        JPanel locationView = gamePanel.returnLocationView();
-
-        gamePanel.setNpcPanel(npcThing);
-        npcPanel.setup(model, npcs, npcController, gamePanel, frame);
-        //frame.add(npcThing, BorderLayout.NORTH);
-        frame.add(locationView, BorderLayout.CENTER); // adds the game panel
-        //frame.setVisible(true);
-
-        //gamePanel.frameSetUp();
-        frame.revalidate();
-    }
-
-     */
 
 }

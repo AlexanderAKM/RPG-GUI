@@ -28,10 +28,6 @@ public class GamePanelGUI {
 
     private JButton moveRoomsButton;
     private JPanel roomsPanel;
-    private JButton north;
-    private JButton east;
-    private JButton west;
-    private JButton south;
 
     private NpcView npcView;
 
@@ -47,17 +43,18 @@ public class GamePanelGUI {
         searchItemButton = new JButton("Search for items in the room");
         searchItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                createItemButtons(manager, controller);
                 showRoomItemPanel();
+
             }
         });
-        //searchItemButton.setActionCommand("items");
+
         interactNpcButton = new JButton("Interact with NPCs in the room");
         interactNpcButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showRoomNpcPanel();
             }
         });
-        //interactNpcButton.setActionCommand("npcs");
         moveRoomsButton = new JButton("Move to a different room");
         moveRoomsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -66,20 +63,6 @@ public class GamePanelGUI {
             }
         });
 
-        //north = new JButton("North");
-        //north.addActionListener(controller);
-        //north.setActionCommand("n");
-        //east = new JButton("East");
-        //east.addActionListener(controller);
-        //east.setActionCommand("e");
-        //south = new JButton("South");
-        //south.addActionListener(controller);
-        //south.setActionCommand("s");
-        //west = new JButton("West");
-        //west.addActionListener(controller);
-        //west.setActionCommand("w");
-
-        //getContentPane().add(gamePanel);
 
         textLabel = new JLabel("Game text goes here");
 
@@ -91,15 +74,9 @@ public class GamePanelGUI {
         gamePanel.add(moveRoomsButton);
         gamePanel.setVisible(true);
 
-        //roomsPanel.add(north);
-        //roomsPanel.add(east);
-        //roomsPanel.add(south);
-        //roomsPanel.add(west);
-        //roomsPanel.setVisible(true);
-
         manager.addListener(evt -> {if (Objects.equals(evt.getPropertyName(), "direction")) {
             setTextLabel((String)evt.getNewValue());
-            showGamePanel();  // returns back to the beginning
+            showGamePanel();  // returns back to the default screen
         }
         });
 
@@ -187,56 +164,20 @@ public class GamePanelGUI {
         panel.revalidate();
         panel.repaint();
     }
-    public void frameSetUp(){
 
-    }
-/*
     public void createItemButtons(LocationManager model, LocationController controller) {
         roomItemsPanel.removeAll(); // Clear the existing buttons ArrayList<Item>
 
-        for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom()) {
+        for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
             JButton itemButton = new JButton(item.getName());
-            roomButton.addActionListener(controller);
+            itemButton.addActionListener(controller);
 
-            roomButton.setActionCommand(room.getRoomName()); // Set the action command as the room name
-            roomsPanel.add(roomButton);
+            itemButton.setActionCommand("item"); // Set the action command as the room name
+            roomItemsPanel.add(itemButton);
         }
 
         panel.revalidate();
         panel.repaint();
     }
-
- */
-
-    //public JFrame getMainFrame(){
-    //    return frame;
-    //}
-
-    /*public void updateGamePanel(){
-     * here it updates the options in the text buttons and also the text label
-     * }
-     * */
-    /*
-    public void updateOptions(LocationManager manager, LocationController controller) {
-        System.out.println("updating options");
-
-        for (Card card :model.getPlayersHand()){
-            playerHand.add(hand.addCardButton(card));
-        }
-
-        for (InteractiveCard playCard : playerHand) {
-            playCard.addActionListener(controller);
-            playCard.setActionCommand("chosenCard");
-        }
-    }
-    public JButton addCardButton() {;
-        JButton newButton = new JButton(); //
-        add(newButton);
-        revalidate();
-        return newButton;
-    }
-
-     */
-
 
 }
