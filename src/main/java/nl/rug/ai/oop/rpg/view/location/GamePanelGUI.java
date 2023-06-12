@@ -5,6 +5,7 @@ import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
+import nl.rug.ai.oop.rpg.view.NPC.NpcView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +32,8 @@ public class GamePanelGUI {
     private JButton east;
     private JButton west;
     private JButton south;
+
+    private NpcView npcView;
 
 
     public GamePanelGUI(LocationManager manager, LocationController controller){
@@ -115,12 +118,21 @@ public class GamePanelGUI {
         gamePanel.revalidate();
     }
 
+    public void setNpcView(NpcView npcView){
+        this.npcView = npcView;
+    }
+
     public void createRoomButtons(LocationManager model, LocationController controller) {
         roomsPanel.removeAll(); // Clear the existing buttons ArrayList<Room>
 
         for (Room room : model.roomsAvailable(Player.getInstance().getCurrentRoom())) {
             JButton roomButton = new JButton(room.getRoomName());
             roomButton.addActionListener(controller);
+            roomButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
 
             roomButton.setActionCommand(room.getRoomName()); // Set the action command as the room name
             roomsPanel.add(roomButton);
@@ -157,6 +169,7 @@ public class GamePanelGUI {
         panel.removeAll();
         panel.add(roomNpcsPanel);
         gamePanel.setVisible(false);
+        npcView.updateNpcView(Player.getInstance().getCurrentRoom().getAvailableNpcs());
         roomNpcsPanel.setVisible(true);
         roomsPanel.setVisible(false);
         roomItemsPanel.setVisible(false);

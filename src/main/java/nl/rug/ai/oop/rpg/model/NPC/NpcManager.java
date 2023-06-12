@@ -32,14 +32,19 @@ public class NpcManager {
     public void initialiseNpcs(){
         Enemy Bob = new Enemy("Bob", 90,90,90,90);
         Enemy Harmen = new Enemy("Harmen", 90,90,90,90);
+        Enemy Michael = new Enemy("Michael", 2, 2, 2, 2);
+
         Bob.inititateInteraction("Intro","Hehehehe I am the amazing " + Bob.getName() + ".\n Be scared. \n", Interactions.InteractionFunction.INTRODUCTION);
         Harmen.inititateInteraction("Intro","Yo yo yo yo I am the amazing " + Harmen.getName() + ".\n Be scared. \n", Interactions.InteractionFunction.INTRODUCTION);
+        Michael.inititateInteraction("Intro", "I am " + Michael.getName() + "\n Yes?", Interactions.InteractionFunction.INTRODUCTION);
+
 
         Bob.inititateInteraction("Bob battles player", "I CHALLENGE U", Interactions.InteractionFunction.BATTLE);
 
 
         allNpcs.add(Bob);
         allNpcs.add(Harmen);
+        allNpcs.add(Michael);
     }
 
     public Npc getNpc(String npcName){

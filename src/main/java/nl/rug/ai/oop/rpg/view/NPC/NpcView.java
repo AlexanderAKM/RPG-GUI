@@ -46,18 +46,18 @@ public class NpcView {
         testButton = new NpcButton("Bob's Introduction", "NPC Introduction", npcManager.allNpcs.get(0));
 
         npcView = new JPanel(new GridLayout(10, 1, 10, 5));
-        npcView.add(backButton);
-        npcView.add(textArea, BorderLayout.CENTER);
         //npcView.add(textField, BorderLayout.PAGE_END);
         //frame.add(centerPanel, BorderLayout.CENTER);
         //frame.setVisible(true);
     }
 
-    private void setUpNpcs(ArrayList<Npc> npcs, NpcController controller){
-
+    private void setUpNpcs(ArrayList<Npc> npcs){
+        npcView.removeAll();
+        npcView.add(backButton);
+        npcView.add(textArea, BorderLayout.CENTER);
         for (Npc npc : npcs) {
             NpcButton npcInteractionButton = new NpcButton(npc.getName(), "Intro", npc);
-            npcInteractionButton.addActionListener(controller);
+            npcInteractionButton.addActionListener(cont);
 
             npcInteractionButton.setActionCommand("NPC Introduction"); // Set the action command as the room name
             npcView.add(npcInteractionButton);
@@ -65,6 +65,11 @@ public class NpcView {
 
         npcView.revalidate();
         npcView.repaint();
+    }
+
+    public void updateNpcView(ArrayList<Npc> npcs){
+        npcView.removeAll();
+        setUpNpcs(npcs);
     }
 
     public JPanel returnNpcView(){
@@ -100,7 +105,7 @@ public class NpcView {
         textField.addActionListener(controller);
         cont = controller;
 
-        setUpNpcs(npcs, cont);
+        setUpNpcs(npcs);
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Speech")) {
