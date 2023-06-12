@@ -55,6 +55,7 @@ public class Main {
 
 
 
+
         // Create the inventory view and controller
         InventoryView inventoryView = new InventoryView(inventory);
         new InventoryController(inventory, inventoryView, player);
