@@ -2,6 +2,10 @@ package nl.rug.ai.oop.rpg.model.location;
 
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.inventory.items.Alcohol;
+import nl.rug.ai.oop.rpg.model.inventory.items.Coffee;
+import nl.rug.ai.oop.rpg.model.inventory.items.Money;
+import nl.rug.ai.oop.rpg.model.inventory.items.Books;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 
@@ -21,6 +25,7 @@ public class LocationManager implements LocationInterface{
         listeners = new ArrayList();
         availableRooms = new ArrayList<Room>();
         locationSetUp();
+        //itemLocationSetUp(Coffee,Alcohol, Books, map);
         //player = currentPlayer;
     }
 
@@ -48,23 +53,23 @@ public class LocationManager implements LocationInterface{
     }
 
     @Override
-    public void addNpcs(String npcName, Npc npc, Room roomName) {
-        roomName.getAvailableNpcs().add(npc);
+    public void addNpcs(String npcName, Npc npc, Room room) {
+        room.getAvailableNpcs().add(npc);
     }
 
     @Override
-    public void removeNpcs(String npcName, Npc npc, Room roomName) {
-        roomName.getAvailableNpcs().remove(npc);
+    public void removeNpcs(String npcName, Npc npc, Room room) {
+        room.getAvailableNpcs().remove(npc);
     }
 
     @Override
-    public void addItemActions(Item x, Room roomName) {
-        roomName.getAvailableItems().add(x);
+    public void addItemActions(Item x, Room room) {
+        room.getAvailableItems().add(x);
     }
 
     @Override
-    public void removeItemActions(Item x, Room roomName) {
-        roomName.getAvailableItems().remove(x);
+    public void removeItemActions(Item x, Room room) {
+        room.getAvailableItems().remove(x);
     }
 
     @Override
@@ -136,4 +141,10 @@ public class LocationManager implements LocationInterface{
         return Player.getInstance().getCurrentRoom().getAvailableNpcs();
     }
 
+    public void itemLocationSetUp(Item coffee,Item alcohol, Item books, Room coverRoom, Room bb, Room home) {
+        addItemActions(coffee, coverRoom);
+        addItemActions(alcohol, coverRoom);
+        addItemActions(books, bb);
+        addItemActions(coffee, home);
+    }
 }

@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.view.location;
 
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
+import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
@@ -41,6 +42,11 @@ public class GamePanelGUI {
         roomsPanel = new JPanel();
 
         searchItemButton = new JButton("Search for items in the room");
+        searchItemButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showRoomItemPanel();
+            }
+        });
         //searchItemButton.setActionCommand("items");
         interactNpcButton = new JButton("Interact with NPCs in the room");
         interactNpcButton.addActionListener(new ActionListener() {
@@ -57,18 +63,18 @@ public class GamePanelGUI {
             }
         });
 
-        north = new JButton("North");
-        north.addActionListener(controller);
-        north.setActionCommand("n");
-        east = new JButton("East");
-        east.addActionListener(controller);
-        east.setActionCommand("e");
-        south = new JButton("South");
-        south.addActionListener(controller);
-        south.setActionCommand("s");
-        west = new JButton("West");
-        west.addActionListener(controller);
-        west.setActionCommand("w");
+        //north = new JButton("North");
+        //north.addActionListener(controller);
+        //north.setActionCommand("n");
+        //east = new JButton("East");
+        //east.addActionListener(controller);
+        //east.setActionCommand("e");
+        //south = new JButton("South");
+        //south.addActionListener(controller);
+        //south.setActionCommand("s");
+        //west = new JButton("West");
+        //west.addActionListener(controller);
+        //west.setActionCommand("w");
 
         //getContentPane().add(gamePanel);
 
@@ -125,15 +131,27 @@ public class GamePanelGUI {
     }
 
 
-public void showGamePanel() {
-    panel.removeAll();
-    panel.add(gamePanel);
-    gamePanel.setVisible(true);
-    roomsPanel.setVisible(false);
-    roomNpcsPanel.setVisible(false);
-    panel.revalidate();
-    panel.repaint();
-}
+    public void showGamePanel() {
+        panel.removeAll();
+        panel.add(gamePanel);
+        gamePanel.setVisible(true);
+        roomsPanel.setVisible(false);
+        roomNpcsPanel.setVisible(false);
+        roomItemsPanel.setVisible(false);
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public void showRoomItemPanel(){
+        panel.removeAll();
+        panel.add(roomItemsPanel);
+        gamePanel.setVisible(false);
+        roomItemsPanel.setVisible(true);
+        roomsPanel.setVisible(false);
+        roomNpcsPanel.setVisible(false);
+        panel.revalidate();
+        panel.repaint();
+    }
 
     public void showRoomNpcPanel() {
         panel.removeAll();
@@ -141,6 +159,7 @@ public void showGamePanel() {
         gamePanel.setVisible(false);
         roomNpcsPanel.setVisible(true);
         roomsPanel.setVisible(false);
+        roomItemsPanel.setVisible(false);
         panel.revalidate();
         panel.repaint();
     }
@@ -151,12 +170,30 @@ public void showGamePanel() {
         gamePanel.setVisible(false);
         roomNpcsPanel.setVisible(false);
         roomsPanel.setVisible(true);
+        roomItemsPanel.setVisible(false);
         panel.revalidate();
         panel.repaint();
     }
     public void frameSetUp(){
 
     }
+/*
+    public void createItemButtons(LocationManager model, LocationController controller) {
+        roomItemsPanel.removeAll(); // Clear the existing buttons ArrayList<Item>
+
+        for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom()) {
+            JButton itemButton = new JButton(item.getName());
+            roomButton.addActionListener(controller);
+
+            roomButton.setActionCommand(room.getRoomName()); // Set the action command as the room name
+            roomsPanel.add(roomButton);
+        }
+
+        panel.revalidate();
+        panel.repaint();
+    }
+
+ */
 
     //public JFrame getMainFrame(){
     //    return frame;
