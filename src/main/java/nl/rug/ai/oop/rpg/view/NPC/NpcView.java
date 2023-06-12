@@ -53,11 +53,11 @@ public class NpcView {
         //frame.setVisible(true);
     }
 
-    private void setUpNpcs(ArrayList<Npc> npcs, NpcController controller){
+    private void setUpNpcs(ArrayList<Npc> npcs){
 
         for (Npc npc : npcs) {
             NpcButton npcInteractionButton = new NpcButton(npc.getName(), "Intro", npc);
-            npcInteractionButton.addActionListener(controller);
+            npcInteractionButton.addActionListener(cont);
 
             npcInteractionButton.setActionCommand("NPC Introduction"); // Set the action command as the room name
             npcView.add(npcInteractionButton);
@@ -65,6 +65,11 @@ public class NpcView {
 
         npcView.revalidate();
         npcView.repaint();
+    }
+
+    public void updateNpcView(ArrayList<Npc> npcs){
+        npcView.removeAll();
+        setUpNpcs(npcs);
     }
 
     public JPanel returnNpcView(){
@@ -100,7 +105,7 @@ public class NpcView {
         textField.addActionListener(controller);
         cont = controller;
 
-        setUpNpcs(npcs, cont);
+        setUpNpcs(npcs);
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Speech")) {

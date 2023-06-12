@@ -13,7 +13,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Main {
-    /*
     public static void main(String[] args) {
         Player player = Player.getInstance();
 
@@ -33,6 +32,9 @@ public class Main {
         Npc harmen = model.getNpc("Harmen");
         manager.addNpcs("Harmen", harmen, manager.getRoom(0));
 
+        Npc michael = model.getNpc("Michael");
+        manager.addNpcs(michael.getName(), michael, manager.getRoom(1));
+
         // We get the players current room
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
@@ -44,10 +46,12 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
 
+        // Location panel + the npc panel and then we add them to the plane
         JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
 
         gamePanel.setNpcPanel(npcThing);
+        gamePanel.setNpcView(npcPanel);
         npcPanel.setup(model, npcs, npcController, gamePanel, frame);
         //frame.add(npcThing, BorderLayout.NORTH);
         frame.add(locationView, BorderLayout.CENTER); // adds the game panel
@@ -57,6 +61,4 @@ public class Main {
         frame.revalidate();
 
     }
-
-     */
 }

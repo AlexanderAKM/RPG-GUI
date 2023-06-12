@@ -4,6 +4,7 @@ import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
+import nl.rug.ai.oop.rpg.view.NPC.NpcView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +32,8 @@ public class GamePanelGUI {
     private JButton west;
     private JButton south;
 
+    private NpcView npcView;
+
 
     public GamePanelGUI(LocationManager manager, LocationController controller){
         panel = new JPanel();
@@ -53,6 +56,7 @@ public class GamePanelGUI {
         moveRoomsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 createRoomButtons(manager, controller);
+                npcView.updateNpcView(Player.getInstance().getCurrentRoom().getAvailableNpcs());
                 showRoomsPanel();
             }
         });
@@ -107,6 +111,10 @@ public class GamePanelGUI {
     private void setTextLabel(String newText){
         textLabel.setText("Room Description :" + newText);
         gamePanel.revalidate();
+    }
+
+    public void setNpcView(NpcView npcView){
+        this.npcView = npcView;
     }
 
     public void createRoomButtons(LocationManager model, LocationController controller) {
