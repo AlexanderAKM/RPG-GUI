@@ -26,9 +26,12 @@ public class NpcController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object npc = e.getSource();
         switch (e.getActionCommand()) {
-            case "NPC Introduction":
+            case "NPC Interaction":
                 //(Npc)npc
-                model.playInteraction((NpcButton)npc, "Intro");
+                model.npcInteraction((NpcButton)npc, "Interaction");
+                break;
+            case "Battle Answer":
+                model.checkAnswer((NpcButton)npc);
                 break;
             default:
                 // Go through each one

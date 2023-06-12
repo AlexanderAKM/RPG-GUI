@@ -40,11 +40,14 @@ public class Main {
         Npc michael = model.getNpc("Michael");
         manager.addNpcs(michael.getName(), michael, manager.getRoom(1));
 
+        Npc evilMan = model.getNpc("Evil Man");
+        manager.addNpcs(evilMan.getName(), evilMan, manager.getRoom(1));
+
         // We get the players current room
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
-        NpcView npcPanel = new NpcView(model);
+        NpcView npcPanel = new NpcView(model, manager);
         JFrame frame = new JFrame();
 
 
