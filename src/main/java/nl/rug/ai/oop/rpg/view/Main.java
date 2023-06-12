@@ -2,6 +2,7 @@ package nl.rug.ai.oop.rpg.view;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
+import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
@@ -88,6 +89,9 @@ public class Main {
         LocationManager manager = new LocationManager(itemManager);
         LocationController controller = new LocationController(manager);
         GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
+
+        RoomItemsController roomItemsController = new RoomItemsController(inventory, gamePanel, player, manager);
+        gamePanel.setItemListener(roomItemsController);
 
         NpcManager model = new NpcManager();
         NpcController npcController = new NpcController(model);

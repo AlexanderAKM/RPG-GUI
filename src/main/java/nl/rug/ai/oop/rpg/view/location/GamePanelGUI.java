@@ -1,6 +1,6 @@
 package nl.rug.ai.oop.rpg.view.location;
 
-import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
+import nl.rug.ai.oop.rpg.controller.inventory.ItemListener;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
@@ -32,8 +32,12 @@ public class GamePanelGUI {
 
     private NpcView npcView;
 
+    private ItemListener itemListener;
 
-    public GamePanelGUI(LocationManager manager, LocationController controller){ // RoomItemsController itemController
+    public void setItemListener(ItemListener itemListener) {
+        this.itemListener = itemListener;
+    }
+    public GamePanelGUI(LocationManager manager, LocationController controller){
         panel = new JPanel();
         gamePanel = new JPanel(new GridLayout(10, 1, 10, 5));
         gamePanel.setBackground(Color.LIGHT_GRAY);
@@ -44,7 +48,7 @@ public class GamePanelGUI {
         searchItemButton = new JButton("Search for items in the room");
         searchItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                createItemButtons(manager, controller);
+                createItemButtons(manager);
                 showRoomItemPanel();
 
             }
@@ -166,19 +170,32 @@ public class GamePanelGUI {
         panel.repaint();
     }
 
-    public void createItemButtons(LocationManager model, LocationController controller) {
-        roomItemsPanel.removeAll(); // Clear the existing buttons ArrayList<Item>
+    /**
+     * Creates buttons for each available item in the current room.
+     *
+     * @param model the LocationManager object representing the game model
+     * @author Alexander Müller
+     */
+    public void createItemButtons(LocationManager model) {
+        roomItemsPanel.removeAll();
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
             JButton itemButton = new JButton(item.getName());
-            itemButton.addActionListener(controller);
+            itemButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (itemListener != null) {
+                        itemListener.onItemClicked(item);
+                    }
+                }
+            });
 
-            itemButton.setActionCommand("item"); // Set the action command as the room name
+            itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
 
         panel.revalidate();
         panel.repaint();
     }
+
 
 }
