@@ -46,15 +46,15 @@ public class NpcView {
         testButton = new NpcButton("Bob's Introduction", "NPC Introduction", npcManager.allNpcs.get(0));
 
         npcView = new JPanel(new GridLayout(10, 1, 10, 5));
-        npcView.add(backButton);
-        npcView.add(textArea, BorderLayout.CENTER);
         //npcView.add(textField, BorderLayout.PAGE_END);
         //frame.add(centerPanel, BorderLayout.CENTER);
         //frame.setVisible(true);
     }
 
     private void setUpNpcs(ArrayList<Npc> npcs){
-
+        npcView.removeAll();
+        npcView.add(backButton);
+        npcView.add(textArea, BorderLayout.CENTER);
         for (Npc npc : npcs) {
             NpcButton npcInteractionButton = new NpcButton(npc.getName(), "Intro", npc);
             npcInteractionButton.addActionListener(cont);
