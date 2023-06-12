@@ -7,6 +7,7 @@ import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.inventory.items.Alcohol;
 import nl.rug.ai.oop.rpg.model.inventory.items.Books;
 import nl.rug.ai.oop.rpg.model.inventory.items.Coffee;
@@ -83,7 +84,8 @@ public class Main {
         c.gridy = 2;
         frame.add(playerStatsPane, c);
 
-        LocationManager manager = new LocationManager();
+        ItemManager itemManager = new ItemManager();
+        LocationManager manager = new LocationManager(itemManager);
         LocationController controller = new LocationController(manager);
         GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
 
