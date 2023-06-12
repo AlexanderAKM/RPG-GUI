@@ -110,11 +110,6 @@ public class GamePanelGUI {
         for (Room room : model.roomsAvailable(Player.getInstance().getCurrentRoom())) {
             JButton roomButton = new JButton(room.getRoomName());
             roomButton.addActionListener(controller);
-            roomButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
 
             roomButton.setActionCommand(room.getRoomName()); // Set the action command as the room name
             roomsPanel.add(roomButton);

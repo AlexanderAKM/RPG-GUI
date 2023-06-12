@@ -8,16 +8,16 @@ import nl.rug.ai.oop.rpg.model.players.Player;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class LocationManager implements LocationInterface{
+public class LocationManager implements LocationInterface, Serializable {
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
 
     private ItemManager manager;
     ArrayList<PropertyChangeListener> listeners;
-    //public Player player;
 
     public LocationManager(ItemManager manager){
         this.manager = manager;
@@ -34,7 +34,7 @@ public class LocationManager implements LocationInterface{
     @Override
     public void locationSetUp() {
         ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
-        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student-Card");
+        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student-Card","Money");
         ArrayList<Item> bbItems = manager.getItemsForRoom("Books","Pen");
         ArrayList<Item> canteenItems = manager.getItemsForRoom("Coffee");
         ArrayList<Item> outsideItems = manager.getItemsForRoom("Money", "Money");
@@ -130,6 +130,11 @@ public class LocationManager implements LocationInterface{
     @Override
     public ArrayList<Npc> getNpcList(Room currentRoom) {
         return Player.getInstance().getCurrentRoom().getAvailableNpcs();
+    }
+
+    @Override
+    public void unlockRoom(Room specificRoom) {
+        specificRoom.setIsLocked(false);
     }
 
 }

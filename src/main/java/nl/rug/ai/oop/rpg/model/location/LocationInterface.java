@@ -72,4 +72,6 @@ public interface LocationInterface {
      */
     public ArrayList<Npc> getNpcList(Room currentRoom);
 
+    public void unlockRoom(Room specificRoom);
+
 }

@@ -3,18 +3,40 @@ package nl.rug.ai.oop.rpg.model.location;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * A class that  defines locations within the game
  */
-public class Room {
+public class Room implements Serializable {
     private String roomName;
     private String roomDescription;
     private int n, e, s, w;
     private ArrayList<Item> availableItems;
     private ArrayList<Npc> availableNpcs;
     private boolean isLocked;
+
+    /**
+     * A constructor for a room (location).
+     * @param name The name of the room.
+     * @param description The description of the room.
+     * @param n North direction.
+     * @param e East direction.
+     * @param s South direction.
+     * @param w West direction.
+     */
+    public Room(String name, String description, int n, int e, int s, int w, boolean status, ArrayList<Item> items) { //,
+        availableNpcs = new ArrayList<Npc>();
+        this.setName(name);
+        this.setDescription(description);
+        this.setNorth(n);
+        this.setEast(e);
+        this.setSouth(s);
+        this.setWest(w);
+        this.setIsLocked(status);
+        this.availableItems = items;
+    }
 
     /**
      * setter for the location name.
@@ -117,26 +139,5 @@ public class Room {
 
     public ArrayList<Npc> getAvailableNpcs(){
         return availableNpcs;
-    }
-    /**
-     * A constructor for a room (location).
-     * @param name The name of the room.
-     * @param description The description of the room.
-     * @param n North direction.
-     * @param e East direction.
-     * @param s South direction.
-     * @param w West direction.
-     */
-    public Room(String name, String description, int n, int e, int s, int w, boolean status, ArrayList<Item> items) { //,
-        availableNpcs = new ArrayList<Npc>();
-        this.setName(name);
-        this.setDescription(description);
-        this.setNorth(n);
-        this.setEast(e);
-        this.setSouth(s);
-        this.setWest(w);
-        this.setIsLocked(status);
-        this.availableItems = items;
-
     }
 }
