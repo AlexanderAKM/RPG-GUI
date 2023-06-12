@@ -142,14 +142,6 @@ public class NpcView {
         return npcView;
     }
 
-    private void processCommand(String command) {
-        // Check if NPC is in this room with the help of @Vic
-        if(Objects.equals(command, "Bob")){
-            //cont.actionPerformed(new ActionEvent(testButton, 0, "NPC Introduction"));
-        }
-        //textArea.append("You entered: " + command + "\n");
-    }
-
     private  void outputSpeech(String command){
         textArea.append(command + "\n");
     }
@@ -197,10 +189,11 @@ public class NpcView {
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Correct")) {
-                setUpNpcs(npcs, (String)evt.getOldValue());
+
                 NpcInitiatedInteractions interaction = (NpcInitiatedInteractions)evt.getNewValue();
                 Npc source = interaction.getNpcSource();
                 locationManager.removeNpcs("", source, player.getCurrentRoom());
+                setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String)evt.getOldValue());
             }
         });
     }

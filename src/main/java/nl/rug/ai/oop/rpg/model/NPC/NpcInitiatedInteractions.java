@@ -6,10 +6,10 @@ public class NpcInitiatedInteractions {
 
     public enum InteractionFunction {
         BATTLE,
-        GIFT,
+        SHOP,
         SOCIALISE,
         INTRODUCTION,
-        WORLDCHANGE
+        UNLOCK
     }
 
     String interactionName;

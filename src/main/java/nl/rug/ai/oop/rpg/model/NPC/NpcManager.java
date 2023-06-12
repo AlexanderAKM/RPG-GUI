@@ -117,10 +117,12 @@ public class NpcManager {
         // Check if it was the correct answer
         if(Objects.equals(target.getText(), battleQuestions.correctAnswer)){
             // Yes correct answer, appropriate effects
+            // Reduce NPC stats
             PropertyChangeEvent payload = new PropertyChangeEvent(this, "Correct", battleQuestions.getVictoryText(), interaction);
             notifyListeners(payload);
         } else {
             // Wrong answer appropriate effects
+            // Idk reduce player stats
             PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, battleQuestions.getLosingText());
             notifyListeners(payload);
         }
