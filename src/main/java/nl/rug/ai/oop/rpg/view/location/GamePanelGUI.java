@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.view.location;
 
+import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
@@ -32,7 +33,7 @@ public class GamePanelGUI {
     private NpcView npcView;
 
 
-    public GamePanelGUI(LocationManager manager, LocationController controller){
+    public GamePanelGUI(LocationManager manager, LocationController controller){ // RoomItemsController itemController
         panel = new JPanel();
         gamePanel = new JPanel(new GridLayout(10, 1, 10, 5));
         gamePanel.setBackground(Color.LIGHT_GRAY);

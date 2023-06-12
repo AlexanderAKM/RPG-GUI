@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.model.location;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
+import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
@@ -18,10 +19,11 @@ public class Main {
     public static void main(String[] args) {
         Player player = Player.getInstance();
         Inventory inventory = new Inventory();
+        //RoomItemsController itemController = new RoomItemsController(inventory, gamePanelGUI, player);
         ItemManager itemManager = new ItemManager();
         LocationManager manager = new LocationManager(itemManager);
         LocationController controller = new LocationController(manager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
+        //GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, itemController);
 
         NpcManager model = new NpcManager();
         NpcController npcController = new NpcController(model);
