@@ -23,7 +23,7 @@ public class Main {
         ItemManager itemManager = new ItemManager();
         LocationManager manager = new LocationManager(itemManager);
         LocationController controller = new LocationController(manager);
-        //GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, itemController);
+        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
 
         NpcManager model = new NpcManager();
         NpcController npcController = new NpcController(model);
