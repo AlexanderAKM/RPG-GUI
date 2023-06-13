@@ -10,12 +10,17 @@ import java.util.ArrayList;
  * A class that  defines locations within the game
  */
 public class Room implements Serializable {
-    private String roomName;
-    private String roomDescription;
-    private int n, e, s, w;
+    String roomName;
+    String roomDescription;
+    int n;
+    int e;
+    int s;
+    int w;
     private ArrayList<Item> availableItems;
     private ArrayList<Npc> availableNpcs;
-    private boolean isLocked;
+    boolean isLocked;
+    Item requiredItem;
+
 
     /**
      * A constructor for a room (location).
@@ -26,6 +31,7 @@ public class Room implements Serializable {
      * @param s South direction.
      * @param w West direction.
      */
+    /*
     public Room(String name, String description, int n, int e, int s, int w, boolean status, ArrayList<Item> items) { //,
         availableNpcs = new ArrayList<Npc>();
         this.setName(name);
@@ -36,6 +42,11 @@ public class Room implements Serializable {
         this.setWest(w);
         this.setIsLocked(status);
         this.availableItems = items;
+    }
+    */
+    Room() {
+        availableNpcs = new ArrayList<Npc>();
+        availableItems = new ArrayList<Item>();
     }
 
     /**
@@ -139,5 +150,17 @@ public class Room implements Serializable {
 
     public ArrayList<Npc> getAvailableNpcs(){
         return availableNpcs;
+    }
+
+    public Item getRequiredItem() {
+        return requiredItem;
+    }
+
+    public void setRequiredItem(Item item){
+        this.requiredItem = item;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        availableItems.addAll(items);
     }
 }

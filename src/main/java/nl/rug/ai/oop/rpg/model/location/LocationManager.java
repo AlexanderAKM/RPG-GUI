@@ -31,6 +31,100 @@ public class LocationManager implements LocationInterface, Serializable {
         return map.get(index);
     }
 
+    public void locationSetUp() {
+        ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
+        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student-Card","Money");
+        ArrayList<Item> bbItems = manager.getItemsForRoom("Books","Pen");
+        ArrayList<Item> canteenItems = manager.getItemsForRoom("Coffee");
+        ArrayList<Item> outsideItems = manager.getItemsForRoom("Money", "Money");
+        ArrayList<Item> examHallItems = manager.getItemsForRoom("Books");
+
+
+        Room home = new RoomBuilder()
+                .setName("Home")
+                .setDescription("The room you live in.")
+                .setNorth(1)
+                .setEast(-1)
+                .setSouth(-1)
+                .setWest(-1)
+                .setIsLocked(false)
+                .addAvailableItems(homeItems)
+                //.setRequiredItem()
+                .build();
+
+        Room outside = new RoomBuilder()
+                .setName("Outside")
+                .setDescription("The outdoors. Nothing more I can say..")
+                .setNorth(3)
+                .setEast(-1)
+                .setSouth(0)
+                .setWest(2)
+                .setIsLocked(false)
+                .addAvailableItems(outsideItems)
+                //.setRequiredItem()
+                .build();
+
+        Room examHall = new RoomBuilder()
+                .setName("Aletta Jacobs Hall")
+                .setDescription("The outdoors. Nothing more I can say..")
+                .setNorth(-1)
+                .setEast(1)
+                .setSouth(-1)
+                .setWest(-1)
+                .setIsLocked(false)
+                .addAvailableItems(examHallItems)
+                //.setRequiredItem()
+                .build();
+
+        Room bb = new RoomBuilder()
+                .setName("Bernoulliborg")
+                .setDescription("The room you live in.")
+                .setNorth(5)
+                .setEast(-1)
+                .setSouth(1)
+                .setWest(4)
+                .setIsLocked(false)
+                .addAvailableItems(bbItems)
+                //.setRequiredItem()
+                .build();
+
+        Room canteen = new RoomBuilder()
+                .setName("The BB canteen")
+                .setDescription("The room you live in.")
+                .setNorth(3)
+                .setEast(-1)
+                .setSouth(-1)
+                .setWest(2)
+                .setIsLocked(false)
+                .addAvailableItems(canteenItems)
+                //.setRequiredItem()
+                .build();
+
+        Room coverRoom = new RoomBuilder()
+                .setName("Cover room")
+                .setDescription("Study association room for AI students and CS students")
+                .setNorth(-1)
+                .setEast(-1)
+                .setSouth(3)
+                .setWest(-1)
+                .setIsLocked(false)
+                .addAvailableItems(coverItems)
+                //.setRequiredItem()
+                .build();
+
+
+
+        Player.getInstance().setCurrentRoom(home);
+
+        map.add(home); // the order of rooms
+        map.add(outside);
+        map.add(examHall);
+        map.add(bb);
+        map.add(canteen);
+        map.add(coverRoom);
+
+    }
+    /*
     @Override
     public void locationSetUp() {
         ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
@@ -57,6 +151,8 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Player.getInstance().setCurrentRoom(home);
     }
+
+     */
 
     @Override
     public void addNpcs(String npcName, Npc npc, Room room) {
@@ -110,6 +206,33 @@ public class LocationManager implements LocationInterface, Serializable {
 
     @Override
     public void movePlayer(int chosenRoom) {
+        //Room currentRoom = Player.getInstance().getCurrentRoom();
+        Room destinationRoom = getRoom(chosenRoom);
+
+        if (destinationRoom.getIsLocked() && destinationRoom.getRequiredItem() != null) {
+            if (Player.getInstance().getInventory().containsItem(destinationRoom.getRequiredItem())) {
+                // The player has the required item, allow them to move
+                Player.getInstance().setCurrentRoom(destinationRoom);
+                PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
+                notifyListeners(payload);
+                System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
+                System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
+            } else {
+                // The player doesn't have the required item, they cannot move
+                System.out.println("You need a " + destinationRoom.getRequiredItem().getName() + " to enter this room.");
+            }
+        } else {
+            // The destination room is not locked or doesn't require a specific item, allow the player to move
+            Player.getInstance().setCurrentRoom(destinationRoom);
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
+            notifyListeners(payload);
+            System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
+            System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
+        }
+    }
+/*
+    @Override
+    public void movePlayer(int chosenRoom) {
         //int nextRoom = Player.getInstance().getCurrentRoom().getDirection(direction);
         if (getRoom(chosenRoom).getIsLocked()){
             System.out.println("Cannot go there");
@@ -121,6 +244,8 @@ public class LocationManager implements LocationInterface, Serializable {
         System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
         System.out.println("description : " + Player.getInstance().getCurrentRoom().getRoomDescription());
     }
+
+ */
 
     @Override
     public ArrayList<Item> getAvailableItemsList(Room currentRoom) {
