@@ -3,10 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
-import nl.rug.ai.oop.rpg.model.NPC.BattleEvent;
-import nl.rug.ai.oop.rpg.model.NPC.BattleQuestions;
-import nl.rug.ai.oop.rpg.model.NPC.Npc;
-import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
+import nl.rug.ai.oop.rpg.model.NPC.*;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
@@ -134,6 +131,22 @@ public class NpcView {
         npcView.repaint();
     }
 
+    private void setupWorldEvent(String speech, int condition, boolean isFinalInteraction, WorldEvent worldEvent){
+        npcView.removeAll();
+        //textArea.setText("");
+        npcView.add(textArea, BorderLayout.CENTER);
+        textArea.append(speech);
+
+        NpcButton interactionButton = new NpcButton(Integer.toString(condition), worldEvent.getName(), worldEvent.getNpcSource());
+        interactionButton.addActionListener(cont);
+        interactionButton.setActionCommand("Continue World Event");
+
+        npcView.add(interactionButton);
+
+        npcView.revalidate();
+        npcView.repaint();
+    }
+
     public void updateNpcView(ArrayList<Npc> npcs){
         npcView.removeAll();
         setUpNpcs(npcs);
@@ -154,11 +167,7 @@ public class NpcView {
        backButton.addActionListener(new ActionListener() {
            @Override
                public void actionPerformed(ActionEvent e) {
-                   //npcView.removeAll();
-                   //npcView.revalidate();
-                   //npcView.repaint();
                    home.showGamePanel();
-                   //frame.add(home);
                }
            });
 
@@ -193,11 +202,18 @@ public class NpcView {
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Correct")) {
-
                 BattleEvent interaction = (BattleEvent)evt.getNewValue();
                 Npc source = interaction.getNpcSource();
                 locationManager.removeNpcs("", source, player.getCurrentRoom());
                 setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String)evt.getOldValue());
+            }
+        });
+
+        model.addListener(evt -> {
+            if (Objects.equals(evt.getPropertyName(), "World Event")) {
+                WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
+                String speech = (String)evt.getOldValue();
+                setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
             }
         });
     }

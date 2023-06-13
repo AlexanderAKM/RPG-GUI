@@ -12,9 +12,4 @@ public class BattleEvent extends Events {
         return battleQuestions;
     }
 
-    /*public String doInteraction(){
-        this.battleInteraction();
-
-        return speechText;
-    }*/
 }

@@ -6,6 +6,10 @@ public class WorldEvent extends Events{
     }
     String speechText;
 
+    private int condition;
+
+    private boolean hasFinishedEventChain;
+
     public WorldEvent(String interactionName, Npc npcSource, effectOnWorld effect, String speechText, BattleQuestions battleQuestions, Events.EventType eventType){
         super(interactionName,npcSource, EventType.WORLD_EVENT, speechText);
 
@@ -17,7 +21,23 @@ public class WorldEvent extends Events{
     }
 
     public void unlockRoom(){
+        // unlockRoom
+    }
 
+    public void setHasFinishedEventChain(boolean value){
+        hasFinishedEventChain = value;
+    }
+
+    public boolean gethasFinishedEventChain(){
+        return hasFinishedEventChain;
+    }
+
+    public void setCondition(int value){
+        condition = value;
+    }
+
+    public int getCondition(){
+        return condition;
     }
 
 }
