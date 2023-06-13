@@ -63,13 +63,6 @@ public class NpcManager {
                 .setNpcSource(EvilMan)
                 .setSpeechText("Death be upon you! \n");
 
-
-
-
-
-        //EvilMan.inititateBattle("EvilBattle", "Death be upon you", NpcInitiatedInteractions.InteractionFunction.BATTLE, "What is the best study association?", answers, "Cover", "Damn you got it right.", "Damn I got it wrong.");
-
-
         allNpcs.add(Bob);
         allNpcs.add(Harmen);
         allNpcs.add(Michael);
