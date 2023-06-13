@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
 import javax.swing.*;
@@ -50,7 +51,7 @@ public class NpcManager {
                 .setInteractionName("interactionName")
                 .setNpcSource(humanMan)
                 .setSpeechText("speechText");
-        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK);
+        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK, 20, "Great", "Bad");
         humanMan.setEvent(worldEvent);
         humanMan.setNpcWorldEvents(worldEvent);
 
@@ -133,5 +134,21 @@ public class NpcManager {
             notifyListeners(payload);
         }
 
+    }
+
+    public void checkWorldEventCondition(NpcButton target){
+        Npc npc = target.getNpc();
+        Events event = npc.findNpcEvent();
+        WorldEvent worldEvent = npc.getWorldEvent(event.getName());
+
+        Player player = Player.getInstance();
+        if(player.getMoney() >= worldEvent.getCondition()){
+            worldEvent.unlockRoom();
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, worldEvent.getSuccessText());
+            notifyListeners(payload);
+        } else {
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, worldEvent.getFailText());
+            notifyListeners(payload);
+        }
     }
 }

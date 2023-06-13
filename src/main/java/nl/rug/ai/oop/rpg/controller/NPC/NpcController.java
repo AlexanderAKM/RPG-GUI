@@ -33,6 +33,9 @@ public class NpcController implements ActionListener {
             case "Battle Answer":
                 model.checkAnswer((NpcButton)npc);
                 break;
+            case "Continue World Event":
+                model.checkWorldEventCondition((NpcButton)npc);
+                break;
             default:
                 // Go through each one
                 /**for(Npc computer : model.allNpcs){

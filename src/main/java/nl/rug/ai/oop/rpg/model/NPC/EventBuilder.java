@@ -2,6 +2,8 @@ package nl.rug.ai.oop.rpg.model.NPC;
 
 public class EventBuilder {
     private String interactionName;
+
+    private int condition;
     private Npc npcSource;
     //private Npc.eventType function;
     private String speechText;
@@ -36,8 +38,10 @@ public class EventBuilder {
         return new BattleEvent(interactionName, npcSource, speechText, battleQuestions);
     }
 
-    public WorldEvent buildWorldEvent(WorldEvent.effectOnWorld effect) {
-        WorldEvent event = new WorldEvent(interactionName, npcSource, effect, speechText, battleQuestions, Events.EventType.WORLD_EVENT);
+
+
+    public WorldEvent buildWorldEvent(WorldEvent.effectOnWorld effect, int condition, String successText, String failText) {
+        WorldEvent event = new WorldEvent(interactionName, npcSource, effect, speechText,condition, Events.EventType.WORLD_EVENT, successText, failText);
         switch (effect) {
             case UNLOCK:
                 //event.unlockRoom();

@@ -138,6 +138,7 @@ public class NpcView {
         textArea.append(speech);
 
         NpcButton interactionButton = new NpcButton(Integer.toString(condition), worldEvent.getName(), worldEvent.getNpcSource());
+        // If statement here
         interactionButton.addActionListener(cont);
         interactionButton.setActionCommand("Continue World Event");
 
