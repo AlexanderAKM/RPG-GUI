@@ -95,7 +95,7 @@ public class Beginning {
                 Player player = Player.getInstance();
                 player.setLanguage(language);
                 player.chooseProgramme(studentType);
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
                 callback.run();
             }
