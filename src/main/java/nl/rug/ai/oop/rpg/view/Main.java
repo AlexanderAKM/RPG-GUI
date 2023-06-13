@@ -42,10 +42,10 @@ public class Main {
 
     /**
      * @author Alexander Müller & Robert Hielkema
-     * @param args
+     * @param
      */
 
-    public static void main(String[] args) {
+    public void start() {
         // Create a player
         Player player = Player.getInstance();
 
@@ -147,6 +147,11 @@ public class Main {
         frame.setVisible(true);
     }
 
+    public static void main(String[] args) {
+        // for testing purposes only
+        new Main().start();
+    }
+
 
     /**
      * @author RobertHielkema
@@ -175,47 +180,15 @@ public class Main {
         frame.revalidate();
     }
 
-    /*
-    // the gamepanel
-    public void gamePanelSetUp(JFrame frame) {
-        LocationManager manager = new LocationManager();
-        LocationController controller = new LocationController(manager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
-
-        NpcManager model = new NpcManager();
-        NpcController npcController = new NpcController(model);
-
-        // Test
-        Npc bob = model.getNpc("Bob");
-        manager.addNpcs("Bob", bob, manager.getRoom(0));
-
-        Npc harmen = model.getNpc("Harmen");
-        manager.addNpcs("Harmen", harmen, manager.getRoom(0));
-
-        // We get the players current room
-        Room currentRoom = player.getCurrentRoom();
-        ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
-
-        NpcView npcPanel = new NpcView(model);
-        //JFrame frame = new JFrame();
-
-
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(500, 500);
-
-        JPanel npcThing = npcPanel.returnNpcView();
-        JPanel locationView = gamePanel.returnLocationView();
-
-        gamePanel.setNpcPanel(npcThing);
-        npcPanel.setup(model, npcs, npcController, gamePanel, frame);
-        //frame.add(npcThing, BorderLayout.NORTH);
-        frame.add(locationView, BorderLayout.CENTER); // adds the game panel
-        //frame.setVisible(true);
-
-        //gamePanel.frameSetUp();
-        frame.revalidate();
+    public void saveGame(LocationManager locManager) {
+        RoomStateManager.saveRoomState(locManager, "room_state.ser");
+        Player.getInstance().save("player");
     }
 
-     */
+    public void loadSavedGame(LocationManager locManager){
+        Player.getInstance().loadSaveFile("player");
+        locManager = RoomStateManager.loadRoomState("room_state.ser");
+    }
+
 
 }
