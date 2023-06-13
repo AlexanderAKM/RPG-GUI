@@ -16,10 +16,11 @@ public class NpcManager {
 
     // Fix this, shouldn't be public, should be encapsulated
     public ArrayList<Npc> allNpcs;
+    private LocationManager locationManager;
 
-    public NpcManager() {
+    public NpcManager(LocationManager locationManager) {
         allNpcs  = new ArrayList<Npc>();
-
+        this.locationManager = locationManager;
         initialiseNpcs();
     }
 
@@ -50,8 +51,8 @@ public class NpcManager {
         EventBuilder eventBuilder = new EventBuilder()
                 .setInteractionName("interactionName")
                 .setNpcSource(humanMan)
-                .setSpeechText("speechText");
-        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK, 20, "Great", "Bad");
+                .setSpeechText("Hey kiddo. Want a cover membership? \n Psst, of course you do! Who doesn't. Well you got to pay up!");
+        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK, 20, "Great", "Bad", locationManager);
         humanMan.setEvent(worldEvent);
         humanMan.setNpcWorldEvents(worldEvent);
 
@@ -144,10 +145,12 @@ public class NpcManager {
         Player player = Player.getInstance();
         if(player.getMoney() >= worldEvent.getCondition()){
             worldEvent.unlockRoom();
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, worldEvent.getSuccessText());
+            player.changeMoney(-20);
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Accepted", worldEvent.getSuccessText(), worldEvent);
+            worldEvent.setHasFinishedEventChain(false);
             notifyListeners(payload);
         } else {
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, worldEvent.getFailText());
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Declined", worldEvent.getFailText(), worldEvent);
             notifyListeners(payload);
         }
     }

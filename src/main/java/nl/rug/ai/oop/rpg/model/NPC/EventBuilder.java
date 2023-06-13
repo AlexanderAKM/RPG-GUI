@@ -1,5 +1,7 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
+import nl.rug.ai.oop.rpg.model.location.LocationManager;
+
 public class EventBuilder {
     private String interactionName;
 
@@ -40,8 +42,8 @@ public class EventBuilder {
 
 
 
-    public WorldEvent buildWorldEvent(WorldEvent.effectOnWorld effect, int condition, String successText, String failText) {
-        WorldEvent event = new WorldEvent(interactionName, npcSource, effect, speechText,condition, Events.EventType.WORLD_EVENT, successText, failText);
+    public WorldEvent buildWorldEvent(WorldEvent.effectOnWorld effect, int condition, String successText, String failText, LocationManager locationManager) {
+        WorldEvent event = new WorldEvent(interactionName, npcSource, effect, speechText,condition, Events.EventType.WORLD_EVENT, successText, failText, locationManager);
         switch (effect) {
             case UNLOCK:
                 //event.unlockRoom();

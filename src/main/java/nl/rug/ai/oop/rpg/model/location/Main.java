@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Player player = Player.getInstance();
+        /*Player player = Player.getInstance();
         Inventory inventory = new Inventory();
         //RoomItemsController itemController = new RoomItemsController(inventory, gamePanelGUI, player);
         ItemManager itemManager = new ItemManager();
@@ -47,7 +47,7 @@ public class Main {
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
-        NpcView npcPanel = new NpcView(model, manager);
+        //NpcView npcPanel = new NpcView(model, manager, );
         JFrame frame = new JFrame();
 
 
@@ -55,7 +55,7 @@ public class Main {
         frame.setSize(500, 500);
 
         // Location panel + the npc panel and then we add them to the plane
-        JPanel npcThing = npcPanel.returnNpcView();
+        //JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
 
         gamePanel.setNpcPanel(npcThing);
@@ -66,6 +66,6 @@ public class Main {
         frame.setVisible(true);
 
         frame.revalidate();
-
+*/
     }
 }

@@ -8,6 +8,7 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
+import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +25,12 @@ public class NpcView {
 
     private LocationManager locationManager;
 
+    private PlayerStatsPane playerStatsPane;
+
     // Temp
     NpcController cont;
 
-    public NpcView(NpcManager npcManager, LocationManager locationManager) {
+    public NpcView(NpcManager npcManager, LocationManager locationManager, PlayerStatsPane playerStatsPane) {
 
         /*JFrame frame = new JFrame("Test");
         frame.setSize(500, 500);
@@ -134,6 +137,7 @@ public class NpcView {
     private void setupWorldEvent(String speech, int condition, boolean isFinalInteraction, WorldEvent worldEvent){
         npcView.removeAll();
         //textArea.setText("");
+        npcView.add(backButton);
         npcView.add(textArea, BorderLayout.CENTER);
         textArea.append(speech);
 
@@ -215,6 +219,23 @@ public class NpcView {
                 WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
                 String speech = (String)evt.getOldValue();
                 setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
+            }
+        });
+
+        model.addListener(evt -> {
+            if (Objects.equals(evt.getPropertyName(), "Accepted")) {
+                WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
+                String speech = (String)evt.getOldValue();
+                setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), worldEvent.getSuccessText());
+            }
+        });
+
+        model.addListener(evt -> {
+            if (Objects.equals(evt.getPropertyName(), "Declined")) {
+                WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
+                String speech = (String)evt.getOldValue();
+                setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
+                setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String) evt.getOldValue());
             }
         });
     }

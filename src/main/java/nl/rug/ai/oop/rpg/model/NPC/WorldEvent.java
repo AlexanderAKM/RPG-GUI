@@ -1,5 +1,7 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
+import nl.rug.ai.oop.rpg.model.location.LocationManager;
+
 public class WorldEvent extends Events{
     public enum effectOnWorld {
         UNLOCK
@@ -9,15 +11,19 @@ public class WorldEvent extends Events{
     private int condition;
 
     private String successText;
+
     private String failText;
     private boolean hasFinishedEventChain;
 
-    public WorldEvent(String interactionName, Npc npcSource, effectOnWorld effect, String speechText, int condition, Events.EventType eventType, String successText, String failText){
+    private LocationManager locationManager;
+
+    public WorldEvent(String interactionName, Npc npcSource, effectOnWorld effect, String speechText, int condition, Events.EventType eventType, String successText, String failText, LocationManager locationManager){
         super(interactionName,npcSource, EventType.WORLD_EVENT, speechText);
         hasFinishedEventChain = false;
         this.condition = condition;
         this.successText = successText;
         this.failText = failText;
+        this.locationManager = locationManager;
 
         switch (effect){
             case UNLOCK:
@@ -35,7 +41,7 @@ public class WorldEvent extends Events{
     }
 
     public void unlockRoom(){
-        // unlockRoom
+        locationManager.unlockRoom(locationManager.getRoom(5));
     }
 
     public void setHasFinishedEventChain(boolean value){
