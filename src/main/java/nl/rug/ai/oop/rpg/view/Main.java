@@ -50,14 +50,7 @@ public class Main {
         Player player = Player.getInstance();
 
         // Create an inventory and add some items
-        Inventory inventory = new Inventory();
-        inventory.addItem(new Alcohol(5, 10));
-        inventory.addItem(new Books(10, 5));
-        inventory.addItem(new Coffee(5, 5));
-        inventory.addItem(new Money(100));
-
-
-
+        Inventory inventory = player.getInventory();
 
         // Create the inventory view and controller
         InventoryView inventoryView = new InventoryView(inventory);
