@@ -60,12 +60,7 @@ public class GamePanelGUI {
 
             }
         });
-        backButton = new JButton("Go Back");
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showGamePanel();
-            }
-        });
+
 
         interactNpcButton = new JButton("Interact with NPCs in the room");
         interactNpcButton.addActionListener(new ActionListener() {
@@ -201,6 +196,7 @@ public class GamePanelGUI {
             itemButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (itemListener != null) {
+                        showGamePanel();
                         itemListener.onItemClicked(item);
                     }
                 }
