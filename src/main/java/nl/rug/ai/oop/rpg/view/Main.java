@@ -153,33 +153,6 @@ public class Main {
     }
 
 
-    /**
-     * @author RobertHielkema
-     */
-    public void loadOrNewGame(JFrame frame){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        JButton newGame = new JButton("New Game");
-        newGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //go to panel to create game with choice of language and player course
-            }
-        });
-        JButton loadGame = new JButton("Load from savefile");
-        loadGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //go to panel to load game
-            }
-        });
-
-        panel.add(newGame);
-        panel.add(loadGame);
-        frame.add(panel);
-        frame.revalidate();
-    }
-
     public void saveGame(LocationManager locManager) {
         RoomStateManager.saveRoomState(locManager, "room_state.ser");
         Player.getInstance().save("player");
