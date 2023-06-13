@@ -15,6 +15,7 @@ import nl.rug.ai.oop.rpg.model.inventory.items.Coffee;
 import nl.rug.ai.oop.rpg.model.inventory.items.Money;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
+import nl.rug.ai.oop.rpg.model.location.RoomStateManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.model.players.SaveFiles;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
@@ -167,6 +168,7 @@ public class Main {
                 //go to panel to load game
             }
         });
+
         panel.add(newGame);
         panel.add(loadGame);
         frame.add(panel);
