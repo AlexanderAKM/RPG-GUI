@@ -196,8 +196,8 @@ public class GamePanelGUI {
             itemButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (itemListener != null) {
-                        showGamePanel();
                         itemListener.onItemClicked(item);
+                        showGamePanel();
                     }
                 }
             });
@@ -205,7 +205,7 @@ public class GamePanelGUI {
             roomItemsPanel.add(itemButton);
         }
         
-        roomItemsPanel.add(backButton);
+        //roomItemsPanel.add(backButton);
         panel.revalidate();
         panel.repaint();
     }
