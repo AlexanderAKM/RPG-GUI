@@ -213,7 +213,7 @@ public class NpcView {
             if (Objects.equals(evt.getPropertyName(), "World Event")) {
                 WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
                 String speech = (String)evt.getOldValue();
-                setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEvent(), worldEvent);
+                setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
             }
         });
     }
