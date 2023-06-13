@@ -15,7 +15,6 @@ public class NpcManager {
 
     // Fix this, shouldn't be public, should be encapsulated
     public ArrayList<Npc> allNpcs;
-    //public ArrayList<Npc>
 
     public NpcManager() {
         allNpcs  = new ArrayList<Npc>();
@@ -41,23 +40,34 @@ public class NpcManager {
         answers.add("2");
         answers.add("3");
 
-        Enemy Bob = new Enemy("Bob", 90,90,90,90);
-        Enemy Harmen = new Enemy("Harmen", 90,90,90,90);
-        Enemy Michael = new Enemy("Michael", 2, 2, 2, 2);
-        Enemy EvilMan = new Enemy("Evil Man", 2, 2, 2, 2);
+        Npc Bob = new Npc("Bob", 90);
+        Npc Harmen = new Npc("Harmen", 90);
+        Npc Michael = new Npc("Michael",2);
 
-        Bob.inititateInteraction("Intro","Hehehehe I am the amazing " + Bob.getName() + ".\n Be scared. \n", NpcInitiatedInteractions.InteractionFunction.INTRODUCTION);
-        Harmen.inititateInteraction("Intro","Yo yo yo yo I am the amazing " + Harmen.getName() + ".\n Be scared. \n", NpcInitiatedInteractions.InteractionFunction.INTRODUCTION);
-        Michael.inititateInteraction("Intro", "I am " + Michael.getName() + "\n Yes?", NpcInitiatedInteractions.InteractionFunction.INTRODUCTION);
+        Npc humanMan = new Npc("Human man", 2);
 
-        EvilMan.inititateBattle("EvilBattle", "Death be upon you", NpcInitiatedInteractions.InteractionFunction.BATTLE, "What is the best study association?", answers, "Cover", "Damn you got it right.", "Damn I got it wrong.");
+        EventBuilder eventBuilder = new EventBuilder()
+                .setInteractionName("interactionName")
+                .setNpcSource(humanMan)
+                .setSpeechText("speechText");
+
+        BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
+        BattleEvent worldEvent = eventBuilder.buildBattleEvent(coverQuestion);
+        humanMan.setEvent(worldEvent);
+        humanMan.setNpcBattleEvents(worldEvent);
 
 
+        Npc EvilMan = new Npc("Evil Man", 2);
+        EventBuilder coverBattle = new EventBuilder()
+                .setInteractionName("EvilBattle")
+                .setNpcSource(EvilMan)
+                .setSpeechText("Death be upon you! \n");
 
         allNpcs.add(Bob);
         allNpcs.add(Harmen);
         allNpcs.add(Michael);
         allNpcs.add(EvilMan);
+        allNpcs.add(humanMan);
     }
 
     public Npc getNpc(String npcName){
@@ -74,51 +84,41 @@ public class NpcManager {
 
     public void npcInteraction(NpcButton target, String interactionName){
         Npc npc = target.getNpc();
-        NpcInitiatedInteractions interaction = npc.findNpcInteraction();
-        switch (interaction.getInteractionFunction()) {
+        Events event = npc.findNpcEvent();
+
+
+        switch (event.getEventType()) {
             case BATTLE:
-                playBattle(target, interaction);
+                ArrayList<String> answers = new ArrayList<String>();
+                BattleEvent battleEvent = npc.getNpcBattleEvents(event.getName());
+                BattleQuestions battleQuestions = battleEvent.getBattleQuestions();
+
+                answers = battleQuestions.getAnswers();
+
+                String speech = event.getSpeechText() + "\n" + battleQuestions.getQuestion();
+                PropertyChangeEvent payload = new PropertyChangeEvent(this, "Battle", speech, battleEvent);
+                notifyListeners(payload);
                 break;
             case INTRODUCTION:
-                playInteraction(target, interaction);
+                //playInteraction(target, interaction);
                 break;
         }
     }
 
-    public void playInteraction(NpcButton target, NpcInitiatedInteractions interaction){
-        // Change this to actually return a string
-        Npc npc = target.getNpc();
-        //NpcInitiatedInteractions interaction = npc.findNpcInteraction(interactionName);
-        String speech = interaction.returnSpeechText();
-
-        PropertyChangeEvent payload = new PropertyChangeEvent(this, "Speech", null, speech);
-        notifyListeners(payload);
-    }
-
-    public void playBattle(NpcButton target, NpcInitiatedInteractions interaction){
-        Npc npc = target.getNpc();
-        //NpcInitiatedInteractions interaction = npc.findNpcInteraction(interactionName);
-
-        ArrayList<String> answers = new ArrayList<String>();
-        answers = interaction.returnPayload();
-
-        String speech = interaction.returnSpeechText() + "\n" + interaction.returnBattleQuestions().getQuestion();
-
-        PropertyChangeEvent payload = new PropertyChangeEvent(this, "Battle", speech, interaction);
-        notifyListeners(payload);
-    }
-
     public void checkAnswer(NpcButton target){
         Npc npc = target.getNpc();
-        String interactionName = target.getInteractionName();
+        Events event = npc.findNpcEvent();
 
-        NpcInitiatedInteractions interaction = npc.findNpcInteraction();
-        BattleQuestions battleQuestions = interaction.returnBattleQuestions();
+        BattleEvent battleEvent = npc.getNpcBattleEvents(event.getName());
+        BattleQuestions battleQuestions = battleEvent.getBattleQuestions();
+
+        ArrayList<String> answers = battleQuestions.getAnswers();
+
         // Check if it was the correct answer
         if(Objects.equals(target.getText(), battleQuestions.correctAnswer)){
             // Yes correct answer, appropriate effects
             // Reduce NPC stats
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Correct", battleQuestions.getVictoryText(), interaction);
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Correct", battleQuestions.getVictoryText(), battleEvent);
             notifyListeners(payload);
         } else {
             // Wrong answer appropriate effects

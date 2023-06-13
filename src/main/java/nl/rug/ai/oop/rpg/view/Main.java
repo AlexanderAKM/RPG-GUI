@@ -112,6 +112,8 @@ public class Main {
         Npc evilMan = model.getNpc("Evil Man");
         manager.addNpcs(evilMan.getName(), evilMan, manager.getRoom(1));
 
+        manager.addNpcs("Human man", model.getNpc("Human man"), manager.getRoom(1));
+
         // We get the players current room
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();

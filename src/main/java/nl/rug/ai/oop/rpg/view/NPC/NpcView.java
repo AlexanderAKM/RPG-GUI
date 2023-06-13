@@ -3,8 +3,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
+import nl.rug.ai.oop.rpg.model.NPC.BattleEvent;
+import nl.rug.ai.oop.rpg.model.NPC.BattleQuestions;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
-import nl.rug.ai.oop.rpg.model.NPC.NpcInitiatedInteractions;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
@@ -107,14 +108,14 @@ public class NpcView {
         npcView.repaint();
     }
 
-    private void setupBattle(ArrayList<String> answers, String speech, NpcInitiatedInteractions interaction){
+    private void setupBattle(ArrayList<String> answers, String speech, BattleEvent battleEvent){
         npcView.removeAll();
         textArea.setText("");
         npcView.add(textArea, BorderLayout.CENTER);
         textArea.append(speech);
         for (String answer : answers) {
 
-            NpcButton answerButton = new NpcButton(answer, interaction.getName(), interaction.getNpcSource());
+            NpcButton answerButton = new NpcButton(answer, battleEvent.getName(), battleEvent.getNpcSource());
             answerButton.addActionListener(cont);
             answerButton.setActionCommand("Battle Answer");
 
@@ -174,10 +175,13 @@ public class NpcView {
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Battle")) {
-                NpcInitiatedInteractions interaction = (NpcInitiatedInteractions)evt.getNewValue();
-                ArrayList<String> answers = interaction.returnPayload();
+                BattleEvent battleEvent = (BattleEvent)evt.getNewValue();
+
+                // Ensure this is a clone a deep clone
+                BattleQuestions battleQuestions = battleEvent.getBattleQuestions();
+                ArrayList<String> answers = battleQuestions.getAnswers();
                 String speech = (String)evt.getOldValue();
-                setupBattle(answers, speech, interaction);
+                setupBattle(answers, speech, battleEvent);
             }
         });
 
@@ -190,7 +194,7 @@ public class NpcView {
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Correct")) {
 
-                NpcInitiatedInteractions interaction = (NpcInitiatedInteractions)evt.getNewValue();
+                BattleEvent interaction = (BattleEvent)evt.getNewValue();
                 Npc source = interaction.getNpcSource();
                 locationManager.removeNpcs("", source, player.getCurrentRoom());
                 setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String)evt.getOldValue());
