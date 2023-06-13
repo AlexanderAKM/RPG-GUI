@@ -41,7 +41,7 @@ public class LocationManager implements LocationInterface, Serializable {
         ArrayList<Item> examHallItems = manager.getItemsForRoom("Books");
 
 
-        Room coverRoom = new Room("Cover room", "Study association room for AI students and CS students",-1, -1, 3, -1, false, coverItems);
+        Room coverRoom = new Room("Cover room", "Study association room for AI students and CS students",-1, -1, 3, -1, true, coverItems);
         Room canteen = new Room("The BB canteen", "A place you can have food. Sometimes good, sometimes bad and always expensive.",3, -1, 0, 2, false, canteenItems);
         Room bb = new Room("Bernoulliborg", "Building where students have lectures. Within the building, a cafeteria and an association room is located.",5, -1, 1, 4, false, bbItems);
         Room outside = new Room("Outside", "The outdoors. Nothing more I can say..",3, -1, 0, 2, false, outsideItems);

@@ -8,11 +8,15 @@ import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class GamePanelGUI {
@@ -31,6 +35,7 @@ public class GamePanelGUI {
     private JPanel roomsPanel;
 
     private NpcView npcView;
+    private JLabel mapLabel;
 
     private ItemListener itemListener;
 
@@ -71,6 +76,13 @@ public class GamePanelGUI {
 
         textLabel = new JLabel("Game text goes here");
 
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File("src/main/resources/map_final.png")); //C:/Coding/OOP-assignment/2023_Project_006/src/main/resources
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mapLabel = new JLabel(new ImageIcon(image));
 
         panel.add(gamePanel);
         gamePanel.add(textLabel, BorderLayout.NORTH);
@@ -78,6 +90,7 @@ public class GamePanelGUI {
         gamePanel.add(interactNpcButton);
         gamePanel.add(moveRoomsButton);
         gamePanel.setVisible(true);
+
 
         manager.addListener(evt -> {if (Objects.equals(evt.getPropertyName(), "direction")) {
             setTextLabel((String)evt.getNewValue());
@@ -115,6 +128,7 @@ public class GamePanelGUI {
             roomsPanel.add(roomButton);
         }
 
+        roomsPanel.add(mapLabel);
         panel.revalidate();
         panel.repaint();
     }
