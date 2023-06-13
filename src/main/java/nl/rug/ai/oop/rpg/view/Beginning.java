@@ -25,12 +25,15 @@ public class Beginning {
     private JButton startGameButton;
     private JComboBox<String> languageComboBox;
     private JComboBox<String> studentTypeComboBox;
+    private Runnable callback;  // Added this field
+
 
     /**
      * Constructor for the Beginning class.
      * It initializes the frame and buttons.
      */
-    public Beginning() {
+    public Beginning(Runnable callback) {
+        this.callback = callback;
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,8 +95,9 @@ public class Beginning {
                 Player player = Player.getInstance();
                 player.setLanguage(language);
                 player.chooseProgramme(studentType);
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
+                callback.run();
             }
         });
         frame.add(startGameButton);
@@ -115,11 +119,5 @@ public class Beginning {
      *
      * @param args command line arguments (not used)
      */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Beginning().show();
-            }
-        });
-    }
+
 }

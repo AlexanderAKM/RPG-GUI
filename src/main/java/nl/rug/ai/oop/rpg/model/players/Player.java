@@ -22,6 +22,9 @@ public class Player implements Serializable {
     private String language;
     private static Player player;
 
+    /**
+     * @author RobertHielkema
+     */
     private Player() {
         intelligence = 0;
         social = 0;
@@ -30,6 +33,9 @@ public class Player implements Serializable {
         inventory = new Inventory();
     }
 
+    /**
+     * @author RobertHielkema
+     */
     public static Player getInstance(){
         if (player == null) {
             player = new Player();
@@ -37,6 +43,9 @@ public class Player implements Serializable {
         return player;
     }
 
+    /**
+     * @author RobertHielkema
+     */
     public void chooseProgramme(String programme) {
         player.programme = programme;
         if (programme.equals("AI") || programme.equals("Artificial Intelligence")) {
@@ -57,16 +66,16 @@ public class Player implements Serializable {
         }
     }
 
-    public void save(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss");
-        String filename = dtf.format(LocalDateTime.now());
+    public void save(String filename){
+        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss");
+        //String filename = dtf.format(LocalDateTime.now());
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename))) {
             output.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
         }
-        SaveFiles.getInstance().saveFileNames(filename);
+        //SaveFiles.getInstance().saveFileNames(filename);
     }
 
     public void loadSaveFile(String filename){
