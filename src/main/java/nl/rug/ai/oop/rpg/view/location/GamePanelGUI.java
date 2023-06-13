@@ -27,6 +27,7 @@ public class GamePanelGUI {
 
     private JButton searchItemButton;
     private JPanel roomItemsPanel;
+    private JButton backButton;
 
     private JButton interactNpcButton;
     private JPanel roomNpcsPanel;
@@ -42,6 +43,7 @@ public class GamePanelGUI {
     public void setItemListener(ItemListener itemListener) {
         this.itemListener = itemListener;
     }
+
     public GamePanelGUI(LocationManager manager, LocationController controller){
         panel = new JPanel();
         gamePanel = new JPanel(new GridLayout(10, 1, 10, 5));
@@ -56,6 +58,12 @@ public class GamePanelGUI {
                 createItemButtons(manager);
                 showRoomItemPanel();
 
+            }
+        });
+        backButton = new JButton("Go Back");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showGamePanel();
             }
         });
 
@@ -197,11 +205,11 @@ public class GamePanelGUI {
                     }
                 }
             });
-
             itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
-
+        
+        roomItemsPanel.add(backButton);
         panel.revalidate();
         panel.repaint();
     }
