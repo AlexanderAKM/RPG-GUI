@@ -50,18 +50,19 @@ public class NpcManager {
                 .setInteractionName("interactionName")
                 .setNpcSource(humanMan)
                 .setSpeechText("speechText");
-
-        BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
-        BattleEvent worldEvent = eventBuilder.buildBattleEvent(coverQuestion);
+        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK);
         humanMan.setEvent(worldEvent);
-        humanMan.setNpcBattleEvents(worldEvent);
+        humanMan.setNpcWorldEvents(worldEvent);
 
 
         Npc EvilMan = new Npc("Evil Man", 2);
-        EventBuilder coverBattle = new EventBuilder()
+        EventBuilder eventBuilder1 = new EventBuilder()
                 .setInteractionName("EvilBattle")
                 .setNpcSource(EvilMan)
                 .setSpeechText("Death be upon you! \n");
+
+        BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
+        BattleEvent coverBattle = eventBuilder1.buildBattleEvent(coverQuestion);
 
         allNpcs.add(Bob);
         allNpcs.add(Harmen);
@@ -86,7 +87,6 @@ public class NpcManager {
         Npc npc = target.getNpc();
         Events event = npc.findNpcEvent();
 
-
         switch (event.getEventType()) {
             case BATTLE:
                 ArrayList<String> answers = new ArrayList<String>();
@@ -95,13 +95,19 @@ public class NpcManager {
 
                 answers = battleQuestions.getAnswers();
 
-                String speech = event.getSpeechText() + "\n" + battleQuestions.getQuestion();
-                PropertyChangeEvent payload = new PropertyChangeEvent(this, "Battle", speech, battleEvent);
-                notifyListeners(payload);
+                String battleSpeech = event.getSpeechText() + "\n" + battleQuestions.getQuestion();
+                PropertyChangeEvent battlePayload = new PropertyChangeEvent(this, "Battle", battleSpeech, battleEvent);
+                notifyListeners(battlePayload);
                 break;
             case INTRODUCTION:
                 //playInteraction(target, interaction);
                 break;
+            case WORLD_EVENT:
+                WorldEvent worldEvent = npc.getWorldEvent(event.getName());
+
+                String worldEventSpeech = event.getSpeechText() + "\n";
+                PropertyChangeEvent worldPayload = new PropertyChangeEvent(this, "World Event", worldEventSpeech, worldEvent);
+                notifyListeners(worldPayload);
         }
     }
 
