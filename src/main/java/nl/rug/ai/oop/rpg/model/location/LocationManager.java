@@ -3,6 +3,7 @@ package nl.rug.ai.oop.rpg.model.location;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
+import nl.rug.ai.oop.rpg.model.inventory.items.StudentCard;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 
@@ -32,8 +33,9 @@ public class LocationManager implements LocationInterface, Serializable {
     }
 
     public void locationSetUp() {
+        //Item StudentCard = new StudentCard();
         ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
-        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student-Card","Money");
+        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "StudentCard","Money");
         ArrayList<Item> bbItems = manager.getItemsForRoom("Books","Pen");
         ArrayList<Item> canteenItems = manager.getItemsForRoom("Coffee");
         ArrayList<Item> outsideItems = manager.getItemsForRoom("Money", "Money");
@@ -73,7 +75,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setWest(-1)
                 .setIsLocked(false)
                 .addAvailableItems(examHallItems)
-                //.setRequiredItem()
+                .setRequiredItem(new StudentCard())
                 .build();
 
         Room bb = new RoomBuilder()
@@ -107,7 +109,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(-1)
                 .setSouth(3)
                 .setWest(-1)
-                .setIsLocked(false)
+                .setIsLocked(true)
                 .addAvailableItems(coverItems)
                 //.setRequiredItem()
                 .build();
@@ -209,8 +211,8 @@ public class LocationManager implements LocationInterface, Serializable {
         //Room currentRoom = Player.getInstance().getCurrentRoom();
         Room destinationRoom = getRoom(chosenRoom);
 
-        if (destinationRoom.getIsLocked() && destinationRoom.getRequiredItem() != null) {
-            if (Player.getInstance().getInventory().containsItem(destinationRoom.getRequiredItem())) {
+        if (destinationRoom.getRequiredItem() != null) { // if room requires item
+            if (Player.getInstance().getInventory().containsItem(destinationRoom.getRequiredItem())) { // if player has required item
                 // The player has the required item, allow them to move
                 Player.getInstance().setCurrentRoom(destinationRoom);
                 PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
@@ -221,13 +223,16 @@ public class LocationManager implements LocationInterface, Serializable {
                 // The player doesn't have the required item, they cannot move
                 System.out.println("You need a " + destinationRoom.getRequiredItem().getName() + " to enter this room.");
             }
-        } else {
-            // The destination room is not locked or doesn't require a specific item, allow the player to move
-            Player.getInstance().setCurrentRoom(destinationRoom);
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
-            notifyListeners(payload);
-            System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-            System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
+        } else { // if room not require item
+            if(destinationRoom.getIsLocked()){ // if room locked
+                System.out.println("You need to interact with someone to enter this room.");
+            } else {
+                Player.getInstance().setCurrentRoom(destinationRoom);
+                PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
+                notifyListeners(payload);
+                System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
+                System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
+            }
         }
     }
 /*
