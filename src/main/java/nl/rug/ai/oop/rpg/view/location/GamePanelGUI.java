@@ -44,22 +44,26 @@ public class GamePanelGUI {
         this.itemListener = itemListener;
     }
 
-    public GamePanelGUI(LocationManager manager, LocationController controller){
+    public GamePanelGUI(LocationManager manager, LocationController controller) {
         panel = new JPanel();
-        gamePanel = new JPanel(new GridLayout(10, 1, 10, 5));
-        gamePanel.setBackground(Color.LIGHT_GRAY);
+        gamePanel = new JPanel(new GridBagLayout());
+        gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
+        //panel.setBackground(new Color(240, 240, 240));
+        GridBagConstraints gbc = new GridBagConstraints();
+
         roomItemsPanel = new JPanel();
         roomNpcsPanel = new JPanel();
         roomsPanel = new JPanel();
 
         searchItemButton = new JButton("Search for items in the room");
+        searchItemButton.setPreferredSize(new Dimension(230, 30));
         searchItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 createItemButtons(manager);
                 showRoomItemPanel();
-
             }
         });
+
         backButton = new JButton("Go Back");
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -68,12 +72,15 @@ public class GamePanelGUI {
         });
 
         interactNpcButton = new JButton("Interact with NPCs in the room");
+        interactNpcButton.setPreferredSize(new Dimension(230, 30));
         interactNpcButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showRoomNpcPanel();
             }
         });
+
         moveRoomsButton = new JButton("Move to a different room");
+        moveRoomsButton.setPreferredSize(new Dimension(230, 30));
         moveRoomsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 createRoomButtons(manager, controller);
@@ -81,8 +88,31 @@ public class GamePanelGUI {
             }
         });
 
+        textLabel = new JLabel("<html>You find yourself standing in the comfort of your Dutch home. The cozy atmosphere embraces you, with the scent of freshly baked stroopwafels wafting through the air. The sun is out for once, casting a warm glow in the room. It's time to embark on your adventure as a University of Groningen Student.</html>");
+        textLabel.setPreferredSize(new Dimension(350, 100));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 20, 20, 20); // Add some vertical spacing
+        gamePanel.add(textLabel, gbc);
 
-        textLabel = new JLabel("Game text goes here");
+        gbc.gridy = 1;
+        gamePanel.add(searchItemButton, gbc);
+
+        gbc.gridy = 2;
+        gamePanel.add(interactNpcButton, gbc);
+
+        gbc.gridy = 3;
+        gamePanel.add(moveRoomsButton, gbc);
+
+        panel.add(gamePanel);
+        gamePanel.setVisible(true);
+
+        manager.addListener(evt -> {
+            if (Objects.equals(evt.getPropertyName(), "direction")) {
+                setTextLabel((String) evt.getNewValue());
+                showGamePanel();
+            }
+        });
 
         BufferedImage image = null;
         try {
@@ -92,21 +122,19 @@ public class GamePanelGUI {
         }
         mapLabel = new JLabel(new ImageIcon(image));
 
-        panel.add(gamePanel);
-        gamePanel.add(textLabel, BorderLayout.NORTH);
-        gamePanel.add(searchItemButton);
-        gamePanel.add(interactNpcButton);
-        gamePanel.add(moveRoomsButton);
-        gamePanel.setVisible(true);
+        // Set the button colors
+        Color buttonColor = new Color(135, 206, 250); // Blue color
+        Color textColor = Color.WHITE; // White text color
 
-
-        manager.addListener(evt -> {if (Objects.equals(evt.getPropertyName(), "direction")) {
-            setTextLabel((String)evt.getNewValue());
-            showGamePanel();  // returns back to the default screen
-        }
-        });
+        moveRoomsButton.setBackground(buttonColor);
+        moveRoomsButton.setForeground(textColor);
+        searchItemButton.setBackground(buttonColor);
+        searchItemButton.setForeground(textColor);
+        interactNpcButton.setBackground(buttonColor);
+        interactNpcButton.setForeground(textColor);
 
     }
+
 
     public void setNpcPanel(JPanel npcPanel){
         roomNpcsPanel = npcPanel;
@@ -116,10 +144,14 @@ public class GamePanelGUI {
         return panel;
     }
 
-    private void setTextLabel(String newText){
-        textLabel.setText("Room Description :" + newText);
+    private void setTextLabel(String newText) {
+        textLabel.setText("<html>"+newText +"</hmtl>");
+        textLabel.setPreferredSize(new Dimension(350, 100)); // Set the preferred size as per your requirements
+        //textLabel.setHorizontalAlignment(SwingConstants.CENTER); // Align the text horizontally in the center
+        //textLabel.setVerticalAlignment(SwingConstants.TOP); // Align the text vertically at the top
         gamePanel.revalidate();
     }
+
 
     public void setNpcView(NpcView npcView){
         this.npcView = npcView;
@@ -131,6 +163,11 @@ public class GamePanelGUI {
         for (Room room : model.roomsAvailable(Player.getInstance().getCurrentRoom())) {
             JButton roomButton = new JButton(room.getRoomName());
             roomButton.addActionListener(controller);
+            Color buttonColor = new Color(135, 206, 250); // Blue color
+            Color textColor = Color.WHITE; // White text color
+
+            roomButton.setBackground(buttonColor);
+            roomButton.setForeground(textColor);
 
             roomButton.setActionCommand(room.getRoomName()); // Set the action command as the room name
             roomsPanel.add(roomButton);
@@ -198,6 +235,12 @@ public class GamePanelGUI {
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
             JButton itemButton = new JButton(item.getName());
+            Color buttonColor = new Color(135, 206, 250); // Blue color
+            Color textColor = Color.WHITE; // White text color
+
+            itemButton.setBackground(buttonColor);
+            itemButton.setForeground(textColor);
+
             itemButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (itemListener != null) {

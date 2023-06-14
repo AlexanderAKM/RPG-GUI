@@ -44,7 +44,7 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Room home = new RoomBuilder()
                 .setName("Home")
-                .setDescription("The room you live in.")
+                .setDescription("Welcome to your Dutch student home, worn and lived-in. The room is a chaotic mix of scattered textbooks, clothes strewn about, and a desk cluttered with study materials. Despite the disarray, it radiates a sense of youthful energy and camaraderie, a sanctuary amidst the bustling student life.")
                 .setNorth(1)
                 .setEast(-1)
                 .setSouth(-1)
@@ -56,7 +56,7 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Room outside = new RoomBuilder()
                 .setName("Outside")
-                .setDescription("The outdoors. Nothing more I can say..")
+                .setDescription("Step outside into the charming streets of Groningen, Netherlands. Despite the gloomy weather, the city exudes a unique beauty. Canals wind through historic buildings, their facades adorned with colorful bicycles. People huddle under umbrellas, but the spirit of this vibrant city remains undeterred.")
                 .setNorth(3)
                 .setEast(-1)
                 .setSouth(0)
@@ -68,7 +68,7 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Room examHall = new RoomBuilder()
                 .setName("Aletta Jacobs Hall")
-                .setDescription("The outdoors. Nothing more I can say..")
+                .setDescription("Welcome to the Aletta Jacobs Lecture Hall, where students face their academic challenges head-on. The grand hall echoes with the collective buzz of eager learners. The vibrant orange interior evokes a mix of excitement and anxiety, as students prepare for exams and attend captivating lectures that shape their educational journey. To access this area, a student card is necessary so don't lose it.")
                 .setNorth(-1)
                 .setEast(1)
                 .setSouth(-1)
@@ -80,7 +80,7 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Room bb = new RoomBuilder()
                 .setName("Bernoulliborg")
-                .setDescription("The room you live in.")
+                .setDescription("Welcome to Bernoulliborg, a hub of knowledge and innovation for STEM students. Lecture halls and labs hum with scientific curiosity. The canteen disappoints with its lackluster food options, but it's the gathering place for students. Adjacent to it is the Cover association room, where friendships are forged and tech enthusiasts unite.")
                 .setNorth(5)
                 .setEast(-1)
                 .setSouth(1)
@@ -92,7 +92,7 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Room canteen = new RoomBuilder()
                 .setName("The BB canteen")
-                .setDescription("The room you live in.")
+                .setDescription("Welcome to the Bernoulliborg Canteen, a bustling yet frustrating culinary oasis. Despite its limited and overpriced menu, hungry students flock here. The lunchtime rush at 1 PM transform the canteen into a lively gathering spot, filled with laughter and the aroma of mediocre food.")
                 .setNorth(3)
                 .setEast(-1)
                 .setSouth(-1)
@@ -104,7 +104,7 @@ public class LocationManager implements LocationInterface, Serializable {
 
         Room coverRoom = new RoomBuilder()
                 .setName("Cover room")
-                .setDescription("Study association room for AI students and CS students")
+                .setDescription("Welcome to the Cover Room, a haven for AI and CS students. Here, you'll find an awesome space filled with laughter and gaming sessions on the Switch. Indulge in tasty snacks and freshly brewed coffee from the machine. Keep an eye out for the Cover board members, always ready for a chat or a game challenge.")
                 .setNorth(-1)
                 .setEast(-1)
                 .setSouth(3)
