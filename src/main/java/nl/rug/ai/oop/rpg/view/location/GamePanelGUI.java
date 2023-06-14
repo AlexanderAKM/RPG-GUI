@@ -41,11 +41,14 @@ public class GamePanelGUI {
 
     private ItemListener itemListener;
 
+    private JFrame frame;
+
     public void setItemListener(ItemListener itemListener) {
         this.itemListener = itemListener;
     }
 
     public GamePanelGUI(LocationManager manager, LocationController controller, RoomLanguageManager roomLanguageManager) {
+        this.frame = frame;
         panel = new JPanel();
         gamePanel = new JPanel(new GridBagLayout());
         gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
@@ -106,6 +109,14 @@ public class GamePanelGUI {
             if (Objects.equals(evt.getPropertyName(), "direction")) {
                 setTextLabel((String) evt.getNewValue());
                 showGamePanel();
+            }
+        });
+
+        manager.addListener(evt -> {
+            if (Objects.equals(evt.getPropertyName(), "popUp")) {
+                showRoomNotAccessiblePopup(frame, roomLanguageManager);
+                //setTextLabel((String) evt.getNewValue());
+                //showGamePanel();
             }
         });
 
@@ -243,6 +254,15 @@ public class GamePanelGUI {
         roomItemsPanel.add(backButton);
         panel.revalidate();
         panel.repaint();
+    }
+
+    private void showRoomNotAccessiblePopup(JFrame frame, RoomLanguageManager roomLanguageManager) {
+        RoomPopup popup = new RoomPopup(frame, roomLanguageManager.getTranslation("popUp_warning"));
+        popup.showDialog();
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
 

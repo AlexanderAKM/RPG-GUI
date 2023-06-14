@@ -194,6 +194,8 @@ public class LocationManager implements LocationInterface, Serializable {
             } else {
                 // The player doesn't have the required item, they cannot move
                 //System.out.println("You need a " + destinationRoom.getRequiredItem().getName() + " to enter this room.");
+                PropertyChangeEvent payload = new PropertyChangeEvent(this, "popUp", null, null);
+                notifyListeners(payload);
             }
         } else { // if room not require item
             if(destinationRoom.getIsLocked()){ // if room locked
@@ -222,11 +224,6 @@ public class LocationManager implements LocationInterface, Serializable {
     @Override
     public void unlockRoom(Room specificRoom) {
         specificRoom.setIsLocked(false);
-    }
-
-    public void initLanguageManager(String language) {
-        roomLanguageManager = new RoomLanguageManager();
-        roomLanguageManager.loadLanguage("english"); // Default language
     }
 
 }

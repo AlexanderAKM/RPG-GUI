@@ -20,7 +20,6 @@ public class LocationController implements ActionListener {
         if (actionCommand.equals(roomLanguageManager.getTranslation("home"))) {
             model.movePlayer(0);
         } else if (actionCommand.equals(roomLanguageManager.getTranslation("outside"))) {
-            System.out.println("controller for outside");
             model.movePlayer(1);
         } else if (actionCommand.equals(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall"))) {
             model.movePlayer(2);
@@ -28,7 +27,7 @@ public class LocationController implements ActionListener {
             model.movePlayer(3);
         } else if (actionCommand.equals(roomLanguageManager.getTranslation("TheBBCanteen"))) {
             model.movePlayer(4);
-        } else if (actionCommand.equals(roomLanguageManager.getTranslation("cover_room= Cover room\n"))) {
+        } else if (actionCommand.equals(roomLanguageManager.getTranslation("cover_room"))) {
             model.movePlayer(5);
         }
     }
