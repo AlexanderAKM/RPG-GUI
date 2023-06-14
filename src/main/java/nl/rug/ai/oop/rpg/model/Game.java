@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.model;
 
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.Beginning;
 import nl.rug.ai.oop.rpg.view.Main;
@@ -16,9 +17,10 @@ public class Game {
 
     private Player player;
     private String chosenLanguage;
+    //private RoomLanguageManager roomLanguageManager;
 
     public Game(){
-
+        //roomLanguageManager = new RoomLanguageManager();
     }
 
 
@@ -36,6 +38,7 @@ public class Game {
     public void start() {
         // Start with the Beginning view
         Beginning beginning = new Beginning();
+        //RoomLanguageManager.loadLanguage("English");
 
 
         beginning.show();

@@ -17,14 +17,17 @@ public class LocationManager implements LocationInterface, Serializable {
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
 
+    private RoomLanguageManager roomLanguageManager;
+
     private ItemManager manager;
     ArrayList<PropertyChangeListener> listeners;
 
-    public LocationManager(ItemManager manager){
+    public LocationManager(ItemManager manager, RoomLanguageManager roomLanguageManager){
         this.manager = manager;
         map = new ArrayList<Room>();
         listeners = new ArrayList();
         availableRooms = new ArrayList<Room>();
+        this.roomLanguageManager = roomLanguageManager;
         locationSetUp();
     }
 
@@ -33,7 +36,6 @@ public class LocationManager implements LocationInterface, Serializable {
     }
 
     public void locationSetUp() {
-        //Item StudentCard = new StudentCard();
         ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
         ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student Card","Money");
         //ArrayList<Item> bbItems = manager.getItemsForRoom("Books");
@@ -43,8 +45,8 @@ public class LocationManager implements LocationInterface, Serializable {
 
 
         Room home = new RoomBuilder()
-                .setName("Home")
-                .setDescription("Welcome to your Dutch student home, worn and lived-in. The room is a chaotic mix of scattered textbooks, clothes strewn about, and a desk cluttered with study materials. Despite the disarray, it radiates a sense of youthful energy and camaraderie, a sanctuary amidst the bustling student life.")
+                .setName(roomLanguageManager.getTranslation("home")) //RoomLanguageManager.getTranslation(
+                .setDescription(roomLanguageManager.getTranslation("home_description"))
                 .setNorth(1)
                 .setEast(-1)
                 .setSouth(-1)
@@ -55,8 +57,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room outside = new RoomBuilder()
-                .setName("Outside")
-                .setDescription("Step outside into the charming streets of Groningen, Netherlands. Despite the gloomy weather, the city exudes a unique beauty. Canals wind through historic buildings, their facades adorned with colorful bicycles. People huddle under umbrellas, but the spirit of this vibrant city remains undeterred.")
+                .setName(roomLanguageManager.getTranslation("outside"))
+                .setDescription(roomLanguageManager.getTranslation("outside_description"))
                 .setNorth(3)
                 .setEast(-1)
                 .setSouth(0)
@@ -67,8 +69,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room examHall = new RoomBuilder()
-                .setName("Aletta Jacobs Hall")
-                .setDescription("Welcome to the Aletta Jacobs Lecture Hall, where students face their academic challenges head-on. The grand hall echoes with the collective buzz of eager learners. The vibrant orange interior evokes a mix of excitement and anxiety, as students prepare for exams and attend captivating lectures that shape their educational journey. To access this area, a student card is necessary so don't lose it.")
+                .setName(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall"))
+                .setDescription(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall_description"))
                 .setNorth(-1)
                 .setEast(1)
                 .setSouth(-1)
@@ -79,8 +81,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room bb = new RoomBuilder()
-                .setName("Bernoulliborg")
-                .setDescription("Welcome to Bernoulliborg, a hub of knowledge and innovation for STEM students. Lecture halls and labs hum with scientific curiosity. The canteen disappoints with its lackluster food options, but it's the gathering place for students. Adjacent to it is the Cover association room, where friendships are forged and tech enthusiasts unite.")
+                .setName(roomLanguageManager.getTranslation("bernoulliborg"))
+                .setDescription(roomLanguageManager.getTranslation("bernoulliborg_description"))
                 .setNorth(5)
                 .setEast(-1)
                 .setSouth(1)
@@ -91,8 +93,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room canteen = new RoomBuilder()
-                .setName("The BB canteen")
-                .setDescription("Welcome to the Bernoulliborg Canteen, a bustling yet frustrating culinary oasis. Despite its limited and overpriced menu, hungry students flock here. The lunchtime rush at 1 PM transform the canteen into a lively gathering spot, filled with laughter and the aroma of mediocre food.")
+                .setName(roomLanguageManager.getTranslation("TheBBCanteen"))
+                .setDescription(roomLanguageManager.getTranslation("TheBBCanteen_description"))
                 .setNorth(3)
                 .setEast(-1)
                 .setSouth(-1)
@@ -103,15 +105,14 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room coverRoom = new RoomBuilder()
-                .setName("Cover room")
-                .setDescription("Welcome to the Cover Room, a haven for AI and CS students. Here, you'll find an awesome space filled with laughter and gaming sessions on the Switch. Indulge in tasty snacks and freshly brewed coffee from the machine. Keep an eye out for the Cover board members, always ready for a chat or a game challenge.")
+                .setName(roomLanguageManager.getTranslation("cover_room"))
+                .setDescription(roomLanguageManager.getTranslation("cover_room_description"))
                 .setNorth(-1)
                 .setEast(-1)
                 .setSouth(3)
                 .setWest(-1)
                 .setIsLocked(true)
                 .addAvailableItems(coverItems)
-                //.setRequiredItem()
                 .build();
 
 
@@ -188,21 +189,21 @@ public class LocationManager implements LocationInterface, Serializable {
                 Player.getInstance().setCurrentRoom(destinationRoom);
                 PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
                 notifyListeners(payload);
-                System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-                System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
+                //System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
+                //System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
             } else {
                 // The player doesn't have the required item, they cannot move
-                System.out.println("You need a " + destinationRoom.getRequiredItem().getName() + " to enter this room.");
+                //System.out.println("You need a " + destinationRoom.getRequiredItem().getName() + " to enter this room.");
             }
         } else { // if room not require item
             if(destinationRoom.getIsLocked()){ // if room locked
-                System.out.println("You need to interact with someone to enter this room.");
+                //System.out.println("You need to interact with someone to enter this room.");
             } else {
                 Player.getInstance().setCurrentRoom(destinationRoom);
                 PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
                 notifyListeners(payload);
-                System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-                System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
+                //System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
+                //System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
             }
         }
     }
@@ -221,6 +222,11 @@ public class LocationManager implements LocationInterface, Serializable {
     @Override
     public void unlockRoom(Room specificRoom) {
         specificRoom.setIsLocked(false);
+    }
+
+    public void initLanguageManager(String language) {
+        roomLanguageManager = new RoomLanguageManager();
+        roomLanguageManager.loadLanguage("english"); // Default language
     }
 
 }

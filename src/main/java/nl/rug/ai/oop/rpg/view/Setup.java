@@ -10,6 +10,7 @@ import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.location.RoomStateManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
@@ -25,12 +26,13 @@ public class Setup {
     //Main class for the JFrame which should include everyone's panes
     public String chosenLanguage;
 
+
     /**
      * @author Alexander Müller & Robert Hielkema
      * @param
      */
 
-    public void start() {
+    public void start(RoomLanguageManager roomLanguageManager) {
         // Create a player
         Player player = Player.getInstance();
 
@@ -65,9 +67,9 @@ public class Setup {
         frame.add(playerStatsPane, c);
 
         ItemManager itemManager = new ItemManager();
-        LocationManager manager = new LocationManager(itemManager);
-        LocationController controller = new LocationController(manager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller);
+        LocationManager manager = new LocationManager(itemManager, roomLanguageManager);
+        LocationController controller = new LocationController(manager, roomLanguageManager);
+        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, roomLanguageManager);
 
         RoomItemsController roomItemsController = new RoomItemsController(inventory, gamePanel, player, manager);
 

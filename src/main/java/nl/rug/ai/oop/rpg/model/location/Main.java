@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Player player = Player.getInstance();
+        /*Player player = Player.getInstance();
         Inventory inventory = new Inventory();
         //RoomItemsController itemController = new RoomItemsController(inventory, gamePanelGUI, player);
         ItemManager itemManager = new ItemManager();
@@ -65,7 +65,7 @@ public class Main {
         frame.add(locationView, BorderLayout.CENTER); // adds the game panel
         frame.setVisible(true);
 
-        frame.revalidate();
+        frame.revalidate();*/
 
     }
 }
