@@ -16,8 +16,8 @@ public class PlayerStatsPane extends JPanel{
     JLabel wellbeing;
     JLabel moneyIcon;
     JLabel money;
-    int STATHEIGHT = 80;
-    int STATWIDTH = 80;
+    final int STATHEIGHT = 80;
+    final int STATWIDTH = 80;
     public PlayerStatsPane() {
         this.player = Player.getInstance();
         this.setLayout(new GridLayout(2,4, 5, 0));

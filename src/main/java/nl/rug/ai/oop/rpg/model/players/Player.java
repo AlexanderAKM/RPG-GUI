@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.model.players;
 
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
+import nl.rug.ai.oop.rpg.model.inventory.items.*;
 import nl.rug.ai.oop.rpg.model.location.*;
 
 import java.io.*;
@@ -53,16 +54,20 @@ public class Player implements Serializable {
             player.changeSocial(60);
             player.changeWellbeing(100);
             player.changeMoney(0);
+            player.inventory.addItem(new Alcohol(5, 10));
         } else if (programme.equals("AP") || programme.equals("Applied Physics")) {
             player.changeIntelligence(85);
             player.changeSocial(40);
             player.changeWellbeing(100);
             player.changeMoney(0);
+            player.inventory.addItem(new Coffee(5, 5));
+            player.inventory.addItem(new Coffee(5, 5));
         } else if (programme.equals("CS") || programme.equals("Computing Science")) {
             player.changeIntelligence(100);
             player.changeSocial(20);
             player.changeWellbeing(100);
             player.changeMoney(0);
+            player.inventory.addItem(new Books(10, 5));
         }
     }
 

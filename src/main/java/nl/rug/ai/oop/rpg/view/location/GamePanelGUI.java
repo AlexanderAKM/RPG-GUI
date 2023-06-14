@@ -64,12 +64,6 @@ public class GamePanelGUI {
             }
         });
 
-        backButton = new JButton("Go Back");
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showGamePanel();
-            }
-        });
 
         interactNpcButton = new JButton("Interact with NPCs in the room");
         interactNpcButton.setPreferredSize(new Dimension(230, 30));
@@ -235,12 +229,6 @@ public class GamePanelGUI {
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
             JButton itemButton = new JButton(item.getName());
-            Color buttonColor = new Color(135, 206, 250); // Blue color
-            Color textColor = Color.WHITE; // White text color
-
-            itemButton.setBackground(buttonColor);
-            itemButton.setForeground(textColor);
-
             itemButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (itemListener != null) {
