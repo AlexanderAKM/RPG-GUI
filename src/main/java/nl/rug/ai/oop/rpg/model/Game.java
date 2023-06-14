@@ -15,16 +15,19 @@ import javax.swing.*;
 public class Game {
 
     private Player player;
+    private String chosenLanguage;
+
+    public Game(){
+
+    }
+
 
     /**
      * The main method that starts the game.
      *
      * @param args command line arguments, not used in this application
      */
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
-    }
+
 
     /**
      * Starts the game by showing the beginning part.
@@ -32,13 +35,9 @@ public class Game {
      */
     public void start() {
         // Start with the Beginning view
-        Beginning beginning = new Beginning(new Runnable() {
-            @Override
-            public void run() {
-                // This code will be run when the Beginning part is done
-                continueGame();
-            }
-        });
+        Beginning beginning = new Beginning();
+
+
         beginning.show();
     }
 
@@ -50,11 +49,12 @@ public class Game {
         // After the beginning part is done, we should have a player instance now
         this.player = Player.getInstance();
 
+
         // Now you can proceed to the Main part
-        SwingUtilities.invokeLater(new Runnable() {
+        /* SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Main().start(); // Call the main method of your Main class
             }
-        });
+        });*/
     }
 }

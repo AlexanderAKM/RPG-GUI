@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
@@ -7,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import javax.swing.JComboBox;
+
 
 /**
  * This is the class for the beginning of the RPG Game.
@@ -26,13 +29,15 @@ public class Beginning {
     private JComboBox<String> languageComboBox;
     private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
+    private RoomLanguageManager roomLanguageManager;
+
 
 
     /**
      * Constructor for the Beginning class.
      * It initializes the frame and buttons.
      */
-    public Beginning(Runnable callback) {
+    public Beginning() {
         this.callback = callback;
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
@@ -77,9 +82,20 @@ public class Beginning {
      * and a button to start the game.
      */
     private void showNewGameOptions() {
+        //roomLanguageManager = new RoomLanguageManager("English");
         String[] languages = {"English", "Nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
+
+        // Add an ActionListener to the languageComboBox
+        languageComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedLanguage = (String) languageComboBox.getSelectedItem();
+                roomLanguageManager.loadLanguage(selectedLanguage);
+            }
+        });
+
 
         String[] studentTypes = {"Artificial Intelligence", "Applied Physics", "Computing Science"};
         studentTypeComboBox = new JComboBox<>(studentTypes);
@@ -97,7 +113,9 @@ public class Beginning {
                 player.chooseProgramme(studentType);
                 frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
-                callback.run();
+                Setup setup = new Setup();
+                setup.start();
+                //callback.run();
             }
         });
         frame.add(startGameButton);
@@ -112,12 +130,5 @@ public class Beginning {
     public void show() {
         frame.setVisible(true);
     }
-
-    /**
-     * Main method for the Beginning class.
-     * It creates an instance of Beginning and shows the frame.
-     *
-     * @param args command line arguments (not used)
-     */
-
 }
+
