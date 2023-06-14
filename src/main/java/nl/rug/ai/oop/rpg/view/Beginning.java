@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
@@ -30,6 +31,7 @@ public class Beginning {
     private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
     private RoomLanguageManager roomLanguageManager;
+    private String selectedLanguage;
 
 
 
@@ -39,6 +41,7 @@ public class Beginning {
      */
     public Beginning() {
         this.callback = callback;
+        //this.roomLanguageManager = roomLanguageManager;
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,17 +85,17 @@ public class Beginning {
      * and a button to start the game.
      */
     private void showNewGameOptions() {
-        //roomLanguageManager = new RoomLanguageManager("English");
-        String[] languages = {"English", "Nederlands"};
+        String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
-
+        roomLanguageManager = new RoomLanguageManager();
         // Add an ActionListener to the languageComboBox
         languageComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedLanguage = (String) languageComboBox.getSelectedItem();
-                roomLanguageManager.loadLanguage(selectedLanguage);
+                selectedLanguage = (String)languageComboBox.getSelectedItem();
+                roomLanguageManager.loadLanguage((String)languageComboBox.getSelectedItem());
+
             }
         });
 
@@ -114,7 +117,7 @@ public class Beginning {
                 frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
                 Setup setup = new Setup();
-                setup.start();
+                setup.start(roomLanguageManager);
                 //callback.run();
             }
         });

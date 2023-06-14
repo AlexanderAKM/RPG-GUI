@@ -7,6 +7,7 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -44,7 +45,7 @@ public class GamePanelGUI {
         this.itemListener = itemListener;
     }
 
-    public GamePanelGUI(LocationManager manager, LocationController controller) {
+    public GamePanelGUI(LocationManager manager, LocationController controller, RoomLanguageManager roomLanguageManager) {
         panel = new JPanel();
         gamePanel = new JPanel(new GridBagLayout());
         gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
@@ -55,7 +56,7 @@ public class GamePanelGUI {
         roomNpcsPanel = new JPanel();
         roomsPanel = new JPanel();
 
-        searchItemButton = new JButton("Search for items in the room");
+        searchItemButton = new JButton(roomLanguageManager.getTranslation("search_item_button"));
         searchItemButton.setPreferredSize(new Dimension(230, 30));
         searchItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -65,7 +66,7 @@ public class GamePanelGUI {
         });
 
 
-        interactNpcButton = new JButton("Interact with NPCs in the room");
+        interactNpcButton = new JButton(roomLanguageManager.getTranslation("interact_npc_button"));
         interactNpcButton.setPreferredSize(new Dimension(230, 30));
         interactNpcButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +74,7 @@ public class GamePanelGUI {
             }
         });
 
-        moveRoomsButton = new JButton("Move to a different room");
+        moveRoomsButton = new JButton(roomLanguageManager.getTranslation("move_room_button"));
         moveRoomsButton.setPreferredSize(new Dimension(230, 30));
         moveRoomsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +83,7 @@ public class GamePanelGUI {
             }
         });
 
-        textLabel = new JLabel("<html>You find yourself standing in the comfort of your Dutch home. The cozy atmosphere embraces you, with the scent of freshly baked stroopwafels wafting through the air. The sun is out for once, casting a warm glow in the room. It's time to embark on your adventure as a University of Groningen Student.</html>");
+        textLabel = new JLabel("<html>"+ roomLanguageManager.getTranslation("start_text_label")+"</html>");
         textLabel.setPreferredSize(new Dimension(350, 100));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -126,7 +127,6 @@ public class GamePanelGUI {
         searchItemButton.setForeground(textColor);
         interactNpcButton.setBackground(buttonColor);
         interactNpcButton.setForeground(textColor);
-
     }
 
 
