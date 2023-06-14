@@ -24,12 +24,6 @@ public class WorldEvent extends Events{
         this.successText = successText;
         this.failText = failText;
         this.locationManager = locationManager;
-
-        switch (effect){
-            case UNLOCK:
-                unlockRoom();
-                break;
-        }
     }
 
     public String getSuccessText(){

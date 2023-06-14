@@ -44,12 +44,11 @@ public class EventBuilder {
 
     public WorldEvent buildWorldEvent(WorldEvent.effectOnWorld effect, int condition, String successText, String failText, LocationManager locationManager) {
         WorldEvent event = new WorldEvent(interactionName, npcSource, effect, speechText,condition, Events.EventType.WORLD_EVENT, successText, failText, locationManager);
-        switch (effect) {
-            case UNLOCK:
-                //event.unlockRoom();
-                break;
-            // Add other effects if necessary
-        }
+        return event;
+    }
+
+    public IntroductionEvent buildIntroductionEvent(String returnText){
+        IntroductionEvent event = new IntroductionEvent(interactionName, npcSource, speechText, returnText);
         return event;
     }
 }

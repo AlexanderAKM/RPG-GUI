@@ -48,6 +48,24 @@ public class NpcManager {
 
         Npc humanMan = new Npc("Human man", 2);
 
+        // Harmen - > Yo I'm in your house
+        // Yo I'm in your house -> Dang. Why?
+        // Dang. - > Bye.
+        // Why? - > Hehe
+        // Bye -> Home
+        // Hehe -> Home
+
+        // The first key is always the NPC's name
+
+
+        EventBuilder eventBuilder3 = new EventBuilder()
+                .setInteractionName("introduction")
+                .setNpcSource(Harmen)
+                .setSpeechText("Yeah, it's me. In your home.");
+        IntroductionEvent introductionEvent = eventBuilder3.buildIntroductionEvent("Bye");
+        Harmen.setEvent(introductionEvent);
+        Harmen.setNpcIntroductionEvents(introductionEvent);
+
         EventBuilder eventBuilder = new EventBuilder()
                 .setInteractionName("interactionName")
                 .setNpcSource(humanMan)
@@ -65,6 +83,8 @@ public class NpcManager {
 
         BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
         BattleEvent coverBattle = eventBuilder1.buildBattleEvent(coverQuestion);
+        EvilMan.setEvent(coverBattle);
+        EvilMan.setNpcBattleEvents(coverBattle);
 
         allNpcs.add(Bob);
         allNpcs.add(Harmen);
@@ -102,18 +122,21 @@ public class NpcManager {
                 notifyListeners(battlePayload);
                 break;
             case INTRODUCTION:
-                //playInteraction(target, interaction);
+                IntroductionEvent introductionEvent = npc.getIntroductionEvent(event.getName());
+                String introductionEventSpeech = event.getSpeechText() + "\n";
+
+                PropertyChangeEvent introductionPayload = new PropertyChangeEvent(this, "Introduction", introductionEventSpeech, introductionEvent);
+                notifyListeners(introductionPayload);
                 break;
             case WORLD_EVENT:
                 WorldEvent worldEvent = npc.getWorldEvent(event.getName());
-
                 String worldEventSpeech = event.getSpeechText() + "\n";
                 PropertyChangeEvent worldPayload = new PropertyChangeEvent(this, "World Event", worldEventSpeech, worldEvent);
                 notifyListeners(worldPayload);
         }
     }
 
-    public void checkAnswer(NpcButton target){
+    public void checkAnswer(NpcButton target, int wellBeingEffect, int socialEffect){
         Npc npc = target.getNpc();
         Events event = npc.findNpcEvent();
 
@@ -131,7 +154,11 @@ public class NpcManager {
         } else {
             // Wrong answer appropriate effects
             // Idk reduce player stats
-            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, battleQuestions.getLosingText());
+            Player player = Player.getInstance();
+            player.changeWellbeing(wellBeingEffect);
+            player.changeIntelligence(socialEffect);
+            String effectsTooltip = "Also you lost: " + Integer.toString(wellBeingEffect) + " Wellbeing, & " + Integer.toString(socialEffect) + " Social.";
+            PropertyChangeEvent payload = new PropertyChangeEvent(this, "Wrong", null, battleQuestions.getLosingText()  + effectsTooltip);
             notifyListeners(payload);
         }
 
