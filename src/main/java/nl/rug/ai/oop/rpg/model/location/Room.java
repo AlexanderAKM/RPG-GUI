@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * A class that  defines locations within the game
+ * A class that represents a room (location) within the game.
+ *
+ * @author Victoria Polaka
  */
 public class Room implements Serializable {
     String roomName;
@@ -21,29 +23,33 @@ public class Room implements Serializable {
     boolean isLocked;
     Item requiredItem;
 
+    /**
+     * Constructs a new Room object.
+     * Initializes the available NPCs and items lists.
+     */
     Room() {
         availableNpcs = new ArrayList<Npc>();
         availableItems = new ArrayList<Item>();
     }
 
     /**
-     * setter for the location name.
-     * @param name Locations name.
+     * setter for the location/room name.
+     * @param name Locations name
      */
     public void setName(String name){
         this.roomName = name;
     }
 
     /**
-     * setter for the location description.
-     * @param description The description of the location.
+     * setter for the location/room description.
+     * @param description The description of the location
      */
     public void setDescription(String description){
         this.roomDescription = description;
     }
 
     /**
-     * getter for the locations name.
+     * getter for the locations/room name.
      * @return The name of the location.
      */
     public String getRoomName(){
@@ -51,7 +57,7 @@ public class Room implements Serializable {
     }
 
     /**
-     * getter for the location description.
+     * getter for the location/room description.
      * @return The description of the location.
      */
     public String getRoomDescription(){
@@ -59,38 +65,77 @@ public class Room implements Serializable {
     }
 
 
-    public void setNorth(int north){
+    /**
+     * Sets the room index representing the north direction of the room.
+     *
+     * @param north The room index representing the north direction.
+     */
+    public void setNorth(int north) {
         this.n = north;
     }
 
-    public void setEast(int east){
+    /**
+     * Sets the room index representing the east direction of the room.
+     *
+     * @param east The room index representing the east direction.
+     */
+    public void setEast(int east) {
         this.e = east;
     }
 
-    public void setSouth(int south){
+    /**
+     * Sets the room index representing the south direction of the room.
+     *
+     * @param south The room index representing the south direction.
+     */
+    public void setSouth(int south) {
         this.s = south;
     }
 
-    public void setWest(int west){
+    /**
+     * Sets the room index representing the west direction of the room.
+     *
+     * @param west The room index representing the west direction.
+     */
+    public void setWest(int west) {
         this.w = west;
     }
 
-    public int getNorth(){
+    /**
+     * Returns the room index representing the north direction of the room.
+     *
+     * @return The room index representing the north direction.
+     */
+    public int getNorth() {
         return this.n;
     }
 
-    public int getEast(){
+    /**
+     * Returns the room index representing the east direction of the room.
+     *
+     * @return The room index representing the east direction.
+     */
+    public int getEast() {
         return this.e;
     }
 
-    public int getSouth(){
+    /**
+     * Returns the room index representing the south direction of the room.
+     *
+     * @return The room index representing the south direction.
+     */
+    public int getSouth() {
         return this.s;
     }
 
-    public int getWest(){
+    /**
+     * Returns the room index representing the west direction of the room.
+     *
+     * @return The room index representing the west direction.
+     */
+    public int getWest() {
         return this.w;
     }
-
     public int getDirection(String direction){
         int answer = 0;
         switch(direction){
@@ -109,34 +154,66 @@ public class Room implements Serializable {
         }
         return answer;
     }
+
     /**
-     * sets the status of the room.
-     * @param x Whether its locked or unlocked.
+     * Sets the locked status of the room.
+     *
+     * @param isLocked The locked status of the room (true if locked, false if unlocked).
      */
-    public void setIsLocked(boolean x){
-        this.isLocked = x;
+    public void setIsLocked(boolean isLocked) {
+        this.isLocked = isLocked;
     }
 
-    public boolean getIsLocked(){
+    /**
+     * Returns the locked status of the room.
+     *
+     * @return The locked status of the room (true if locked, false if unlocked).
+     */
+    public boolean getIsLocked() {
         return isLocked;
     }
 
-    public ArrayList<Item> getAvailableItems(){
+    /**
+     * Returns the list of available items in the room.
+     *
+     * @return The list of available items in the room.
+     */
+    public ArrayList<Item> getAvailableItems() {
         return availableItems;
     }
 
-    public ArrayList<Npc> getAvailableNpcs(){
+    /**
+     * Returns the list of available NPCs in the room.
+     *
+     * @return The list of available NPCs in the room.
+     */
+    public ArrayList<Npc> getAvailableNpcs() {
         return availableNpcs;
     }
 
+    /**
+     * Returns the required item to access the room.
+     *
+     * @return The required item to access the room.
+     */
     public Item getRequiredItem() {
         return requiredItem;
     }
 
-    public void setRequiredItem(Item item){
+    /**
+     * Sets the required item to access the room.
+     *
+     * @param item The required item to access the room.
+     */
+    public void setRequiredItem(Item item) {
         this.requiredItem = item;
     }
 
+    /**
+     * Sets the list of items available in the room.
+     *
+     * @param items The list of items available in the room.
+     */
     public void setItems(ArrayList<Item> items) {
         availableItems.addAll(items);
     }

@@ -4,16 +4,33 @@ import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * The LocationController class handles the actions related to location selection.
+ * It implements the ActionListener interface to respond to user actions.
+ *
+ * @author Victoria Polaka
+ */
 public class LocationController implements ActionListener {
     private LocationManager model;
     private RoomLanguageManager roomLanguageManager;
 
+    /**
+     * Constructs a LocationController.
+     *
+     * @param model                The LocationManager instance.
+     * @param roomLanguageManager  The RoomLanguageManager instance.
+     */
     public LocationController(LocationManager model, RoomLanguageManager roomLanguageManager) {
         this.model = model;
         this.roomLanguageManager = roomLanguageManager;
     }
 
+    /**
+     * Handles the actionPerformed event.
+     * Determines what the action command is and triggers the corresponding location change in the model.
+     *
+     * @param e The ActionEvent object representing the user's action.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
@@ -32,4 +49,3 @@ public class LocationController implements ActionListener {
         }
     }
 }
-

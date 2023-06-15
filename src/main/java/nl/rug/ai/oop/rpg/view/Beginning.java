@@ -52,6 +52,7 @@ public class Beginning {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Add your code here to load the old game
+
                 removeInitialButtons();
             }
         });
@@ -83,12 +84,14 @@ public class Beginning {
      * This method shows new game options.
      * It adds a combo box for languages and student types
      * and a button to start the game.
+     * @author Victoria Polaka (only included room language)
      */
     private void showNewGameOptions() {
         String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
         roomLanguageManager = new RoomLanguageManager();
+        roomLanguageManager.loadLanguage("english"); //sets default language
         // Add an ActionListener to the languageComboBox
         languageComboBox.addActionListener(new ActionListener() {
             @Override

@@ -28,7 +28,7 @@ public class Setup {
 
 
     /**
-     * @author Alexander Müller & Robert Hielkema
+     * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kikis Hjikakou
      * @param
      */
 
@@ -101,16 +101,14 @@ public class Setup {
         NpcView npcPanel = new NpcView(model, manager);
 
 
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(500, 500);
-
         JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
 
         gamePanel.setNpcPanel(npcThing);
         gamePanel.setNpcView(npcPanel);
         npcPanel.setup(model, npcs, npcController, gamePanel, frame);
-        //frame.add(npcThing, BorderLayout.NORTH);
+
+        //setup GridBagLayout for LocationView (game panel)
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridwidth = 2;
@@ -118,9 +116,7 @@ public class Setup {
         c.gridx = 0;
         c.gridy = 0;
         frame.add(locationView, c); // adds the game panel
-        //frame.setVisible(true);
 
-        //gamePanel.frameSetUp();
         frame.revalidate();
 
         frame.setSize(800, 600);

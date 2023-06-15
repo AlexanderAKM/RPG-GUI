@@ -13,6 +13,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The LocationManager class manages the locations (rooms) in the game.
+ * It implements the LocationInterface and Serializable interfaces.
+ *
+ * @author Victoria Polaka
+ */
 public class LocationManager implements LocationInterface, Serializable {
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
@@ -22,6 +28,12 @@ public class LocationManager implements LocationInterface, Serializable {
     private ItemManager manager;
     ArrayList<PropertyChangeListener> listeners;
 
+    /**
+     * Constructs a LocationManager object with the specified ItemManager and RoomLanguageManager.
+     *
+     * @param manager             The ItemManager for managing items.
+     * @param roomLanguageManager The RoomLanguageManager for managing room language translations.
+     */
     public LocationManager(ItemManager manager, RoomLanguageManager roomLanguageManager){
         this.manager = manager;
         map = new ArrayList<Room>();
@@ -31,21 +43,30 @@ public class LocationManager implements LocationInterface, Serializable {
         locationSetUp();
     }
 
+    /**
+     * Retrieves the room at the specified index from the map.
+     *
+     * @param index The index of the room in the map.
+     * @return The room at the specified index.
+     */
     public Room getRoom(int index){
         return map.get(index);
     }
 
+    /**
+     * Sets up the locations in the game.
+     */
     public void locationSetUp() {
+        // Get items for each room
         ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
         ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student Card","Money");
-        //ArrayList<Item> bbItems = manager.getItemsForRoom("Books");
         ArrayList<Item> canteenItems = manager.getItemsForRoom("Coffee");
         ArrayList<Item> outsideItems = manager.getItemsForRoom("Money", "Money");
         ArrayList<Item> examHallItems = manager.getItemsForRoom("Books");
 
-
+        // Create rooms using RoomBuilder (builder design pattern) and initialize their properties
         Room home = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("home")) //RoomLanguageManager.getTranslation(
+                .setName(roomLanguageManager.getTranslation("home"))
                 .setDescription(roomLanguageManager.getTranslation("home_description"))
                 .setNorth(1)
                 .setEast(-1)
@@ -53,7 +74,6 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setWest(-1)
                 .setIsLocked(false)
                 .addAvailableItems(homeItems)
-                //.setRequiredItem()
                 .build();
 
         Room outside = new RoomBuilder()
@@ -65,7 +85,6 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setWest(2)
                 .setIsLocked(false)
                 .addAvailableItems(outsideItems)
-                //.setRequiredItem()
                 .build();
 
         Room examHall = new RoomBuilder()
@@ -115,11 +134,11 @@ public class LocationManager implements LocationInterface, Serializable {
                 .addAvailableItems(coverItems)
                 .build();
 
-
-
+        // Set the current room for the player
         Player.getInstance().setCurrentRoom(home);
 
-        map.add(home); // the order of rooms
+        // Add rooms to the map in a specific order
+        map.add(home);
         map.add(outside);
         map.add(examHall);
         map.add(bb);
@@ -127,46 +146,81 @@ public class LocationManager implements LocationInterface, Serializable {
         map.add(coverRoom);
 
     }
-
+    /**
+     * Adds an NPC to a room.
+     *
+     * @param npcName The name of the NPC.
+     * @param npc The NPC object to add.
+     * @param room The room where the NPC will be added.
+     */
     @Override
     public void addNpcs(String npcName, Npc npc, Room room) {
         room.getAvailableNpcs().add(npc);
     }
 
+    /**
+     * Removes an NPC from a room.
+     *
+     * @param npcName The name of the NPC.
+     * @param npc The NPC object to remove.
+     * @param room The room where the NPC will be removed from.
+     */
     @Override
     public void removeNpcs(String npcName, Npc npc, Room room) {
         room.getAvailableNpcs().remove(npc);
     }
 
+    /**
+     * Adds an item to a room.
+     *
+     * @param x The item to add.
+     * @param room The room where the item will be added.
+     */
     @Override
     public void addItemActions(Item x, Room room) {
         room.getAvailableItems().add(x);
     }
 
+    /**
+     * Removes an item from a room.
+     *
+     * @param x The item to remove.
+     * @param room The room where the item will be removed from.
+     */
     @Override
     public void removeItemActions(Item x, Room room) {
         room.getAvailableItems().remove(x);
     }
-
+    /**
+     * Returns a list of available rooms adjacent to the current room.
+     *
+     * @param currentRoom The current room.
+     * @return An ArrayList of available rooms adjacent to the current room.
+     */
     @Override
     public ArrayList<Room> roomsAvailable(Room currentRoom) {
         availableRooms.clear();
-        if (Player.getInstance().getCurrentRoom().getNorth() >= 0){
+        if (Player.getInstance().getCurrentRoom().getNorth() >= 0) {
             availableRooms.add(getRoom(Player.getInstance().getCurrentRoom().getNorth()));
         }
-        if (Player.getInstance().getCurrentRoom().getEast() >= 0){
+        if (Player.getInstance().getCurrentRoom().getEast() >= 0) {
             availableRooms.add(getRoom(Player.getInstance().getCurrentRoom().getEast()));
         }
-        if (Player.getInstance().getCurrentRoom().getSouth() >= 0){
+        if (Player.getInstance().getCurrentRoom().getSouth() >= 0) {
             availableRooms.add(getRoom(Player.getInstance().getCurrentRoom().getSouth()));
         }
-        if (Player.getInstance().getCurrentRoom().getWest() >= 0){
+        if (Player.getInstance().getCurrentRoom().getWest() >= 0) {
             availableRooms.add(getRoom(Player.getInstance().getCurrentRoom().getWest()));
         }
         return availableRooms;
     }
 
-    private void notifyListeners(  PropertyChangeEvent payload) {
+    /**
+     * Notifies all registered listeners of a property change event.
+     *
+     * @param payload The PropertyChangeEvent payload.
+     */
+    private void notifyListeners(PropertyChangeEvent payload) {
         Iterator<PropertyChangeListener> allListeners = listeners.iterator();
 
         while (allListeners.hasNext()) {
@@ -174,56 +228,80 @@ public class LocationManager implements LocationInterface, Serializable {
         }
     }
 
+    /**
+     * Adds a property change listener.
+     *
+     * @param listener The PropertyChangeListener to add.
+     */
     public void addListener(PropertyChangeListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * Moves the player to the specified room.
+     *
+     * @param chosenRoom The index of the chosen room in the available rooms list.
+     */
     @Override
     public void movePlayer(int chosenRoom) {
-        //Room currentRoom = Player.getInstance().getCurrentRoom();
         Room destinationRoom = getRoom(chosenRoom);
 
-        if (destinationRoom.getRequiredItem() != null) { // if room requires item
-            if (Player.getInstance().getInventory().containsItem(destinationRoom.getRequiredItem())) { // if player has required item
-                // The player has the required item, allow them to move
+        if (destinationRoom.getRequiredItem() != null) {
+            // If the room requires an item
+            if (Player.getInstance().getInventory().containsItem(destinationRoom.getRequiredItem())) {
+                // If the player has the required item, allow them to move
                 Player.getInstance().setCurrentRoom(destinationRoom);
                 PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
                 notifyListeners(payload);
-                //System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-                //System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
             } else {
-                // The player doesn't have the required item, they cannot move
-                //System.out.println("You need a " + destinationRoom.getRequiredItem().getName() + " to enter this room.");
+                // The player doesn't have the required item, they go there
                 PropertyChangeEvent payload = new PropertyChangeEvent(this, "popUp", null, null);
                 notifyListeners(payload);
             }
-        } else { // if room not require item
-            if(destinationRoom.getIsLocked()){ // if room locked
-                //System.out.println("You need to interact with someone to enter this room.");
+        } else {
+            // If the room does not require an item
+            if (destinationRoom.getIsLocked()) {
+                // If the room is locked
+                PropertyChangeEvent payload = new PropertyChangeEvent(this, "popUp", null, null);
+                notifyListeners(payload);
             } else {
+                // If the room is not locked, allow the player to move
                 Player.getInstance().setCurrentRoom(destinationRoom);
                 PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
                 notifyListeners(payload);
-                //System.out.println("You are now in " + Player.getInstance().getCurrentRoom().getRoomName());
-                //System.out.println("Description: " + Player.getInstance().getCurrentRoom().getRoomDescription());
             }
         }
     }
 
-
+    /**
+     * Returns a list of available items in the current room.
+     *
+     * @param currentRoom The current room.
+     * @return An ArrayList of available items in the current room.
+     */
     @Override
     public ArrayList<Item> getAvailableItemsList(Room currentRoom) {
         return Player.getInstance().getCurrentRoom().getAvailableItems();
     }
 
+    /**
+     * Returns a list of NPCs in the current room.
+     *
+     * @param currentRoom The current room.
+     * @return An ArrayList of NPCs in the current room.
+     */
     @Override
     public ArrayList<Npc> getNpcList(Room currentRoom) {
         return Player.getInstance().getCurrentRoom().getAvailableNpcs();
     }
 
+    /**
+     * Unlocks a specific room.
+     *
+     * @param specificRoom The room to unlock.
+     */
     @Override
     public void unlockRoom(Room specificRoom) {
         specificRoom.setIsLocked(false);
     }
-
 }

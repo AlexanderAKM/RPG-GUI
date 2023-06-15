@@ -11,7 +11,6 @@ import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +19,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Represents the game panel GUI that displays the game elements, including rooms, items, NPCs, and text labels.
+ *
+ * @author Victoria Polaka
+ */
 public class GamePanelGUI {
-    //private JFrame frame;
     private JPanel panel;
     private JPanel gamePanel;
     private JLabel textLabel;
@@ -32,21 +35,22 @@ public class GamePanelGUI {
 
     private JButton interactNpcButton;
     private JPanel roomNpcsPanel;
+    private NpcView npcView;
 
     private JButton moveRoomsButton;
     private JPanel roomsPanel;
 
-    private NpcView npcView;
     private JLabel mapLabel;
-
     private ItemListener itemListener;
-
     private JFrame frame;
 
-    public void setItemListener(ItemListener itemListener) {
-        this.itemListener = itemListener;
-    }
-
+    /**
+     * Constructs a new GamePanelGUI instance.
+     *
+     * @param manager             the LocationManager object representing the game model
+     * @param controller          the LocationController object for handling location-related actions
+     * @param roomLanguageManager the RoomLanguageManager object for managing room translations
+     */
     public GamePanelGUI(LocationManager manager, LocationController controller, RoomLanguageManager roomLanguageManager) {
         this.frame = frame;
         panel = new JPanel();
@@ -90,7 +94,7 @@ public class GamePanelGUI {
         textLabel.setPreferredSize(new Dimension(350, 100));
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 20, 20, 20); // Add some vertical spacing
+        gbc.insets = new Insets(0, 20, 20, 20);
         gamePanel.add(textLabel, gbc);
 
         gbc.gridy = 1;
@@ -115,14 +119,12 @@ public class GamePanelGUI {
         manager.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "popUp")) {
                 showRoomNotAccessiblePopup(frame, roomLanguageManager);
-                //setTextLabel((String) evt.getNewValue());
-                //showGamePanel();
             }
         });
 
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File("src/main/resources/map_final.png")); //C:/Coding/OOP-assignment/2023_Project_006/src/main/resources
+            image = ImageIO.read(new File("src/main/resources/map_final.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,28 +142,54 @@ public class GamePanelGUI {
         interactNpcButton.setForeground(textColor);
     }
 
-
+    /**
+     * Sets the panel for displaying NPC interactions within the room.
+     *
+     * @param npcPanel the JPanel containing the NPC interactions
+     * @author Kikis Hjikakou
+     */
     public void setNpcPanel(JPanel npcPanel){
         roomNpcsPanel = npcPanel;
     }
 
+    /**
+     * Returns the view panel.
+     *
+     * @return the JPanel representing the locations view (GamePanelGUI)
+     */
     public JPanel returnLocationView(){
         return panel;
     }
 
+    /**
+     * Sets the text of the text label in the game panel.
+     *
+     * @param newText the new text to set
+     */
     private void setTextLabel(String newText) {
         textLabel.setText("<html>"+newText +"</hmtl>");
-        textLabel.setPreferredSize(new Dimension(350, 100)); // Set the preferred size as per your requirements
-        //textLabel.setHorizontalAlignment(SwingConstants.CENTER); // Align the text horizontally in the center
-        //textLabel.setVerticalAlignment(SwingConstants.TOP); // Align the text vertically at the top
+        textLabel.setPreferredSize(new Dimension(350, 100));
+        textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        textLabel.setVerticalAlignment(SwingConstants.TOP);
         gamePanel.revalidate();
     }
 
-
+    /**
+     * Sets the NPC view for displaying NPC information in the room.
+     *
+     * @param npcView the NpcView object representing the NPC view
+     * @author Kikis Hjikakou
+     */
     public void setNpcView(NpcView npcView){
         this.npcView = npcView;
     }
 
+    /**
+     * Creates buttons for each available room in the current location.
+     *
+     * @param model     the LocationManager object representing the location game model
+     * @param controller the LocationController object for handling room button actions
+     */
     public void createRoomButtons(LocationManager model, LocationController controller) {
         roomsPanel.removeAll(); // Clear the existing buttons ArrayList<Room>
 
@@ -183,7 +211,10 @@ public class GamePanelGUI {
         panel.repaint();
     }
 
-
+    /**
+     * Displays the game panel in the main panel, hiding other panels.
+     * This method shows the main gameplay interface.
+     */
     public void showGamePanel() {
         panel.removeAll();
         panel.add(gamePanel);
@@ -195,6 +226,10 @@ public class GamePanelGUI {
         panel.repaint();
     }
 
+    /**
+     * Displays the room item panel in the main panel, hiding other panels.
+     * This method shows the panel where the player can interact with items in the room.
+     */
     public void showRoomItemPanel(){
         panel.removeAll();
         panel.add(roomItemsPanel);
@@ -206,6 +241,10 @@ public class GamePanelGUI {
         panel.repaint();
     }
 
+    /**
+     * Displays the room NPC panel in the main panel, hiding other panels.
+     * This method shows the panel where the player can interact with NPCs in the room.
+     */
     public void showRoomNpcPanel() {
         panel.removeAll();
         panel.add(roomNpcsPanel);
@@ -218,6 +257,10 @@ public class GamePanelGUI {
         panel.repaint();
     }
 
+    /**
+     * Displays the rooms panel in the main panel, hiding other panels.
+     * This method shows the panel where the player can navigate between available rooms.
+     */
     public void showRoomsPanel() {
         panel.removeAll();
         panel.add(roomsPanel);
@@ -233,13 +276,18 @@ public class GamePanelGUI {
      * Creates buttons for each available item in the current room.
      *
      * @param model the LocationManager object representing the game model
-     * @author Alexander Müller
+     * @author Alexander Müller & Victoria Polaka
      */
     public void createItemButtons(LocationManager model) {
         roomItemsPanel.removeAll();
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
             JButton itemButton = new JButton(item.getName());
+            Color buttonColor = new Color(135, 206, 250); // Blue color
+            Color textColor = Color.WHITE; // White text color
+
+            itemButton.setBackground(buttonColor);
+            itemButton.setForeground(textColor);
             itemButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (itemListener != null) {
@@ -256,14 +304,23 @@ public class GamePanelGUI {
         panel.repaint();
     }
 
+    /**
+     *
+     * @param itemListener
+     * @author Alexander Müller
+     */
+    public void setItemListener(ItemListener itemListener) {
+        this.itemListener = itemListener;
+    }
+
+    /**
+     * Displays a popup dialog indicating that the current room is not accessible.
+     *
+     * @param frame               the JFrame object representing the parent frame
+     * @param roomLanguageManager the RoomLanguageManager object for translation purposes
+     */
     private void showRoomNotAccessiblePopup(JFrame frame, RoomLanguageManager roomLanguageManager) {
         RoomPopup popup = new RoomPopup(frame, roomLanguageManager.getTranslation("popUp_warning"));
         popup.showDialog();
     }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-
 }
