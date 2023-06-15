@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -52,7 +53,13 @@ public class Inventory implements Serializable {
      * @param itemName the name of the item to remove
      */
     public void removeItemByName(String itemName) {
-        items.removeIf(item -> item.getName().equals(itemName));
+        for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
+            Item item = iterator.next();
+            if (item.getName().equals(itemName)) {
+                iterator.remove();
+                break; // Stop after removing the first occurrence
+            }
+        }
         support.firePropertyChange("items", null, null);
     }
 
