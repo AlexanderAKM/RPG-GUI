@@ -244,14 +244,13 @@ public class GamePanelGUI {
                 public void actionPerformed(ActionEvent e) {
                     if (itemListener != null) {
                         itemListener.onItemClicked(item);
+                        showGamePanel();
                     }
                 }
             });
             itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
-        
-        roomItemsPanel.add(backButton);
         panel.revalidate();
         panel.repaint();
     }
