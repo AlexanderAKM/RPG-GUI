@@ -1,40 +1,51 @@
 package nl.rug.ai.oop.rpg.controller.location;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * The LocationController class handles the actions related to location selection.
+ * It implements the ActionListener interface to respond to user actions.
+ *
+ * @author Victoria Polaka
+ */
 public class LocationController implements ActionListener {
     private LocationManager model;
-    public LocationController(LocationManager model) {
+    private RoomLanguageManager roomLanguageManager;
+
+    /**
+     * Constructs a LocationController.
+     *
+     * @param model                The LocationManager instance.
+     * @param roomLanguageManager  The RoomLanguageManager instance.
+     */
+    public LocationController(LocationManager model, RoomLanguageManager roomLanguageManager) {
         this.model = model;
+        this.roomLanguageManager = roomLanguageManager;
     }
 
+    /**
+     * Handles the actionPerformed event.
+     * Determines what the action command is and triggers the corresponding location change in the model.
+     *
+     * @param e The ActionEvent object representing the user's action.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        switch (e.getActionCommand()) {
-            case "Home":
-                model.movePlayer(0);
-                break;
-            case "Outside":
-                System.out.println("controller for outside");
-                model.movePlayer(1);
-                break;
-            case "Aletta Jacobs Hall":
-                model.movePlayer(2);
-                break;
-            case "Bernoulliborg":
-                model.movePlayer(3);
-                break;
-            case "The BB canteen":
-                model.movePlayer(4);
-                break;
-            case "Cover room":
-                model.movePlayer(5);
-                break;
+        String actionCommand = e.getActionCommand();
+        if (actionCommand.equals(roomLanguageManager.getTranslation("home"))) {
+            model.movePlayer(0);
+        } else if (actionCommand.equals(roomLanguageManager.getTranslation("outside"))) {
+            model.movePlayer(1);
+        } else if (actionCommand.equals(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall"))) {
+            model.movePlayer(2);
+        } else if (actionCommand.equals(roomLanguageManager.getTranslation("bernoulliborg"))) {
+            model.movePlayer(3);
+        } else if (actionCommand.equals(roomLanguageManager.getTranslation("TheBBCanteen"))) {
+            model.movePlayer(4);
+        } else if (actionCommand.equals(roomLanguageManager.getTranslation("cover_room"))) {
+            model.movePlayer(5);
         }
     }
 }
-
-

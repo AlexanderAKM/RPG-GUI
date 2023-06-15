@@ -5,7 +5,7 @@ import nl.rug.ai.oop.rpg.model.players.Player;
 
 public class StudentCard extends Item {
     public StudentCard() {
-        super("Student Card");
+        super("StudentCard");
     }
 
     @Override

@@ -1,5 +1,8 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.model.inventory.InventoryLanguageManager;
+import nl.rug.ai.oop.rpg.model.location.Room;
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
@@ -7,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import javax.swing.JComboBox;
+
 
 /**
  * This is the class for the beginning of the RPG Game.
@@ -26,14 +31,19 @@ public class Beginning {
     private JComboBox<String> languageComboBox;
     private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
+    private RoomLanguageManager roomLanguageManager;
+    //private InventoryLanguageManager inventoryLanguageManager;
+    private String selectedLanguage;
+
 
 
     /**
      * Constructor for the Beginning class.
      * It initializes the frame and buttons.
      */
-    public Beginning(Runnable callback) {
+    public Beginning() {
         this.callback = callback;
+        //this.roomLanguageManager = roomLanguageManager;
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +54,7 @@ public class Beginning {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Add your code here to load the old game
+
                 removeInitialButtons();
             }
         });
@@ -75,11 +86,26 @@ public class Beginning {
      * This method shows new game options.
      * It adds a combo box for languages and student types
      * and a button to start the game.
+     * @author Victoria Polaka (only included room language)
      */
     private void showNewGameOptions() {
-        String[] languages = {"English", "Nederlands"};
+        String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
+        roomLanguageManager = new RoomLanguageManager();
+        roomLanguageManager.loadLanguage("english"); //sets default language
+        //inventoryLanguageManager = new InventoryLanguageManager();
+        //inventoryLanguageManager.loadLanguage("english"); //sets default language
+        // Add an ActionListener to the languageComboBox
+        languageComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedLanguage = (String)languageComboBox.getSelectedItem();
+                roomLanguageManager.loadLanguage((String)languageComboBox.getSelectedItem());
+                //inventoryLanguageManager.loadLanguage(selectedLanguage);
+            }
+        });
+
 
         String[] studentTypes = {"Artificial Intelligence", "Applied Physics", "Computing Science"};
         studentTypeComboBox = new JComboBox<>(studentTypes);
@@ -97,7 +123,9 @@ public class Beginning {
                 player.chooseProgramme(studentType);
                 frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
-                callback.run();
+                Setup setup = new Setup();
+                setup.start(roomLanguageManager);
+                //callback.run();
             }
         });
         frame.add(startGameButton);
@@ -112,12 +140,5 @@ public class Beginning {
     public void show() {
         frame.setVisible(true);
     }
-
-    /**
-     * Main method for the Beginning class.
-     * It creates an instance of Beginning and shows the frame.
-     *
-     * @param args command line arguments (not used)
-     */
-
 }
+

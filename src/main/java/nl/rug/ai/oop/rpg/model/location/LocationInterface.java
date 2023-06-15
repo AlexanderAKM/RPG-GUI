@@ -5,73 +5,88 @@ import nl.rug.ai.oop.rpg.model.inventory.Item;
 
 import java.util.ArrayList;
 
+/**
+ * The LocationInterface defines the behavior and functionality of a location in the game.
+ * This interface provides methods for managing NPCs, items, rooms, and player movement.
+ *
+ * @author Victoria Polaka
+ */
 public interface LocationInterface {
-    ///**
-    // * Gets the room the player is currently in.
-     //* @return The current room the player is in.
-     //*/
-    //public Room getPlayerRoom();
 
     /**
-     * Method that sets up the location feature; rooms, starting room and map.
+     * Sets up the location by creating rooms, adding items to the room, defining the starting room, and generating the map.
      */
     public void locationSetUp();
 
     /**
-     * Adds NPCs to the list of NPCs in a specific room.
-     * @param npcName The name of the NPC.
-     * @param roomName The room in which the NPC should be in.
+     * Adds an NPC to a specific room.
+     *
+     * @param npcName  The name of the NPC.
+     * @param npc      The NPC object to add.
+     * @param roomName The room where the NPC should be added.
      */
     public void addNpcs(String npcName, Npc npc, Room roomName);
 
     /**
      * Removes a specific NPC from a room.
-     * @param npcName The name of the NPC.
-     * @param roomName The room in which the NPC remains.
+     *
+     * @param npcName  The name of the NPC to remove.
+     * @param npc      The NPC object to remove.
+     * @param roomName The room from which the NPC should be removed.
      */
     public void removeNpcs(String npcName, Npc npc, Room roomName);
 
     /**
-     * Adds an item to the room.
-     * @param x The item specified.
-     * @param roomName The name of the room the item should be in.
+     * Adds an item to a room.
+     *
+     * @param item     The item to add.
+     * @param roomName The name of the room where the item should be added.
      */
-    public void addItemActions(Item x, Room roomName);
+    public void addItemActions(Item item, Room roomName);
 
     /**
-     * removes a particular item from a room.
-     * @param x The item to be removed.
-     * @param roomName The name of the room the item is in.
+     * Removes a particular item from a room.
+     *
+     * @param item     The item to remove.
+     * @param roomName The name of the room from which the item should be removed.
      */
-    public void removeItemActions(Item x, Room roomName);
+    public void removeItemActions(Item item, Room roomName);
 
     /**
-     * Returns all the available rooms the player can access/ go to.
-     * @param currentRoom The room the player resides.
-     * @return An arrayList of all the rooms you can access from the current room
+     * Returns a list of available rooms that can be accessed from the current room.
+     *
+     * @param currentRoom The current room the player is in.
+     * @return An ArrayList of all the rooms accessible from the current room.
      */
     public ArrayList<Room> roomsAvailable(Room currentRoom);
 
     /**
-     * Moves the player to the chosen room.
-     * @param direction compass direction chosen.
+     * Moves the player to the specified room in the given direction.
+     *
+     * @param direction The compass direction to move towards.
      */
     public void movePlayer(int direction);
 
     /**
-     * Returns all the items you can interact with that are present in the room.
-     * @param currentRoom The room the player is currently in.
-     * @return An ArrayList of all the items in the room.
+     * Returns a list of available items in the current room that can be interacted with.
+     *
+     * @param currentRoom The current room the player is in.
+     * @return An ArrayList of all the items in the room that can be interacted with.
      */
     public ArrayList<Item> getAvailableItemsList(Room currentRoom);
 
     /**
-     * Returns all the NPCs you can interact with in the current room.
-     * @param currentRoom The room the player is in.
-     * @return An ArrayList of all the available NPCs.
+     * Returns a list of available NPCs in the current room that can be interacted with.
+     *
+     * @param currentRoom The current room the player is in.
+     * @return An ArrayList of all the available NPCs in the room.
      */
     public ArrayList<Npc> getNpcList(Room currentRoom);
 
+    /**
+     * Unlocks a specific room.
+     *
+     * @param specificRoom The room to unlock.
+     */
     public void unlockRoom(Room specificRoom);
-
 }
