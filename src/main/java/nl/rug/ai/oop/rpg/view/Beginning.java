@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.model.inventory.InventoryLanguageManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
@@ -31,6 +32,7 @@ public class Beginning {
     private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
     private RoomLanguageManager roomLanguageManager;
+    //private InventoryLanguageManager inventoryLanguageManager;
     private String selectedLanguage;
 
 
@@ -92,13 +94,15 @@ public class Beginning {
         frame.add(languageComboBox);
         roomLanguageManager = new RoomLanguageManager();
         roomLanguageManager.loadLanguage("english"); //sets default language
+        //inventoryLanguageManager = new InventoryLanguageManager();
+        //inventoryLanguageManager.loadLanguage("english"); //sets default language
         // Add an ActionListener to the languageComboBox
         languageComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedLanguage = (String)languageComboBox.getSelectedItem();
                 roomLanguageManager.loadLanguage((String)languageComboBox.getSelectedItem());
-
+                //inventoryLanguageManager.loadLanguage(selectedLanguage);
             }
         });
 
