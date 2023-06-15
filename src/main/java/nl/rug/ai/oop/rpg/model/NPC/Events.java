@@ -3,18 +3,13 @@ package nl.rug.ai.oop.rpg.model.NPC;
 public abstract class Events {
     public enum EventType {
         BATTLE,
-        SHOP,
-        SOCIALISE,
         INTRODUCTION,
         WORLD_EVENT
     }
     private String interactionName;
     private Npc npcSource;
-
     private EventType eventType;
-
     private String speechText;
-
 
     public Events(String eventName, Npc npcSource, EventType eventType, String speechText){
         this.interactionName = eventName;

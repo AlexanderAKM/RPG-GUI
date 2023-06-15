@@ -26,7 +26,7 @@ public class Npc implements Serializable {
 
     HashMap<String, WorldEvent> npcWorldEvents;
 
-    HashMap<String, BattleEvent> npcIntroductionEvents;
+    HashMap<String, IntroductionEvent> npcIntroductionEvents;
 
 
     public Npc(String name, int money){
@@ -34,7 +34,7 @@ public class Npc implements Serializable {
         playerEvents = new ArrayList<Events>();
         npcBattleEvents = new HashMap<String, BattleEvent>();
         npcWorldEvents = new HashMap<String, WorldEvent>();
-        npcIntroductionEvents = new HashMap<String, BattleEvent>();
+        npcIntroductionEvents = new HashMap<String, IntroductionEvent>();
 
         this.name = name;
         this.money = money;
@@ -48,29 +48,29 @@ public class Npc implements Serializable {
     public String getName(){
         return name;
     }
-
     public int getMoney(){
         return money;
     }
-
     public void changeMoney(int amount){
         money += amount;
     }
-
     public void setEvent(Events newInteraction){
         playerEvents.add(newInteraction);
     }
-
     public void setNpcBattleEvents(BattleEvent battleEvent){
         npcBattleEvents.put(battleEvent.getName(), battleEvent);
     }
-
     public void setNpcWorldEvents(WorldEvent worldEvent){
         npcWorldEvents.put(worldEvent.getName(), worldEvent);
     }
+    public void setNpcIntroductionEvents(IntroductionEvent introductionEvent) { npcIntroductionEvents.put(introductionEvent.getName(), introductionEvent);}
     public BattleEvent getNpcBattleEvents(String eventName){
        return npcBattleEvents.get(eventName);
     }
+    public IntroductionEvent getIntroductionEvent(String eventName){
+        return npcIntroductionEvents.get(eventName);
+    }
+
 
     public WorldEvent getWorldEvent(String eventName){
         return npcWorldEvents.get(eventName);

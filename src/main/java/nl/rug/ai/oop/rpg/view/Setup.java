@@ -76,7 +76,7 @@ public class Setup {
         // Connect the RoomItemsController to the GamePanelGUI
         gamePanel.setItemListener(roomItemsController);
 
-        NpcManager model = new NpcManager();
+        NpcManager model = new NpcManager(manager);
         NpcController npcController = new NpcController(model);
 
         // Test
@@ -98,7 +98,7 @@ public class Setup {
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
-        NpcView npcPanel = new NpcView(model, manager);
+        NpcView npcPanel = new NpcView(model, manager, playerStatsPane);
 
 
         JPanel npcThing = npcPanel.returnNpcView();

@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class NpcController implements ActionListener {
+public class NpcController implements NpcActionListener {
     private NpcManager model;
 
 
@@ -23,23 +23,32 @@ public class NpcController implements ActionListener {
 
     // TO DO FIGURE OUT HOW TO PASS AN INTERACTION NAME
     @Override
-    public void actionPerformed(ActionEvent e) {
-        Object npc = e.getSource();
+    public void actionPerformed(ActionEvent e){
+
+    }
+    @Override
+    public void actionPerformed(NpcActionEvent e) {
+       // Object npc = e.getSource();
+        NpcButton npcButton = e.getSourceNpcButton();
         switch (e.getActionCommand()) {
             case "NPC Interaction":
                 //(Npc)npc
-                model.npcInteraction((NpcButton)npc, "Interaction");
+                System.out.println("Ye");
+                model.npcInteraction(npcButton, "Interaction");
                 break;
             case "Battle Answer":
-                model.checkAnswer((NpcButton)npc);
+                System.out.println("Ye");
+                model.checkAnswer(npcButton, -10, -10);
+                break;
+            case "Continue World Event":
+                model.checkWorldEventCondition(npcButton);
+                break;
+            case "Continue Conversation":
+                // I need the event that ran it as well
+                model.continueConversation(npcButton, e.getEventName(), npcButton.getText());
                 break;
             default:
                 // Go through each one
-                /**for(Npc computer : model.allNpcs){
-                    if(Objects.equals(e.getActionCommand(), computer.getName())){
-                        model.playInteraction(computer, "Intro");
-                    }
-                }**/
                 break;
         }
     }
