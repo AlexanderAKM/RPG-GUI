@@ -299,6 +299,14 @@ public class GamePanelGUI {
             itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
+        backButton = new JButton("Go back");
+        roomItemsPanel.add(backButton);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showGamePanel();
+            }
+        });
         panel.revalidate();
         panel.repaint();
     }

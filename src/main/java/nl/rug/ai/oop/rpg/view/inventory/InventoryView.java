@@ -22,10 +22,10 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
     private final JPanel itemsPanel;
     private ItemListener itemListener;
 
-    public static int ITEM_WIDTH = 150;
-    public static int ITEM_LENGTH = 250;
-    public static int VIEWWIDTH = 500;
-    public static int VIEWHEIGHT = 600;
+    public static int ITEM_WIDTH = 75;
+    public static int ITEM_LENGTH = 100;
+    public static int VIEWWIDTH = 200;
+    public static int VIEWHEIGHT = 250;
 
     /**
      * Creates an InventoryView with the given Inventory.
