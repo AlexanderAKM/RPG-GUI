@@ -43,6 +43,7 @@ public class GamePanelGUI {
     private JLabel mapLabel;
     private ItemListener itemListener;
     private JFrame frame;
+    private final RoomLanguageManager roomLanguageManager;
 
     /**
      * Constructs a new GamePanelGUI instance.
@@ -53,6 +54,7 @@ public class GamePanelGUI {
      */
     public GamePanelGUI(LocationManager manager, LocationController controller, RoomLanguageManager roomLanguageManager) {
         this.frame = frame;
+        this.roomLanguageManager = roomLanguageManager;
         panel = new JPanel();
         gamePanel = new JPanel(new GridBagLayout());
         gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
@@ -282,7 +284,7 @@ public class GamePanelGUI {
         roomItemsPanel.removeAll();
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
-            JButton itemButton = new JButton(item.getName());
+            JButton itemButton = new JButton(roomLanguageManager.getTranslation(item.getName()));
             Color buttonColor = new Color(135, 206, 250); // Blue color
             Color textColor = Color.WHITE; // White text color
 
@@ -299,7 +301,7 @@ public class GamePanelGUI {
             itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
-        backButton = new JButton("Go back");
+        backButton = new JButton(roomLanguageManager.getTranslation("Go_Back"));
         roomItemsPanel.add(backButton);
         backButton.addActionListener(new ActionListener() {
             @Override

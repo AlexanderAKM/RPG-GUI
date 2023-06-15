@@ -40,7 +40,7 @@ public class Setup {
         Inventory inventory = player.getInventory();
 
         // Create the inventory view and controller
-        InventoryView inventoryView = new InventoryView(inventory);
+        InventoryView inventoryView = new InventoryView(inventory, roomLanguageManager);
         new InventoryController(inventory, inventoryView, player);
 
         // Create the main frame and add the inventory view and PlayerStatsPane

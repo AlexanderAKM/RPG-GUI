@@ -3,6 +3,8 @@ package nl.rug.ai.oop.rpg.view.inventory;
 import nl.rug.ai.oop.rpg.controller.inventory.ItemListener;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.location.Room;
+import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +21,10 @@ import java.util.List;
  */
 public class InventoryView extends JPanel implements PropertyChangeListener {
     private final Inventory inventory;
+    private final RoomLanguageManager roomLanguageManager;
     private final JPanel itemsPanel;
     private ItemListener itemListener;
-
+    private JLabel inventoryLabel;
     public static int ITEM_WIDTH = 75;
     public static int ITEM_LENGTH = 100;
     public static int VIEWWIDTH = 200;
@@ -32,15 +35,17 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
      *
      * @param inventory the inventory to display
      */
-    public InventoryView(Inventory inventory) {
+    public InventoryView(Inventory inventory, RoomLanguageManager roomLanguageManager) {
         this.inventory = inventory;
+        this.roomLanguageManager = roomLanguageManager;
         itemsPanel = new JPanel();
         itemsPanel.setLayout(new GridLayout(0, 2));
         setLayout(new BorderLayout());
-        add(new JLabel("Inventory:"), BorderLayout.NORTH);
+        inventoryLabel = new JLabel(roomLanguageManager.getTranslation("Inventory"));
+        add(inventoryLabel, BorderLayout.NORTH);
         add(itemsPanel, BorderLayout.CENTER);
         this.inventory.addChangeListener(this);
-        loadInventory();
+        loadInventory(roomLanguageManager);
         Dimension size = new Dimension(VIEWWIDTH, VIEWHEIGHT);
         this.setPreferredSize(size);
         this.setMaximumSize(size);
@@ -58,19 +63,19 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
     /**
      * Loads items into the inventory.
      */
-    private void loadInventory() {
+    private void loadInventory(RoomLanguageManager roomLanguageManager) {
         itemsPanel.removeAll();
         List<Item> items = this.inventory.getItems();
         for (Item item : items) {
             URL resourceUrl = getClass().getClassLoader().getResource(item.getName() + ".png");
             if (resourceUrl == null) {
-                System.out.println("Failed to load image for item: " + item.getName());
+                System.out.println(roomLanguageManager.getTranslation("Image_Fail") + roomLanguageManager.getTranslation(item.getName()));
                 continue;
             }
             ImageIcon imageIcon = new ImageIcon(resourceUrl);
             ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
-            JButton button = new JButton(item.getName(), resizedIcon);
-            button.setActionCommand(item.getName());
+            JButton button = new JButton(roomLanguageManager.getTranslation(item.getName()), resizedIcon);
+            button.setActionCommand(roomLanguageManager.getTranslation(item.getName()));
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -117,6 +122,6 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        loadInventory();
+        loadInventory(roomLanguageManager);
     }
 }
