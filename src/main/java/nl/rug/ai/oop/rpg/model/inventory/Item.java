@@ -3,6 +3,7 @@ package nl.rug.ai.oop.rpg.model.inventory;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * This abstract class represents a general item in the game.
@@ -35,4 +36,24 @@ public abstract class Item implements Serializable {
      * @param player the player to use the item on
      */
     public abstract void use(Player player);
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Item otherItem = (Item) obj;
+        return Objects.equals(name, otherItem.name);
+        // Add more comparisons for other fields as needed
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+        // Hash other fields as needed
+    }
+
 }
