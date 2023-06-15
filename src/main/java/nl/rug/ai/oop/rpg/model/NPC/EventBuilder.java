@@ -47,8 +47,8 @@ public class EventBuilder {
         return event;
     }
 
-    public IntroductionEvent buildIntroductionEvent(String returnText){
-        IntroductionEvent event = new IntroductionEvent(interactionName, npcSource, speechText, returnText);
+    public IntroductionEvent buildIntroductionEvent(String returnText, ConversationChain conversationChain){
+        IntroductionEvent event = new IntroductionEvent(interactionName, npcSource, speechText, returnText, conversationChain);
         return event;
     }
 }

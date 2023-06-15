@@ -41,7 +41,11 @@ public class NpcController implements NpcActionListener {
                 model.checkAnswer(npcButton, -10, -10);
                 break;
             case "Continue World Event":
-                //model.checkWorldEventCondition((npc);
+                model.checkWorldEventCondition(npcButton);
+                break;
+            case "Continue Conversation":
+                // I need the event that ran it as well
+                model.continueConversation(npcButton, e.getEventName(), npcButton.getText());
                 break;
             default:
                 // Go through each one

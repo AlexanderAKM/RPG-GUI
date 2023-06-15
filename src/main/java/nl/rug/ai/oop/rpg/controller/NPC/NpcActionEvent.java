@@ -10,16 +10,23 @@ public class NpcActionEvent extends ActionEvent {
     private int socialEffect;
 
     private NpcButton sourceNpcButton;
-    public NpcActionEvent(Object source, int id, String command, int wellBeingEffect, int socialEffect, NpcButton sourceNpcButton){
+
+    String eventName;
+
+    public NpcActionEvent(Object source, int id, String command, String eventName, int wellBeingEffect, int socialEffect, NpcButton sourceNpcButton){
         super(source, id, command);
         this.wellBeingEffect = wellBeingEffect;
         this.socialEffect = socialEffect;
         this.sourceNpcButton = sourceNpcButton;
+        this.eventName = eventName;
     }
 
     public NpcButton getSourceNpcButton(){
         return sourceNpcButton;
     }
 
+    public String getEventName(){
+        return eventName;
+    }
 
 }

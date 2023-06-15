@@ -48,27 +48,21 @@ public class Npc implements Serializable {
     public String getName(){
         return name;
     }
-
     public int getMoney(){
         return money;
     }
-
     public void changeMoney(int amount){
         money += amount;
     }
-
     public void setEvent(Events newInteraction){
         playerEvents.add(newInteraction);
     }
-
     public void setNpcBattleEvents(BattleEvent battleEvent){
         npcBattleEvents.put(battleEvent.getName(), battleEvent);
     }
-
     public void setNpcWorldEvents(WorldEvent worldEvent){
         npcWorldEvents.put(worldEvent.getName(), worldEvent);
     }
-
     public void setNpcIntroductionEvents(IntroductionEvent introductionEvent) { npcIntroductionEvents.put(introductionEvent.getName(), introductionEvent);}
     public BattleEvent getNpcBattleEvents(String eventName){
        return npcBattleEvents.get(eventName);

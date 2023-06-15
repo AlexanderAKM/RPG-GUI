@@ -49,20 +49,55 @@ public class NpcManager {
         Npc humanMan = new Npc("Human man", 2);
 
         // Harmen - > Yo I'm in your house
+
         // Yo I'm in your house -> Dang. Why?
-        // Dang. - > Bye.
-        // Why? - > Hehe
-        // Bye -> Home
-        // Hehe -> Home
+        // Connection: Dang. - > Hehe
+        // Hehe -> Ok. (Home)
+
+        // Connection: Why? - > I need friends.
+        // I need fiends. -> Ok. (Home)
+
+
 
         // The first key is always the NPC's name
+        ArrayList<String> ZeroOption = new ArrayList<String>();
+        ArrayList<String> FirstOption = new ArrayList<String>();
+        ArrayList<String> home = new ArrayList<String>();
+        ArrayList<String> thirdOption = new ArrayList<String>();
+        home.add("Ok");
+
+        ZeroOption.add("Yo I'm in your house");
+        FirstOption.add("Dang.");
+        FirstOption.add("Why?");
+        thirdOption.add("Hehe.");
+        thirdOption.add("I need fiends.");
+
+        ConversationChain conversationChain = new ConversationChain();
+
+        conversationChain.addToConversationChain(Harmen.getName(), ZeroOption);
+
+        // Yo I'm in your house -> Dang. Why?
+        conversationChain.addToConversationChain(ZeroOption.get(0), FirstOption);
+        // Connection: Dang. - > Hehe
+        conversationChain.addToDialogueConnections(FirstOption.get(0), thirdOption.get(0));
+        // Hehe -> Ok. (Home)
+        conversationChain.addToConversationChain(thirdOption.get(0),home);
+        conversationChain.setFinalText(home);
+
+        // Connection: Why? - > I need friends.
+        conversationChain.addToDialogueConnections(FirstOption.get(1), thirdOption.get(1));
+        // I need fiends. -> Ok. (Home)
+        conversationChain.addToConversationChain(thirdOption.get(1), home);
+
+
 
 
         EventBuilder eventBuilder3 = new EventBuilder()
                 .setInteractionName("introduction")
                 .setNpcSource(Harmen)
                 .setSpeechText("Yeah, it's me. In your home.");
-        IntroductionEvent introductionEvent = eventBuilder3.buildIntroductionEvent("Bye");
+        IntroductionEvent introductionEvent = eventBuilder3.buildIntroductionEvent("Bye", conversationChain);
+        //introductionEvent.initialSetup();
         Harmen.setEvent(introductionEvent);
         Harmen.setNpcIntroductionEvents(introductionEvent);
 
@@ -122,10 +157,18 @@ public class NpcManager {
                 notifyListeners(battlePayload);
                 break;
             case INTRODUCTION:
+                ArrayList<String> options = new ArrayList<String>();
                 IntroductionEvent introductionEvent = npc.getIntroductionEvent(event.getName());
-                String introductionEventSpeech = event.getSpeechText() + "\n";
+                introductionEvent.initialSetup();
+                ConversationChain conversationChain = introductionEvent.getConversationChain();
 
-                PropertyChangeEvent introductionPayload = new PropertyChangeEvent(this, "Introduction", introductionEventSpeech, introductionEvent);
+                // We get the starting Key from the event itself, it starts of with the NPCs name
+
+                options = conversationChain.getOptions(introductionEvent.getCurrentKey());
+                //  Whenever button gets pressed key is updated
+
+                String introductionEventSpeech = event.getSpeechText() + "\n";
+                PropertyChangeEvent introductionPayload = new PropertyChangeEvent(this, "Introduction", options, introductionEvent);
                 notifyListeners(introductionPayload);
                 break;
             case WORLD_EVENT:
@@ -162,6 +205,22 @@ public class NpcManager {
             notifyListeners(payload);
         }
 
+    }
+
+    public void continueConversation(NpcButton target, String eventName, String optionSelected){
+        Npc npc = target.getNpc();
+
+        IntroductionEvent introductionEvent = npc.getIntroductionEvent(eventName);
+
+        ArrayList<String> options = new ArrayList<String>();
+        ConversationChain conversationChain = introductionEvent.getConversationChain();
+        String nextKey = conversationChain.getNextKey(optionSelected);
+        introductionEvent.setCurrentKey(nextKey);
+
+        options = conversationChain.getOptions(nextKey);
+
+        PropertyChangeEvent introductionPayload = new PropertyChangeEvent(this, "Introduction", options, introductionEvent);
+        notifyListeners(introductionPayload);
     }
 
     public void checkWorldEventCondition(NpcButton target){
