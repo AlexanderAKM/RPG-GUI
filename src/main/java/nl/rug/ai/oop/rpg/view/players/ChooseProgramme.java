@@ -6,21 +6,22 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ChooseProgramme extends JPanel {
 
     private JLabel Explanation;
+    private JLabel choiceOne;
+    private JLabel choiceTwo;
     private static JButton AIButton;
     private static JButton APButton;
     private static JButton CSButton;
-    private JButton CustomButton;
+    private JButton customButton;
     private JLabel AILabel;
     private JLabel APLabel;
     private JLabel CSLabel;
     private JLabel customLabel;
     private JSlider customSlider;
+    private TextField textField;
     private int customIntelligence = 70;
     private int customSocial = 60;
     private String customProgrammeName;
@@ -59,10 +60,10 @@ public class ChooseProgramme extends JPanel {
         CSButton.addActionListener(new ChooseProgrammeController(this));
         buttons.add(CSButton);
 
-        CustomButton = new JButton("Custom");
-        CustomButton.setActionCommand("Custom");
-        CustomButton.addActionListener(new ChooseProgrammeController(this));
-        buttons.add(CustomButton);
+        customButton = new JButton("Custom");
+        customButton.setActionCommand("Custom");
+        customButton.addActionListener(new ChooseProgrammeController(this));
+        buttons.add(customButton);
 
         AILabel = new JLabel("<html>Intelligence: 70<br/>Social: 60<html>", SwingConstants.CENTER);
         buttons.add(AILabel);
@@ -82,18 +83,27 @@ public class ChooseProgramme extends JPanel {
         for (Component component : components){
             remove(component);
         }
-        this.setLayout(new GridLayout(3,3));
         this.revalidate();
         this.repaint();
         this.setLayout(new GridBagLayout());
 
-        Explanation = new JLabel("<html>Choose the stats for your custom programme<html>", SwingConstants.CENTER);
+        choiceOne = new JLabel("<html>Choose the name for your custom programme<html>", SwingConstants.CENTER);
         c.weightx = 0.5;
         c.gridwidth = 1;
         c.gridheight = 1;
         c.gridx = 1;
+        c.gridy = 1;
+        this.add(choiceOne, c);
+
+        textField = new TextField();
+        Dimension dimension = new Dimension(200, 30);
+        textField.setMaximumSize(dimension);
+        c.gridy = 2;
+        this.add(textField, c);
+
+        choiceTwo = new JLabel("<html>Choose the stats for your custom programme<html>", SwingConstants.CENTER);
         c.gridy = 3;
-        this.add(Explanation, c);
+        this.add(choiceTwo, c);
 
         customLabel = new JLabel("<html>Intelligence: <html>" + customIntelligence + "<html><br/>Social: <html>" + customSocial, SwingConstants.CENTER);
         c.gridy = 5;
