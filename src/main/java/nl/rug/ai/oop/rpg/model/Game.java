@@ -1,5 +1,7 @@
 package nl.rug.ai.oop.rpg.model;
 
+import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.location.RoomStateManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.Beginning;
 
@@ -12,11 +14,8 @@ import nl.rug.ai.oop.rpg.view.Beginning;
 public class Game {
 
     private Player player;
-    private String chosenLanguage;
-    //private RoomLanguageManager roomLanguageManager;
-
     public Game(){
-        //roomLanguageManager = new RoomLanguageManager();
+
     }
 
 
@@ -31,13 +30,23 @@ public class Game {
      * Starts the game by showing the beginning part.
      * When the beginning part is done, it continues to the main part of the game.
      */
-    public void start() {
+    public void start(Game game) {
         // Start with the Beginning view
-        Beginning beginning = new Beginning();
+        Beginning beginning = new Beginning(game);
         //RoomLanguageManager.loadLanguage("English");
 
 
         beginning.show();
+    }
+
+    public void saveGame(LocationManager locManager) {
+        RoomStateManager.saveRoomState(locManager, "room_state.ser");
+        Player.getInstance().save("player");
+    }
+
+    public void loadSavedGame(LocationManager locManager){
+        Player.getInstance().loadSaveFile("player");
+        locManager = RoomStateManager.loadRoomState("room_state.ser");
     }
 
     /**
