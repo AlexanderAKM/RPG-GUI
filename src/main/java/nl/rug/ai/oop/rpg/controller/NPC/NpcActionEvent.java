@@ -1,6 +1,5 @@
 package nl.rug.ai.oop.rpg.controller.NPC;
 
-import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
 import java.awt.event.ActionEvent;

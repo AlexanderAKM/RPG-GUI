@@ -1,6 +1,8 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationChain;
+import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationEvent;
 
 public class EventBuilder {
     private String interactionName;
@@ -8,7 +10,6 @@ public class EventBuilder {
     private Npc npcSource;
     //private Npc.eventType function;
     private String speechText;
-    private BattleQuestions battleQuestions;
 
     public EventBuilder setInteractionName(String interactionName) {
         this.interactionName = interactionName;
@@ -46,8 +47,8 @@ public class EventBuilder {
         return event;
     }
 
-    public IntroductionEvent buildIntroductionEvent(String returnText, ConversationChain conversationChain){
-        IntroductionEvent event = new IntroductionEvent(interactionName, npcSource, speechText, returnText, conversationChain);
+    public ConversationEvent buildIntroductionEvent(String returnText, ConversationChain conversationChain){
+        ConversationEvent event = new ConversationEvent(interactionName, npcSource, speechText, returnText, conversationChain);
         return event;
     }
 }

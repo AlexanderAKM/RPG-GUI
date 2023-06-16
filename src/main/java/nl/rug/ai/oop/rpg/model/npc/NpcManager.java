@@ -1,17 +1,14 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 
-import nl.rug.ai.oop.rpg.controller.NPC.NpcActionEvent;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationChain;
+import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationEvent;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.*;
 
 
@@ -108,10 +105,10 @@ public class NpcManager {
                 .setInteractionName("introduction")
                 .setNpcSource(Harmen)
                 .setSpeechText("Yeah, it's me. In your home.");
-        IntroductionEvent introductionEvent = eventBuilder3.buildIntroductionEvent("Bye", conversationChain);
+        ConversationEvent conversationEvent = eventBuilder3.buildIntroductionEvent("Bye", conversationChain);
         //introductionEvent.initialSetup();
-        Harmen.setEvent(introductionEvent);
-        Harmen.setNpcIntroductionEvents(introductionEvent);
+        Harmen.setEvent(conversationEvent);
+        Harmen.setNpcIntroductionEvents(conversationEvent);
 
         EventBuilder eventBuilder = new EventBuilder()
                 .setInteractionName("interactionName")
@@ -172,20 +169,20 @@ public class NpcManager {
             case INTRODUCTION:
                 //PropertyChangeListener();
                 ArrayList<String> options = new ArrayList<String>();
-                IntroductionEvent introductionEvent = npc.getIntroductionEvent(event.getName());
-                introductionEvent.initialSetup();
-                ConversationChain conversationChain = introductionEvent.getConversationChain();
+                ConversationEvent conversationEvent = npc.getIntroductionEvent(event.getName());
+                conversationEvent.initialSetup();
+                ConversationChain conversationChain = conversationEvent.getConversationChain();
 
-                options = conversationChain.getOptions(introductionEvent.getCurrentKey());
+                options = conversationChain.getOptions(conversationEvent.getCurrentKey());
 
                 String introductionEventSpeech = event.getSpeechText() + "\n";
-                NpcPropertyEvent introductionPayload = new NpcPropertyEvent(Npc.EventType.INTRODUCTION, introductionEvent.getName(), introductionEvent.getCurrentKey(), options, 0, npc);
+                NpcPropertyEvent introductionPayload = new NpcPropertyEvent(Npc.EventType.INTRODUCTION, conversationEvent.getName(), conversationEvent.getCurrentKey(), options, 0, npc);
                 notifyListeners(introductionPayload);
                 break;
             case WORLD_EVENT:
                 WorldEvent worldEvent = npc.getWorldEvent(event.getName());
                 String worldEventSpeech = event.getSpeechText() + "\n";
-                NpcPropertyEvent worldPayload = new NpcPropertyEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, 0, npc);
+                NpcPropertyEvent worldPayload = new NpcPropertyEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCondition(), npc);
                 notifyListeners(worldPayload);
                 break;
         }
@@ -222,7 +219,11 @@ public class NpcManager {
             ArrayList<Item> item = itemManager.getItemsForRoom(randomItem);
             inventory.addItem(item.get(0));
             String itemText = "\n Congrats you were witty and won: " + item.get(0).getName();
+
+            locationManager.removeNpcs("", npc, player.getCurrentRoom());
+
             payload = new NpcPropertyEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.victoryText + itemText, null,0, npc);
+            payload.setToolTipText("Enjoy your prize.");
             notifyListeners(payload);
         } else {
             // Wrong answer appropriate effects
@@ -232,6 +233,7 @@ public class NpcManager {
             player.changeIntelligence(socialEffect);
             //String effectsTooltip = "Also you lost: " + Integer.toString(wellBeingEffect) + " Wellbeing, & " + Integer.toString(socialEffect) + " Social.";
             payload = new NpcPropertyEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.losingText, null,0, npc);
+            payload.setToolTipText("Well. You messed up. Wellbeing " +  Integer.toString(wellBeingEffect) + " Social " + Integer.toString(socialEffect));
             notifyListeners(payload);
         }
     }
@@ -241,16 +243,14 @@ public class NpcManager {
         Boolean isFinal = false;
         Npc npc = target.getNpc();
 
-
-
-        IntroductionEvent introductionEvent = npc.getIntroductionEvent(eventName);
+        ConversationEvent conversationEvent = npc.getIntroductionEvent(eventName);
 
         ArrayList<String> options = new ArrayList<String>();
-        ConversationChain conversationChain = introductionEvent.getConversationChain();
+        ConversationChain conversationChain = conversationEvent.getConversationChain();
 
 
         String nextKey = conversationChain.getNextKey(optionSelected);
-        introductionEvent.setCurrentKey(nextKey);
+        conversationEvent.setCurrentKey(nextKey);
 
         options = conversationChain.getOptions(nextKey);
 
@@ -264,7 +264,7 @@ public class NpcManager {
         if(isFinal) {
             introductionPayload= new NpcPropertyEvent(Npc.EventType.RESET, eventName, null, null, 0, npc);
         } else {
-            introductionPayload = new NpcPropertyEvent(Npc.EventType.INTRODUCTION, eventName, introductionEvent.getCurrentKey(), options, 0, npc);
+            introductionPayload = new NpcPropertyEvent(Npc.EventType.INTRODUCTION, eventName, conversationEvent.getCurrentKey(), options, 0, npc);
         }
 
         notifyListeners(introductionPayload);
@@ -278,7 +278,7 @@ public class NpcManager {
 
         Player player = Player.getInstance();
         if(player.getMoney() >= worldEvent.getCondition()){
-            worldEvent.unlockRoom();
+            worldEvent.unlockRoom(5);
             player.changeMoney(-20);
             payload = new NpcPropertyEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getSuccessText(), null, 0, npc);
             worldEvent.setHasFinishedEventChain(false);

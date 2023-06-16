@@ -1,8 +1,5 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 
-import nl.rug.ai.oop.rpg.controller.NPC.NpcActionEvent;
-
-import java.beans.PropertyChangeListener;
 import java.util.EventListener;
 
 public interface NpcPropertyChangeListener extends EventListener {

@@ -1,10 +1,13 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc.conversation;
+
+import nl.rug.ai.oop.rpg.model.npc.Events;
+import nl.rug.ai.oop.rpg.model.npc.Npc;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class IntroductionEvent extends Events implements Serializable {
+public class ConversationEvent extends Events implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -13,7 +16,7 @@ public class IntroductionEvent extends Events implements Serializable {
     private String returnText;
     private ConversationChain conversationChain;
 
-    public IntroductionEvent(String interactionName, Npc npcSource, String speechText, String returnText, ConversationChain conversationChain){
+    public ConversationEvent(String interactionName, Npc npcSource, String speechText, String returnText, ConversationChain conversationChain){
         super(interactionName, npcSource, EventType.INTRODUCTION, speechText);
         this.returnText = returnText;
         this.conversationChain = conversationChain;

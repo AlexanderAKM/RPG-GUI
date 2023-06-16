@@ -1,6 +1,6 @@
 package nl.rug.ai.oop.rpg.model.location;
 
-import nl.rug.ai.oop.rpg.model.NPC.Npc;
+import nl.rug.ai.oop.rpg.model.npc.Npc;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.inventory.items.StudentCard;
