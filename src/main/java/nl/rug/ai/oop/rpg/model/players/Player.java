@@ -3,7 +3,6 @@ package nl.rug.ai.oop.rpg.model.players;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.items.*;
 import nl.rug.ai.oop.rpg.model.location.*;
-import nl.rug.ai.oop.rpg.view.Setup;
 import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
 import javax.swing.*;
