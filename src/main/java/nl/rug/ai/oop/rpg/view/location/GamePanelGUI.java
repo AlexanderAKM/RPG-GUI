@@ -145,6 +145,7 @@ public class GamePanelGUI {
         interactNpcButton.setForeground(textColor);
     }
 
+
     /**
      * Sets the panel for displaying NPC interactions within the room.
      *
