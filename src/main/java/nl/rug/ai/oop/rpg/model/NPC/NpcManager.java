@@ -20,11 +20,12 @@ public class NpcManager {
 
     NpcLanguageManager npcLanguageManager;
 
-    public NpcManager(LocationManager locationManager, String language, String directory) {
+    public NpcManager(LocationManager locationManager, String directory) {
         allNpcs  = new ArrayList<Npc>();
         this.locationManager = locationManager;
-        System.out.println(language);
+        //System.out.println(language);
         //npcLanguageManager = new NpcLanguageManager(language, directory);
+        this.npcLanguageManager = npcLanguageManager;
         initialiseNpcs();
     }
 
@@ -195,7 +196,8 @@ public class NpcManager {
 
         // Check if it was the correct answer
         if(Objects.equals(target.getText(), battleQuestions.correctAnswer)){
-            // Yes correct answer, appropriate effects
+            //ADD Items to room
+            // We increase Player stats
             // Reduce NPC stats
             //payload = new NpcPropertyEvent(this, "Correct", battleQuestions.getVictoryText(), battleEvent);
 
@@ -205,10 +207,10 @@ public class NpcManager {
             Player player = Player.getInstance();
             player.changeWellbeing(wellBeingEffect);
             player.changeIntelligence(socialEffect);
-            String effectsTooltip = "Also you lost: " + Integer.toString(wellBeingEffect) + " Wellbeing, & " + Integer.toString(socialEffect) + " Social.";
-            //payload = new NpcPropertyEvent(this, "Wrong", null, battleQuestions.getLosingText()  + effectsTooltip);
+            //String effectsTooltip = "Also you lost: " + Integer.toString(wellBeingEffect) + " Wellbeing, & " + Integer.toString(socialEffect) + " Social.";
+            payload = new NpcPropertyEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.losingText, null,0, npc);
+            notifyListeners(payload);
         }
-        //notifyListeners(payload);
     }
 
     public void continueConversation(NpcButton target, String eventName, String optionSelected){

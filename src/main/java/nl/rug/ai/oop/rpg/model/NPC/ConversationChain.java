@@ -1,9 +1,13 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ConversationChain {
+public class ConversationChain implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     // Harmen - > Yo I'm in your house
     // Yo I'm in your house -> Dang. Why?
     // Dang. - > Bye.

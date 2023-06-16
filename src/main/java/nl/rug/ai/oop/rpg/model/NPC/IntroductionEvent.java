@@ -1,8 +1,12 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class IntroductionEvent extends Events{
+public class IntroductionEvent extends Events implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     String speechText;
     private String currentKey;

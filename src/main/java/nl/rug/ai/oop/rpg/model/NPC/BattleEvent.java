@@ -1,6 +1,11 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
-public class BattleEvent extends Events {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class BattleEvent extends Events implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     BattleQuestions battleQuestions;
     public BattleEvent(String interactionName, Npc npcSource, String speechText, BattleQuestions battleQuestions){

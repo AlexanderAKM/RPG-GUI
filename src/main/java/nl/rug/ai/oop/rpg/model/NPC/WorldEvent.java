@@ -2,7 +2,12 @@ package nl.rug.ai.oop.rpg.model.NPC;
 
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 
-public class WorldEvent extends Events{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class WorldEvent extends Events implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     public enum effectOnWorld {
         UNLOCK
     }

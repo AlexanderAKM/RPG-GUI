@@ -282,7 +282,8 @@ public class NpcView {
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getEventType(), Npc.EventType.RESET)) {
-                setUpNpcs(npcList, evt.getText(), evt.getEventName());
+                updateNpcView(npcList, evt.getEventName());
+                //setUpNpcs(npcList, evt.getText(), evt.getEventName());
             }
         });
 

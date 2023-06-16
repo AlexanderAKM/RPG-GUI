@@ -1,7 +1,11 @@
 package nl.rug.ai.oop.rpg.model.NPC;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-public class BattleQuestions {
+public class BattleQuestions implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     HashMap<String, ArrayList<String>> questionsAnswers   = new HashMap<String, ArrayList<String>>();
     String correctAnswer;
     String question;
