@@ -23,7 +23,7 @@ public class LocationManager implements LocationInterface, Serializable {
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
 
-    private RoomLanguageManager roomLanguageManager;
+    private languageManager languageManager;
 
     private ItemManager manager;
     ArrayList<PropertyChangeListener> listeners;
@@ -32,14 +32,14 @@ public class LocationManager implements LocationInterface, Serializable {
      * Constructs a LocationManager object with the specified ItemManager and RoomLanguageManager.
      *
      * @param manager             The ItemManager for managing items.
-     * @param roomLanguageManager The RoomLanguageManager for managing room language translations.
+     * @param languageManager The RoomLanguageManager for managing room language translations.
      */
-    public LocationManager(ItemManager manager, RoomLanguageManager roomLanguageManager){
+    public LocationManager(ItemManager manager, languageManager languageManager){
         this.manager = manager;
         map = new ArrayList<Room>();
         listeners = new ArrayList();
         availableRooms = new ArrayList<Room>();
-        this.roomLanguageManager = roomLanguageManager;
+        this.languageManager = languageManager;
         locationSetUp();
     }
 
@@ -59,15 +59,15 @@ public class LocationManager implements LocationInterface, Serializable {
     public void locationSetUp() {
         // Get items for each room
         ArrayList<Item> coverItems = manager.getItemsForRoom("Coffee", "Alcohol");
-        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "Student Card","Money");
+        ArrayList<Item> homeItems = manager.getItemsForRoom("Books", "Alcohol", "StudentCard","Money");
         ArrayList<Item> canteenItems = manager.getItemsForRoom("Coffee");
         ArrayList<Item> outsideItems = manager.getItemsForRoom("Money", "Money");
         ArrayList<Item> examHallItems = manager.getItemsForRoom("Books");
 
         // Create rooms using RoomBuilder (builder design pattern) and initialize their properties
         Room home = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("home"))
-                .setDescription(roomLanguageManager.getTranslation("home_description"))
+                .setName(languageManager.getTranslation("home"))
+                .setDescription(languageManager.getTranslation("home_description"))
                 .setNorth(1)
                 .setEast(-1)
                 .setSouth(-1)
@@ -77,8 +77,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room outside = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("outside"))
-                .setDescription(roomLanguageManager.getTranslation("outside_description"))
+                .setName(languageManager.getTranslation("outside"))
+                .setDescription(languageManager.getTranslation("outside_description"))
                 .setNorth(3)
                 .setEast(-1)
                 .setSouth(0)
@@ -88,8 +88,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room examHall = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall"))
-                .setDescription(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall_description"))
+                .setName(languageManager.getTranslation("Aletta_Jacobs_Hall"))
+                .setDescription(languageManager.getTranslation("Aletta_Jacobs_Hall_description"))
                 .setNorth(-1)
                 .setEast(1)
                 .setSouth(-1)
@@ -100,8 +100,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room bb = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("bernoulliborg"))
-                .setDescription(roomLanguageManager.getTranslation("bernoulliborg_description"))
+                .setName(languageManager.getTranslation("bernoulliborg"))
+                .setDescription(languageManager.getTranslation("bernoulliborg_description"))
                 .setNorth(5)
                 .setEast(-1)
                 .setSouth(1)
@@ -112,8 +112,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room canteen = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("TheBBCanteen"))
-                .setDescription(roomLanguageManager.getTranslation("TheBBCanteen_description"))
+                .setName(languageManager.getTranslation("TheBBCanteen"))
+                .setDescription(languageManager.getTranslation("TheBBCanteen_description"))
                 .setNorth(3)
                 .setEast(-1)
                 .setSouth(-1)
@@ -124,8 +124,8 @@ public class LocationManager implements LocationInterface, Serializable {
                 .build();
 
         Room coverRoom = new RoomBuilder()
-                .setName(roomLanguageManager.getTranslation("cover_room"))
-                .setDescription(roomLanguageManager.getTranslation("cover_room_description"))
+                .setName(languageManager.getTranslation("cover_room"))
+                .setDescription(languageManager.getTranslation("cover_room_description"))
                 .setNorth(-1)
                 .setEast(-1)
                 .setSouth(3)

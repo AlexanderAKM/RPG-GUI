@@ -1,16 +1,18 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.controller.GameController;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
 import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
+import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
-import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
+import nl.rug.ai.oop.rpg.model.location.languageManager;
 import nl.rug.ai.oop.rpg.model.location.RoomStateManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
@@ -20,19 +22,20 @@ import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class Setup {
-    //Main class for the JFrame which should include everyone's panes
-    public String chosenLanguage;
-
+public class SetUp implements PropertyChangeListener{
+    //Setting up the main frame
+    private JFrame frame;
 
     /**
      * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kikis Hjikakou
      * @param
      */
 
-    public void start(RoomLanguageManager roomLanguageManager) {
+    public void start(languageManager languageManager, Game game) {
         // Create a player
         Player player = Player.getInstance();
 
@@ -40,14 +43,16 @@ public class Setup {
         Inventory inventory = player.getInventory();
 
         // Create the inventory view and controller
-        InventoryView inventoryView = new InventoryView(inventory, roomLanguageManager);
+        InventoryView inventoryView = new InventoryView(inventory, languageManager);
         new InventoryController(inventory, inventoryView, player);
 
         // Create the main frame and add the inventory view and PlayerStatsPane
-        JFrame frame = new JFrame("RPG Game");
+        frame = new JFrame("RPG Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+
+        player.addChangeListener(this);
 
         //setup GridBagLayout for inventory view
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -67,9 +72,9 @@ public class Setup {
         frame.add(playerStatsPane, c);
 
         ItemManager itemManager = new ItemManager();
-        LocationManager manager = new LocationManager(itemManager, roomLanguageManager);
-        LocationController controller = new LocationController(manager, roomLanguageManager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, roomLanguageManager);
+        LocationManager manager = new LocationManager(itemManager, languageManager);
+        LocationController controller = new LocationController(manager, languageManager);
+        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, languageManager);
 
         RoomItemsController roomItemsController = new RoomItemsController(inventory, gamePanel, player, manager);
 
@@ -117,6 +122,18 @@ public class Setup {
         c.gridy = 0;
         frame.add(locationView, c); // adds the game panel
 
+        GameController gameController = new GameController(game, manager);
+        //SavePanel saveGamePanel = new SavePanel(gameController);
+        SavePanel savePanel = new SavePanel(gameController);
+        c.fill = GridBagConstraints.VERTICAL;
+        c.weightx = 0.0;
+        c.gridheight = 2;
+        c.gridx = 0;
+        c.gridy = 0;
+        frame.add(savePanel, c);
+
+        //frame.add(saveGamePanel);
+
         frame.revalidate();
 
         frame.setSize(800, 600);
@@ -124,13 +141,17 @@ public class Setup {
     }
 
 
-    public void saveGame(LocationManager locManager) {
-        RoomStateManager.saveRoomState(locManager, "room_state.ser");
-        Player.getInstance().save("player");
-    }
-
-    public void loadSavedGame(LocationManager locManager){
-        Player.getInstance().loadSaveFile("player");
-        locManager = RoomStateManager.loadRoomState("room_state.ser");
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if(evt.getPropertyName().equals("lowWellbeing")){
+            frame.getContentPane().removeAll();
+            frame.repaint();
+            frame.setLayout(new BorderLayout());
+            JLabel message = new JLabel("YOU DIED", SwingConstants.CENTER);
+            message.setFont(new Font("Serif", Font.BOLD, 50));
+            frame.add(message, BorderLayout.CENTER);
+            frame.revalidate();
+            frame.repaint();
+        }
     }
 }

@@ -3,7 +3,11 @@ package nl.rug.ai.oop.rpg.model.players;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.items.*;
 import nl.rug.ai.oop.rpg.model.location.*;
+import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
+import javax.swing.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,21 +26,18 @@ public class Player implements Serializable {
     private String programme;
     private String language;
     private static Player player;
+    private PropertyChangeSupport support;
 
-    /**
-     * @author RobertHielkema
-     */
+
     private Player() {
         intelligence = 0;
         social = 0;
         wellbeing = 0;
         money = 0;
         inventory = new Inventory();
+        support = new PropertyChangeSupport(this);
     }
 
-    /**
-     * @author RobertHielkema
-     */
     public static Player getInstance(){
         if (player == null) {
             player = new Player();
@@ -44,9 +45,6 @@ public class Player implements Serializable {
         return player;
     }
 
-    /**
-     * @author RobertHielkema
-     */
     public void chooseProgramme(String programme) {
         player.programme = programme;
         if (programme.equals("AI") || programme.equals("Artificial Intelligence")) {
@@ -69,6 +67,16 @@ public class Player implements Serializable {
             player.changeMoney(0);
             player.inventory.addItem(new Books(10, 5));
         }
+    }
+
+    public void customProgramme(String programme, int intelligence, int social){
+        player.programme = programme;
+        player.changeIntelligence(intelligence);
+        player.changeSocial(social);
+        player.changeWellbeing(100);
+        player.changeMoney(0);
+        player.inventory.addItem(new Alcohol(5, 5));
+        player.inventory.addItem(new Coffee(5, 5));
     }
 
     public void save(String filename){
@@ -99,6 +107,7 @@ public class Player implements Serializable {
             throw new ArithmeticException("Intelligence can't go lower than 0");
         }
         this.intelligence += change;
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public void changeSocial(int change){
@@ -106,13 +115,15 @@ public class Player implements Serializable {
             throw new ArithmeticException("Social can't go lower than 0");
         }
         this.social += change;
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public void changeWellbeing(int change){
         if (-change > this.wellbeing){
-            throw new ArithmeticException("Wellbeing can't go lower than 0");
+            support.firePropertyChange("lowWellbeing", null, null);
         }
         this.wellbeing += change;
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public void changeMoney(int change){
@@ -120,6 +131,7 @@ public class Player implements Serializable {
             throw new ArithmeticException("Money can't go lower than 0");
         }
         this.money += change;
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public int getIntelligence() {
@@ -160,5 +172,9 @@ public class Player implements Serializable {
 
     public void setLanguage(String language){
         this.language = language;
+    }
+
+    public void addChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
     }
 }

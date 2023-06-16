@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
  *
  * @author Victoria Polaka
  */
-public class RoomLanguageManager {
+public class languageManager {
     private ResourceBundle resourceBundle;
 
     /**
@@ -16,9 +16,9 @@ public class RoomLanguageManager {
      *
      * @param languageCode the language code (e.g either "en" or "english")
      */
-    public void loadLanguage(String languageCode) {
+    public void loadLanguage(String languageCode, String directoryName) {
         Locale locale = new Locale(languageCode);
-        resourceBundle = ResourceBundle.getBundle("roomTranslations.roomTranslations", locale);
+        resourceBundle = ResourceBundle.getBundle(directoryName, locale);
     }
 
     /**

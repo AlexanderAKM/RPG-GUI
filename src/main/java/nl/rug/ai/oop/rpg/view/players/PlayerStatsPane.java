@@ -4,8 +4,13 @@ import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class PlayerStatsPane extends JPanel{
+/**
+ * @author RobertHielkema
+ */
+public class PlayerStatsPane extends JPanel implements PropertyChangeListener {
 
     Player player;
     JLabel intelligenceIcon;
@@ -20,6 +25,7 @@ public class PlayerStatsPane extends JPanel{
     final int STATWIDTH = 80;
     public PlayerStatsPane() {
         this.player = Player.getInstance();
+        player.addChangeListener(this);
         this.setLayout(new GridLayout(2,4, 5, 0));
         intelligenceIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/intelligence_stat.jpg"))));
         socialIcon = new JLabel(resizeImage(new ImageIcon(PlayerStatsPane.class.getResource("/social_stat.jpg"))));
@@ -53,6 +59,7 @@ public class PlayerStatsPane extends JPanel{
         social.setText(String.valueOf(this.player.getSocial()));
         wellbeing.setText(String.valueOf(this.player.getWellbeing()));
         money.setText(String.valueOf(this.player.getMoney()));
+        this.repaint();
     }
 
     public static void main(String[] args) {
@@ -62,5 +69,12 @@ public class PlayerStatsPane extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(pane, BorderLayout.SOUTH);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if(evt.getPropertyName().equals("playerstat")) {
+            this.revalidate();
+        }
     }
 }

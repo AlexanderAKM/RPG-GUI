@@ -7,7 +7,7 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
-import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
+import nl.rug.ai.oop.rpg.model.location.languageManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -43,18 +43,18 @@ public class GamePanelGUI {
     private JLabel mapLabel;
     private ItemListener itemListener;
     private JFrame frame;
-    private final RoomLanguageManager roomLanguageManager;
+    private final languageManager languageManager;
 
     /**
      * Constructs a new GamePanelGUI instance.
      *
      * @param manager             the LocationManager object representing the game model
      * @param controller          the LocationController object for handling location-related actions
-     * @param roomLanguageManager the RoomLanguageManager object for managing room translations
+     * @param languageManager the RoomLanguageManager object for managing room translations
      */
-    public GamePanelGUI(LocationManager manager, LocationController controller, RoomLanguageManager roomLanguageManager) {
+    public GamePanelGUI(LocationManager manager, LocationController controller, languageManager languageManager) {
         this.frame = frame;
-        this.roomLanguageManager = roomLanguageManager;
+        this.languageManager = languageManager;
         panel = new JPanel();
         gamePanel = new JPanel(new GridBagLayout());
         gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
@@ -65,7 +65,7 @@ public class GamePanelGUI {
         roomNpcsPanel = new JPanel();
         roomsPanel = new JPanel();
 
-        searchItemButton = new JButton(roomLanguageManager.getTranslation("search_item_button"));
+        searchItemButton = new JButton(languageManager.getTranslation("search_item_button"));
         searchItemButton.setPreferredSize(new Dimension(230, 30));
         searchItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,7 +75,7 @@ public class GamePanelGUI {
         });
 
 
-        interactNpcButton = new JButton(roomLanguageManager.getTranslation("interact_npc_button"));
+        interactNpcButton = new JButton(languageManager.getTranslation("interact_npc_button"));
         interactNpcButton.setPreferredSize(new Dimension(230, 30));
         interactNpcButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -83,7 +83,7 @@ public class GamePanelGUI {
             }
         });
 
-        moveRoomsButton = new JButton(roomLanguageManager.getTranslation("move_room_button"));
+        moveRoomsButton = new JButton(languageManager.getTranslation("move_room_button"));
         moveRoomsButton.setPreferredSize(new Dimension(230, 30));
         moveRoomsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +92,7 @@ public class GamePanelGUI {
             }
         });
 
-        textLabel = new JLabel("<html>"+ roomLanguageManager.getTranslation("start_text_label")+"</html>");
+        textLabel = new JLabel("<html>"+ languageManager.getTranslation("start_text_label")+"</html>");
         textLabel.setPreferredSize(new Dimension(350, 100));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -120,7 +120,7 @@ public class GamePanelGUI {
 
         manager.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "popUp")) {
-                showRoomNotAccessiblePopup(frame, roomLanguageManager);
+                showRoomNotAccessiblePopup(frame, languageManager);
             }
         });
 
@@ -284,7 +284,7 @@ public class GamePanelGUI {
         roomItemsPanel.removeAll();
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
-            JButton itemButton = new JButton(roomLanguageManager.getTranslation(item.getName()));
+            JButton itemButton = new JButton(languageManager.getTranslation(item.getName()));
             Color buttonColor = new Color(135, 206, 250); // Blue color
             Color textColor = Color.WHITE; // White text color
 
@@ -301,7 +301,7 @@ public class GamePanelGUI {
             itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
-        backButton = new JButton(roomLanguageManager.getTranslation("Go_Back"));
+        backButton = new JButton(languageManager.getTranslation("Go_Back"));
         roomItemsPanel.add(backButton);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -326,10 +326,10 @@ public class GamePanelGUI {
      * Displays a popup dialog indicating that the current room is not accessible.
      *
      * @param frame               the JFrame object representing the parent frame
-     * @param roomLanguageManager the RoomLanguageManager object for translation purposes
+     * @param languageManager the RoomLanguageManager object for translation purposes
      */
-    private void showRoomNotAccessiblePopup(JFrame frame, RoomLanguageManager roomLanguageManager) {
-        RoomPopup popup = new RoomPopup(frame, roomLanguageManager.getTranslation("popUp_warning"));
+    private void showRoomNotAccessiblePopup(JFrame frame, languageManager languageManager) {
+        RoomPopup popup = new RoomPopup(frame, languageManager.getTranslation("popUp_warning"));
         popup.showDialog();
     }
 }

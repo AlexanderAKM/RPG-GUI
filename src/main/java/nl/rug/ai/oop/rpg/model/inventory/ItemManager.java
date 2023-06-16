@@ -3,10 +3,7 @@ package nl.rug.ai.oop.rpg.model.inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.items.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Alexander Müller
@@ -24,7 +21,7 @@ public class ItemManager {
         items.put("Books", new Books(15, 10));
         items.put("Coffee", new Coffee(5, 15));
         items.put("Money", new Money(100));
-        items.put("Student Card", new StudentCard());
+        items.put("StudentCard", new StudentCard());
     }
 
     public ArrayList<Item> getItemsForRoom(String... itemNames) {
@@ -36,5 +33,7 @@ public class ItemManager {
         }
         return itemsForRoom;
     }
+
+
 }
 
