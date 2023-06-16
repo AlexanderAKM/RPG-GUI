@@ -10,7 +10,7 @@ import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
-import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
+import nl.rug.ai.oop.rpg.model.location.languageManager;
 import nl.rug.ai.oop.rpg.model.location.RoomStateManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
@@ -32,7 +32,7 @@ public class Setup {
      * @param
      */
 
-    public void start(RoomLanguageManager roomLanguageManager) {
+    public void start(languageManager languageManager) {
         // Create a player
         Player player = Player.getInstance();
 
@@ -40,7 +40,7 @@ public class Setup {
         Inventory inventory = player.getInventory();
 
         // Create the inventory view and controller
-        InventoryView inventoryView = new InventoryView(inventory, roomLanguageManager);
+        InventoryView inventoryView = new InventoryView(inventory, languageManager);
         new InventoryController(inventory, inventoryView, player);
 
         // Create the main frame and add the inventory view and PlayerStatsPane
@@ -67,9 +67,9 @@ public class Setup {
         frame.add(playerStatsPane, c);
 
         ItemManager itemManager = new ItemManager();
-        LocationManager manager = new LocationManager(itemManager, roomLanguageManager);
-        LocationController controller = new LocationController(manager, roomLanguageManager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, roomLanguageManager);
+        LocationManager manager = new LocationManager(itemManager, languageManager);
+        LocationController controller = new LocationController(manager, languageManager);
+        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, languageManager);
 
         RoomItemsController roomItemsController = new RoomItemsController(inventory, gamePanel, player, manager);
 

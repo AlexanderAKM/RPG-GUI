@@ -1,6 +1,6 @@
 package nl.rug.ai.oop.rpg.controller.location;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
-import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
+import nl.rug.ai.oop.rpg.model.location.languageManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,17 +12,17 @@ import java.awt.event.ActionListener;
  */
 public class LocationController implements ActionListener {
     private LocationManager model;
-    private RoomLanguageManager roomLanguageManager;
+    private languageManager languageManager;
 
     /**
      * Constructs a LocationController.
      *
      * @param model                The LocationManager instance.
-     * @param roomLanguageManager  The RoomLanguageManager instance.
+     * @param languageManager  The RoomLanguageManager instance.
      */
-    public LocationController(LocationManager model, RoomLanguageManager roomLanguageManager) {
+    public LocationController(LocationManager model, languageManager languageManager) {
         this.model = model;
-        this.roomLanguageManager = roomLanguageManager;
+        this.languageManager = languageManager;
     }
 
     /**
@@ -34,17 +34,17 @@ public class LocationController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if (actionCommand.equals(roomLanguageManager.getTranslation("home"))) {
+        if (actionCommand.equals(languageManager.getTranslation("home"))) {
             model.movePlayer(0);
-        } else if (actionCommand.equals(roomLanguageManager.getTranslation("outside"))) {
+        } else if (actionCommand.equals(languageManager.getTranslation("outside"))) {
             model.movePlayer(1);
-        } else if (actionCommand.equals(roomLanguageManager.getTranslation("Aletta_Jacobs_Hall"))) {
+        } else if (actionCommand.equals(languageManager.getTranslation("Aletta_Jacobs_Hall"))) {
             model.movePlayer(2);
-        } else if (actionCommand.equals(roomLanguageManager.getTranslation("bernoulliborg"))) {
+        } else if (actionCommand.equals(languageManager.getTranslation("bernoulliborg"))) {
             model.movePlayer(3);
-        } else if (actionCommand.equals(roomLanguageManager.getTranslation("TheBBCanteen"))) {
+        } else if (actionCommand.equals(languageManager.getTranslation("TheBBCanteen"))) {
             model.movePlayer(4);
-        } else if (actionCommand.equals(roomLanguageManager.getTranslation("cover_room"))) {
+        } else if (actionCommand.equals(languageManager.getTranslation("cover_room"))) {
             model.movePlayer(5);
         }
     }

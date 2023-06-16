@@ -1,11 +1,7 @@
 package nl.rug.ai.oop.rpg.model;
 
-import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.Beginning;
-import nl.rug.ai.oop.rpg.view.Main;
-
-import javax.swing.*;
 
 /**
  * This class represents the main game logic for the RPG.

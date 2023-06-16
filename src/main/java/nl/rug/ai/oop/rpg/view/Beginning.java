@@ -1,15 +1,12 @@
 package nl.rug.ai.oop.rpg.view;
 
-import nl.rug.ai.oop.rpg.model.inventory.InventoryLanguageManager;
-import nl.rug.ai.oop.rpg.model.location.Room;
-import nl.rug.ai.oop.rpg.model.location.RoomLanguageManager;
+import nl.rug.ai.oop.rpg.model.location.languageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import javax.swing.JComboBox;
 
 
@@ -31,7 +28,7 @@ public class Beginning {
     private JComboBox<String> languageComboBox;
     private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
-    private RoomLanguageManager roomLanguageManager;
+    private languageManager languageManager;
     //private InventoryLanguageManager inventoryLanguageManager;
     private String selectedLanguage;
 
@@ -92,8 +89,8 @@ public class Beginning {
         String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
-        roomLanguageManager = new RoomLanguageManager();
-        roomLanguageManager.loadLanguage("english"); //sets default language
+        languageManager = new languageManager();
+        languageManager.loadLanguage("english", "roomTranslations.roomTranslations"); //sets default language
         //inventoryLanguageManager = new InventoryLanguageManager();
         //inventoryLanguageManager.loadLanguage("english"); //sets default language
         // Add an ActionListener to the languageComboBox
@@ -101,7 +98,7 @@ public class Beginning {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedLanguage = (String)languageComboBox.getSelectedItem();
-                roomLanguageManager.loadLanguage((String)languageComboBox.getSelectedItem());
+                languageManager.loadLanguage((String)languageComboBox.getSelectedItem(), "roomTranslations.roomTranslations");
                 //inventoryLanguageManager.loadLanguage(selectedLanguage);
             }
         });
@@ -124,7 +121,7 @@ public class Beginning {
                 frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
                 Setup setup = new Setup();
-                setup.start(roomLanguageManager);
+                setup.start(languageManager);
                 //callback.run();
             }
         });
