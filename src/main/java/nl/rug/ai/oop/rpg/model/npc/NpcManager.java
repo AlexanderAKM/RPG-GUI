@@ -69,17 +69,10 @@ public class NpcManager {
 
 
         // The first key is always the NPC's name
-        ArrayList<String> ZeroOption = new ArrayList<String>();
-        ArrayList<String> FirstOption = new ArrayList<String>();
-        ArrayList<String> home = new ArrayList<String>();
-        ArrayList<String> thirdOption = new ArrayList<String>();
-        home.add("Ok");
-
-        ZeroOption.add("Yo I'm in your house");
-        FirstOption.add("Dang.");
-        FirstOption.add("Why?");
-        thirdOption.add("Hehe.");
-        thirdOption.add("I need fiends.");
+        ArrayList<String> ZeroOption = new ArrayList<>(List.of("Yo I'm in your house"));
+        ArrayList<String> FirstOption = new ArrayList<>(List.of("Dang.", "Why?"));
+        ArrayList<String> ThirdOption = new ArrayList<>(List.of("Hehe.", "Why not?"));
+        ArrayList<String> home = new ArrayList<>(List.of("Ok."));
 
         ConversationChain conversationChain = new ConversationChain();
 
@@ -88,15 +81,15 @@ public class NpcManager {
         // Yo I'm in your house -> Dang. Why?
         conversationChain.addToConversationChain(ZeroOption.get(0), FirstOption);
         // Connection: Dang. - > Hehe
-        conversationChain.addToDialogueConnections(FirstOption.get(0), thirdOption.get(0));
+        conversationChain.addToDialogueConnections(FirstOption.get(0), ThirdOption.get(0));
         // Hehe -> Ok. (Home)
-        conversationChain.addToConversationChain(thirdOption.get(0),home);
+        conversationChain.addToConversationChain(ThirdOption.get(0),home);
         conversationChain.setFinalText(home);
 
         // Connection: Why? - > I need friends.
-        conversationChain.addToDialogueConnections(FirstOption.get(1), thirdOption.get(1));
+        conversationChain.addToDialogueConnections(FirstOption.get(1), ThirdOption.get(1));
         // I need fiends. -> Ok. (Home)
-        conversationChain.addToConversationChain(thirdOption.get(1), home);
+        conversationChain.addToConversationChain(ThirdOption.get(1), home);
 
 
 
@@ -168,12 +161,11 @@ public class NpcManager {
                 break;
             case INTRODUCTION:
                 //PropertyChangeListener();
-                ArrayList<String> options = new ArrayList<String>();
                 ConversationEvent conversationEvent = npc.getIntroductionEvent(event.getName());
                 conversationEvent.initialSetup();
                 ConversationChain conversationChain = conversationEvent.getConversationChain();
 
-                options = conversationChain.getOptions(conversationEvent.getCurrentKey());
+                ArrayList<String> options = conversationChain.getOptions(conversationEvent.getCurrentKey());
 
                 String introductionEventSpeech = event.getSpeechText() + "\n";
                 NpcPropertyEvent introductionPayload = new NpcPropertyEvent(Npc.EventType.INTRODUCTION, conversationEvent.getName(), conversationEvent.getCurrentKey(), options, 0, npc);
@@ -226,8 +218,6 @@ public class NpcManager {
             payload.setToolTipText("Enjoy your prize.");
             notifyListeners(payload);
         } else {
-            // Wrong answer appropriate effects
-            // Idk reduce player stats
             Player player = Player.getInstance();
             player.changeWellbeing(wellBeingEffect);
             player.changeIntelligence(socialEffect);
@@ -244,15 +234,13 @@ public class NpcManager {
         Npc npc = target.getNpc();
 
         ConversationEvent conversationEvent = npc.getIntroductionEvent(eventName);
-
-        ArrayList<String> options = new ArrayList<String>();
         ConversationChain conversationChain = conversationEvent.getConversationChain();
 
 
         String nextKey = conversationChain.getNextKey(optionSelected);
         conversationEvent.setCurrentKey(nextKey);
 
-        options = conversationChain.getOptions(nextKey);
+        ArrayList<String> options = conversationChain.getOptions(nextKey);
 
         for(String finalText : conversationChain.getFinalTexts()){
             if (Objects.equals(optionSelected, finalText)) {
