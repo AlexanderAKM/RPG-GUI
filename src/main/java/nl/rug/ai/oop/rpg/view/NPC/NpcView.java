@@ -2,20 +2,16 @@ package nl.rug.ai.oop.rpg.view.NPC;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import jdk.jfr.Event;
-import nl.rug.ai.oop.rpg.controller.NPC.NpcAction;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcActionEvent;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
-import nl.rug.ai.oop.rpg.model.NPC.*;
+import nl.rug.ai.oop.rpg.model.npc.*;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
-import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
 import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -247,18 +243,21 @@ public class NpcView {
         textArea.append(command + "\n");
     }
 
-    public void finalResponseSetup(String text, GamePanelGUI home){
+    public void finalResponseSetup(String text, GamePanelGUI home, String toolTip){
         npcView.removeAll();
         npcView.add(textArea);
         textArea.setText("");
         textArea.append(text);
+        if(toolTip != null) {
+            backButton.setToolTipText(toolTip);
+        }
         npcView.add(backButton);
     }
 
     public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller, GamePanelGUI home, JFrame frame) {
         Player player = Player.getInstance();
-        testButton.addActionListener(controller);
-        testButton.setActionCommand("NPC Interaction");
+        //testButton.addActionListener(controller);
+       // testButton.setActionCommand("NPC Interaction");
         npcList = locationManager.getNpcList(player.getCurrentRoom());
         backButton.addActionListener(new ActionListener() {
            @Override
@@ -267,7 +266,7 @@ public class NpcView {
                }
         });
 
-        textField.addActionListener(controller);
+        //textField.addActionListener(controller);
         cont = controller;
 
         setUpNpcs(npcs, "");
@@ -281,7 +280,6 @@ public class NpcView {
         model.addListener(evt -> {
             if (Objects.equals(evt.getEventType(), Npc.EventType.RESET)) {
                 updateNpcView(npcList, evt.getEventName());
-                //setUpNpcs(npcList, evt.getText(), evt.getEventName());
             }
         });
 
@@ -291,7 +289,6 @@ public class NpcView {
             }
         });
 
-
         model.addListener(evt -> {
             if (Objects.equals(evt.getEventType(), Npc.EventType.WORLD_EVENT)) {
                 setupWorldEvent(evt.getEventName(), evt.getText(), evt.getCost(),evt.getSourceNpc());
@@ -300,26 +297,8 @@ public class NpcView {
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getEventType(), Npc.EventType.RESPONSE)){
-                finalResponseSetup(evt.getText(), home);
+                finalResponseSetup(evt.getText(), home, evt.getToolTipText());
             }
         });
-
-        /*
-        model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "Accepted")) {
-                WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
-                String speech = (String)evt.getOldValue();
-                setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), worldEvent.getSuccessText(), worldEvent.getName());
-            }
-        });
-
-        model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "Declined")) {
-                WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
-                String speech = (String)evt.getOldValue();
-                setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
-                setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String) evt.getOldValue(), worldEvent.getName());
-            }
-        });*/
     }
 }

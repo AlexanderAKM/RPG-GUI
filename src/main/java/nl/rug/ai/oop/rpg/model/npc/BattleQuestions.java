@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;

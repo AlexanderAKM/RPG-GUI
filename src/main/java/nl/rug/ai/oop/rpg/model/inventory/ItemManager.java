@@ -36,6 +36,9 @@ public class ItemManager implements Serializable {
         }
         return itemsForRoom;
     }
+    public Collection<Item> getAllItems() {
+        return new ArrayList<>(items.values());
+    }
 
 
 }

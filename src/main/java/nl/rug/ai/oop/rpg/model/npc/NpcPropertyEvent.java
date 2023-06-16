@@ -1,9 +1,5 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 
-import jdk.jfr.Event;
-import nl.rug.ai.oop.rpg.controller.NPC.NpcActionEvent;
-
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class NpcPropertyEvent {
@@ -12,10 +8,9 @@ public class NpcPropertyEvent {
     private String eventName;
     private String text;
     private ArrayList<String> dialogueText;
-
     private Npc sourceNpc;
-
     private int cost;
+    private String toolTipText;
 
     public NpcPropertyEvent(Npc.EventType eventType, String eventName, String text, ArrayList<String> dialogueText, int cost, Npc sourceNpc) {
         this.eventType = eventType;
@@ -36,6 +31,14 @@ public class NpcPropertyEvent {
 
     public String getText() {
         return text;
+    }
+
+    public void setToolTipText(String toolTipText){
+        this.toolTipText = toolTipText;
+    }
+
+    public String getToolTipText(){
+        return toolTipText;
     }
 
     public ArrayList<String> getDialogueText() {

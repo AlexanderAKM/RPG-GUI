@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 
@@ -39,8 +39,8 @@ public class WorldEvent extends Events implements Serializable {
         return failText;
     }
 
-    public void unlockRoom(){
-        locationManager.unlockRoom(locationManager.getRoom(5));
+    public void unlockRoom(int index){
+        locationManager.unlockRoom(locationManager.getRoom(index));
     }
 
     public void setHasFinishedEventChain(boolean value){

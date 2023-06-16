@@ -1,9 +1,10 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
+import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationEvent;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class Npc implements Serializable {
     @Serial
@@ -26,7 +27,7 @@ public class Npc implements Serializable {
 
     HashMap<String, WorldEvent> npcWorldEvents;
 
-    HashMap<String, IntroductionEvent> npcIntroductionEvents;
+    HashMap<String, ConversationEvent> npcIntroductionEvents;
 
 
     public Npc(String name, int money){
@@ -34,7 +35,7 @@ public class Npc implements Serializable {
         playerEvents = new ArrayList<Events>();
         npcBattleEvents = new HashMap<String, BattleEvent>();
         npcWorldEvents = new HashMap<String, WorldEvent>();
-        npcIntroductionEvents = new HashMap<String, IntroductionEvent>();
+        npcIntroductionEvents = new HashMap<String, ConversationEvent>();
 
         this.name = name;
         this.money = money;
@@ -63,11 +64,11 @@ public class Npc implements Serializable {
     public void setNpcWorldEvents(WorldEvent worldEvent){
         npcWorldEvents.put(worldEvent.getName(), worldEvent);
     }
-    public void setNpcIntroductionEvents(IntroductionEvent introductionEvent) { npcIntroductionEvents.put(introductionEvent.getName(), introductionEvent);}
+    public void setNpcIntroductionEvents(ConversationEvent conversationEvent) { npcIntroductionEvents.put(conversationEvent.getName(), conversationEvent);}
     public BattleEvent getNpcBattleEvents(String eventName){
        return npcBattleEvents.get(eventName);
     }
-    public IntroductionEvent getIntroductionEvent(String eventName){
+    public ConversationEvent getIntroductionEvent(String eventName){
         return npcIntroductionEvents.get(eventName);
     }
 

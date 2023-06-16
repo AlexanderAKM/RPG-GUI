@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.NPC;
+package nl.rug.ai.oop.rpg.model.npc;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

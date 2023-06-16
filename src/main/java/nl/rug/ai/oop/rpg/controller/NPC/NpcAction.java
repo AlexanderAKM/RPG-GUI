@@ -11,10 +11,5 @@ public class NpcAction implements NpcActionListener {
             NpcActionEvent actionEvent = new NpcActionEvent(this, 0, "Command", "", 0, 0, null);
             if (listener != null) listener.actionPerformed(actionEvent);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }
 

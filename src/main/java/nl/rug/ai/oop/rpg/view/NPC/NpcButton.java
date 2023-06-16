@@ -1,6 +1,5 @@
 package nl.rug.ai.oop.rpg.view.NPC;
-import nl.rug.ai.oop.rpg.controller.NPC.NpcActionListener;
-import nl.rug.ai.oop.rpg.model.NPC.Npc;
+import nl.rug.ai.oop.rpg.model.npc.Npc;
 
 import javax.swing.*;
 
