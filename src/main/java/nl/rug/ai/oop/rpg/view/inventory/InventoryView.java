@@ -78,8 +78,8 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String itemName = e.getActionCommand();
-                    Item item = inventory.getItemByName(itemName);
+                    //String itemName = e.getActionCommand();
+                    //Item item = inventory.getItemByName(itemName);
                     if (item != null && itemListener != null) {
                         itemListener.onItemClicked(item);
                     }

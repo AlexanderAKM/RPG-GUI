@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.location.languageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
@@ -37,9 +38,8 @@ public class Beginning {
      * Constructor for the Beginning class.
      * It initializes the frame and buttons.
      */
-    public Beginning() {
+    public Beginning(Game game) {
         this.callback = callback;
-        //this.roomLanguageManager = roomLanguageManager;
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +62,7 @@ public class Beginning {
             public void actionPerformed(ActionEvent e) {
                 // Add your code here to start a new game
                 removeInitialButtons();
-                showNewGameOptions();
+                showNewGameOptions(game);
             }
         });
         frame.add(startNewGameButton);
@@ -84,7 +84,7 @@ public class Beginning {
      * and a button to start the game.
      * @author Victoria Polaka (only included room language)
      */
-    private void showNewGameOptions() {
+    private void showNewGameOptions(Game game) {
         String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
@@ -116,8 +116,8 @@ public class Beginning {
                 player.chooseProgramme(studentType);
                 frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
-                Setup setup = new Setup();
-                setup.start(languageManager);
+                SetUp setUp = new SetUp();
+                setUp.start(languageManager, game);
                 //callback.run();
             }
         });
