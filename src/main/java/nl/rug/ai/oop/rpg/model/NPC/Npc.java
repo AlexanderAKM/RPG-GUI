@@ -13,7 +13,9 @@ public class Npc implements Serializable {
         SHOP,
         SOCIALISE,
         INTRODUCTION,
-        WORLD_EVENT
+        WORLD_EVENT,
+        RESET,
+        RESPONSE
     }
     private String name;
     private int money;

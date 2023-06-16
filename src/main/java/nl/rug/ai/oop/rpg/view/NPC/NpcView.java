@@ -2,6 +2,7 @@ package nl.rug.ai.oop.rpg.view.NPC;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import jdk.jfr.Event;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcAction;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcActionEvent;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
@@ -14,6 +15,7 @@ import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -28,6 +30,8 @@ public class NpcView {
     private LocationManager locationManager;
 
     private PlayerStatsPane playerStatsPane;
+
+    private ArrayList<Npc> npcList;
 
 
     // Temp
@@ -126,14 +130,14 @@ public class NpcView {
         npcView.repaint();
     }
 
-    private void setupBattle(ArrayList<String> answers, String speech, BattleEvent battleEvent, String eventName){
+    private void setupBattle(ArrayList<String> answers, String speech, String eventName, Npc npc){
         npcView.removeAll();
         textArea.setText("");
         npcView.add(textArea, BorderLayout.CENTER);
         textArea.append(speech);
         for (String answer : answers) {
 
-            NpcButton answerButton = new NpcButton(answer, battleEvent.getName(), battleEvent.getNpcSource());
+            NpcButton answerButton = new NpcButton(answer, eventName,npc);
             answerButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -150,19 +154,19 @@ public class NpcView {
         npcView.repaint();
     }
 
-    private void setUpConversation(ArrayList<String> options, IntroductionEvent introductionEvent, String eventName, GamePanelGUI home){
+    private void setUpConversation(ArrayList<String> options, String text, String eventName,Npc npcSource, GamePanelGUI home){
         boolean isNotFinal = true;
         npcView.removeAll();
         textArea.setText("");
         npcView.add(textArea, BorderLayout.CENTER);
 
-        textArea.append(introductionEvent.getCurrentKey());
-        ConversationChain conversationChain = introductionEvent.getConversationChain();
+        textArea.append(text);
+        //ConversationChain conversationChain = introductionEvent.getConversationChain();
 
-        System.out.println(introductionEvent.getCurrentKey());
+        //System.out.println(introductionEvent.getCurrentKey());
         System.out.println(options);
 
-        for (String option : options){
+        /*for (String option : options){
             for(String finalText : conversationChain.getFinalTexts()){
                 if(Objects.equals(option, finalText)) {
                     isNotFinal = false;
@@ -176,45 +180,44 @@ public class NpcView {
                     npcView.add(answerButton);
                 }
             }
+        }*/
+
+        for (String option : options) {
+
+            NpcButton answerButton = new NpcButton(option, eventName, npcSource);
+            answerButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(), eventName, -10, -1, answerButton);
+                    cont.actionPerformed(customEvent);
+                }
+            });
+            answerButton.setActionCommand("Continue Conversation");
+
+
+            npcView.add(answerButton);
         }
 
-        if(isNotFinal) {
-            for (String option : options) {
-
-                NpcButton answerButton = new NpcButton(option, introductionEvent.getName(), introductionEvent.getNpcSource());
-                answerButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(), eventName, -10, -1, answerButton);
-                        cont.actionPerformed(customEvent);
-                    }
-                });
-                answerButton.setActionCommand("Continue Conversation");
-
-
-                npcView.add(answerButton);
-            }
-        }
 
         npcView.revalidate();
         npcView.repaint();
     }
 
-    private void setupWorldEvent(String speech, int condition, boolean isFinalInteraction, WorldEvent worldEvent){
+    private void setupWorldEvent(String eventName, String speech, int cost, Npc npcSource){
         npcView.removeAll();
         //textArea.setText("");
         npcView.add(backButton);
         npcView.add(textArea, BorderLayout.CENTER);
         textArea.append(speech);
 
-        NpcButton interactionButton = new NpcButton(Integer.toString(condition), worldEvent.getName(), worldEvent.getNpcSource());
+        NpcButton interactionButton = new NpcButton(Integer.toString(cost), eventName, npcSource);
         // If statement here
         interactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(), worldEvent.getName(), -10, - 1, interactionButton);
+                NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(), eventName, -10, - 1, interactionButton);
                 cont.actionPerformed(customEvent);
-                updateNpcView(Player.getInstance().getCurrentRoom().getAvailableNpcs(), worldEvent.getName());
+                //updateNpcView(Player.getInstance().getCurrentRoom().getAvailableNpcs(), worldEvent.getName());
                 System.out.println("This worked");
             }
         });
@@ -228,6 +231,7 @@ public class NpcView {
 
     public void updateNpcView(ArrayList<Npc> npcs, String eventName){
         npcView.removeAll();
+        npcList = npcs;
         setUpNpcs(npcs, eventName);
     }
 
@@ -243,16 +247,27 @@ public class NpcView {
         textArea.append(command + "\n");
     }
 
+    public void finalResponseSetup(String text, GamePanelGUI home){
+        textArea.append(text + "\n");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                returnToHomePanel(home);
+            }
+        });
+    }
+
     public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller, GamePanelGUI home, JFrame frame) {
         Player player = Player.getInstance();
         testButton.addActionListener(controller);
         testButton.setActionCommand("NPC Interaction");
-       backButton.addActionListener(new ActionListener() {
+        npcList = locationManager.getNpcList(player.getCurrentRoom());
+        backButton.addActionListener(new ActionListener() {
            @Override
                public void actionPerformed(ActionEvent e) {
                returnToHomePanel(home);
                }
-           });
+        });
 
         textField.addActionListener(controller);
         cont = controller;
@@ -260,61 +275,37 @@ public class NpcView {
         setUpNpcs(npcs, "");
 
         model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "-Introduction")) {
-                //returnToHomePanel(home);
+            if (Objects.equals(evt.getEventType(), Npc.EventType.BATTLE)) {
+                setupBattle(evt.getDialogueText(), evt.getText(), evt.getEventName(), evt.getSourceNpc());
             }
         });
 
         model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "Battle")) {
-                BattleEvent battleEvent = (BattleEvent)evt.getNewValue();
-
-                // Ensure this is a clone a deep clone
-                BattleQuestions battleQuestions = battleEvent.getBattleQuestions();
-                ArrayList<String> answers = battleQuestions.getAnswers();
-                String speech = (String)evt.getOldValue();
-                setupBattle(answers, speech, battleEvent, battleEvent.getName());
+            if (Objects.equals(evt.getEventType(), Npc.EventType.RESET)) {
+                setUpNpcs(npcList, evt.getText(), evt.getEventName());
             }
         });
 
         model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "Introduction")) {
-                IntroductionEvent introductionEvent = (IntroductionEvent)evt.getNewValue();
-                ArrayList<String> options = (ArrayList<String>) evt.getOldValue();
-                // Ensure this is a clone a deep clone
-                ConversationChain conversationChain = introductionEvent.getConversationChain();
-                conversationChain.getKey();
+            if (Objects.equals(evt.getEventType(), Npc.EventType.INTRODUCTION)) {
+                setUpConversation(evt.getDialogueText(), evt.getText() , evt.getEventName(), evt.getSourceNpc(), home);
+            }
+        });
 
-                //ArrayList<String> answers = battleQuestions.getAnswers();
-                //String speech = (String)evt.getOldValue();
-                //setupBattle(answers, speech, battleEvent);
-                setUpConversation(options, introductionEvent, introductionEvent.getName(), home);
+
+        model.addListener(evt -> {
+            if (Objects.equals(evt.getEventType(), Npc.EventType.WORLD_EVENT)) {
+                setupWorldEvent(evt.getEventName(), evt.getText(), evt.getCost(),evt.getSourceNpc());
             }
         });
 
         model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "Enter Room")) {
-                outputSpeech((String)evt.getNewValue());
+            if (Objects.equals(evt.getEventType(), Npc.EventType.RESPONSE)){
+                finalResponseSetup(evt.getText(), home);
             }
         });
 
-        model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "Correct")) {
-                BattleEvent interaction = (BattleEvent)evt.getNewValue();
-                Npc source = interaction.getNpcSource();
-                locationManager.removeNpcs("", source, player.getCurrentRoom());
-                setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String)evt.getOldValue(), interaction.getName());
-            }
-        });
-
-        model.addListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), "World Event")) {
-                WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
-                String speech = (String)evt.getOldValue();
-                setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
-            }
-        });
-
+        /*
         model.addListener(evt -> {
             if (Objects.equals(evt.getPropertyName(), "Accepted")) {
                 WorldEvent worldEvent = (WorldEvent)evt.getNewValue();
@@ -330,6 +321,6 @@ public class NpcView {
                 setupWorldEvent(speech, worldEvent.getCondition(),worldEvent.gethasFinishedEventChain(), worldEvent);
                 setUpNpcs(locationManager.getNpcList(player.getCurrentRoom()), (String) evt.getOldValue(), worldEvent.getName());
             }
-        });
+        });*/
     }
 }

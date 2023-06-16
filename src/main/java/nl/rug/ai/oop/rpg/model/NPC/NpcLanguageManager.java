@@ -6,22 +6,12 @@ import java.util.ResourceBundle;
 public class NpcLanguageManager {
         private ResourceBundle resourceBundle;
 
-        /**
-         * Loads the language translations for the specified language code.
-         *
-         * @param languageCode the language code (e.g either "en" or "english")
-         */
-        public void loadLanguage(String languageCode) {
+        public NpcLanguageManager(String languageCode, String directory) {
+            System.out.println(languageCode);
             Locale locale = new Locale(languageCode);
-            resourceBundle = ResourceBundle.getBundle("roomTranslations.roomTranslations", locale);
+            resourceBundle = ResourceBundle.getBundle(directory, locale);
         }
 
-        /**
-         * Retrieves the translated string for the given key.
-         *
-         * @param key the translation key
-         * @return the translated string
-         */
         public String getTranslation(String key) {
             return resourceBundle.getString(key);
         }

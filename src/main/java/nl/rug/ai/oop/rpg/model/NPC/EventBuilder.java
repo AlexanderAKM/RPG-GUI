@@ -4,7 +4,6 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 
 public class EventBuilder {
     private String interactionName;
-
     private int condition;
     private Npc npcSource;
     //private Npc.eventType function;

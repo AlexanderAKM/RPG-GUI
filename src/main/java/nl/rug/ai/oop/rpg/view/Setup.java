@@ -76,7 +76,7 @@ public class Setup {
         // Connect the RoomItemsController to the GamePanelGUI
         gamePanel.setItemListener(roomItemsController);
 
-        NpcManager model = new NpcManager(manager);
+        NpcManager model = new NpcManager(manager, chosenLanguage, "npcLocalisation.npcLocalisation");
         NpcController npcController = new NpcController(model);
 
         // Test

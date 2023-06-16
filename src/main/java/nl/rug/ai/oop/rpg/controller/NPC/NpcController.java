@@ -33,11 +33,9 @@ public class NpcController implements NpcActionListener {
         switch (e.getActionCommand()) {
             case "NPC Interaction":
                 //(Npc)npc
-                System.out.println("Ye");
                 model.npcInteraction(npcButton, "Interaction");
                 break;
             case "Battle Answer":
-                System.out.println("Ye");
                 model.checkAnswer(npcButton, -10, -10);
                 break;
             case "Continue World Event":
