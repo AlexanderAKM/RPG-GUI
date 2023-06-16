@@ -248,13 +248,11 @@ public class NpcView {
     }
 
     public void finalResponseSetup(String text, GamePanelGUI home){
-        textArea.append(text + "\n");
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                returnToHomePanel(home);
-            }
-        });
+        npcView.removeAll();
+        npcView.add(textArea);
+        textArea.setText("");
+        textArea.append(text);
+        npcView.add(backButton);
     }
 
     public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller, GamePanelGUI home, JFrame frame) {

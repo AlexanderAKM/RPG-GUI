@@ -2,6 +2,7 @@ package nl.rug.ai.oop.rpg.model.inventory;
 
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.items.*;
+import java.util.Random;
 
 import java.util.*;
 

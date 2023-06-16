@@ -1,15 +1,17 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcActionEvent;
+import nl.rug.ai.oop.rpg.model.inventory.Inventory;
+import nl.rug.ai.oop.rpg.model.inventory.Item;
+import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
+
 
 public class NpcManager {
     ArrayList<NpcPropertyChangeListener> listeners = new ArrayList<>();
@@ -18,14 +20,17 @@ public class NpcManager {
     public ArrayList<Npc> allNpcs;
     private LocationManager locationManager;
 
+    private ItemManager itemManager;
+
     NpcLanguageManager npcLanguageManager;
 
-    public NpcManager(LocationManager locationManager, String directory) {
+    public NpcManager(LocationManager locationManager, String directory, ItemManager itemManager) {
         allNpcs  = new ArrayList<Npc>();
         this.locationManager = locationManager;
         //System.out.println(language);
         //npcLanguageManager = new NpcLanguageManager(language, directory);
         this.npcLanguageManager = npcLanguageManager;
+        this.itemManager = itemManager;
         initialiseNpcs();
     }
 
@@ -200,7 +205,23 @@ public class NpcManager {
             // We increase Player stats
             // Reduce NPC stats
             //payload = new NpcPropertyEvent(this, "Correct", battleQuestions.getVictoryText(), battleEvent);
+            // A random item gets added
+            Player player = Player.getInstance();
+            Inventory inventory = player.getInventory();
+            ArrayList<String> arrayList = new ArrayList<>();
+            arrayList.add("Alcohol");
+            arrayList.add("Coffee");
+            arrayList.add("Books");
+            arrayList.add("Money");
 
+            Random rand = new Random();
+
+            String randomItem = arrayList.get(rand.nextInt(arrayList.size()));
+            ArrayList<Item> item = itemManager.getItemsForRoom(randomItem);
+            inventory.addItem(item.get(0));
+            String itemText = "\n Congrats you were witty and won: " + item.get(0).getName();
+            payload = new NpcPropertyEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.victoryText + itemText, null,0, npc);
+            notifyListeners(payload);
         } else {
             // Wrong answer appropriate effects
             // Idk reduce player stats
