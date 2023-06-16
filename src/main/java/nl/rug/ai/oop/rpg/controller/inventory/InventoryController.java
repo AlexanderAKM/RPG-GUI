@@ -9,12 +9,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 /**
  * This class is responsible for controlling the actions associated with the inventory.
  * @author Alexander Müller
  */
-public class InventoryController implements ItemListener {
+public class InventoryController implements ItemListener, Serializable {
     private final Inventory inventory;
     private final Player player;
 

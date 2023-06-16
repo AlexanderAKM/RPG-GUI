@@ -2,7 +2,7 @@ package nl.rug.ai.oop.rpg.view;
 
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
-import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
+//import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
