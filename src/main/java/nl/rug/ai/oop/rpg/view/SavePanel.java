@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 public class SavePanel extends JPanel {
     //JPanel savePanel;
     JButton saveGameButton;
+    JButton loadGameButton;
 
     public SavePanel(GameController controller){
         //savePanel = new JPanel();
@@ -18,9 +19,13 @@ public class SavePanel extends JPanel {
         saveGameButton = new JButton("Save Game");
         saveGameButton.addActionListener(controller);
         saveGameButton.setActionCommand("save");
+        loadGameButton = new JButton("Load Game");
+        loadGameButton.addActionListener(controller);
+        loadGameButton.setActionCommand("load");
         //savePanel.add(saveGameButton);
         //savePanel.setVisible(true);
         add(saveGameButton);
+        add(loadGameButton);
     }
 
 

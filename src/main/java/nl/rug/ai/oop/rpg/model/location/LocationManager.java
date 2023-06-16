@@ -26,7 +26,7 @@ public class LocationManager implements LocationInterface, Serializable {
     private languageManager languageManager;
 
     private ItemManager manager;
-    ArrayList<PropertyChangeListener> listeners;
+    private transient ArrayList<PropertyChangeListener> listeners;
 
     /**
      * Constructs a LocationManager object with the specified ItemManager and RoomLanguageManager.

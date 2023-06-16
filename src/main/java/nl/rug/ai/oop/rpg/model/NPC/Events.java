@@ -1,6 +1,8 @@
 package nl.rug.ai.oop.rpg.model.NPC;
 
-public abstract class Events {
+import java.io.Serializable;
+
+public abstract class Events implements Serializable {
     public enum EventType {
         BATTLE,
         INTRODUCTION,
