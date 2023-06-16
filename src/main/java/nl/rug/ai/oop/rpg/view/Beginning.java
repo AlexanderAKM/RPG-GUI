@@ -1,5 +1,6 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.controller.players.ChooseProgrammeController;
 import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.location.languageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
@@ -9,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**
@@ -27,11 +30,16 @@ public class Beginning {
     private JButton startNewGameButton;
     private JButton startGameButton;
     private JComboBox<String> languageComboBox;
-    private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
     private languageManager languageManager;
     private String selectedLanguage;
-
+    private JButton customButton;
+    private JLabel customLabel;
+    private int customIntelligence = 70;
+    private int customSocial = 60;
+    private String customProgrammeName;
+    private ChooseProgrammeController listener;
+    private Game game;
 
 
     /**
@@ -39,6 +47,7 @@ public class Beginning {
      * It initializes the frame and buttons.
      */
     public Beginning(Game game) {
+        this.game = game;
         this.callback = callback;
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
@@ -75,7 +84,7 @@ public class Beginning {
     private void removeInitialButtons() {
         frame.remove(loadOldGameButton);
         frame.remove(startNewGameButton);
-        frame.setLayout(new GridLayout(3,1)); // Updated to accommodate an extra button
+        frame.setLayout(new GridLayout(2,1)); // Updated to accommodate an extra button
     }
 
     /**
@@ -99,25 +108,19 @@ public class Beginning {
             }
         });
 
-
-        String[] studentTypes = {"Artificial Intelligence", "Applied Physics", "Computing Science"};
-        studentTypeComboBox = new JComboBox<>(studentTypes);
-        frame.add(studentTypeComboBox);
-
-        startGameButton = new JButton("Start Game");
+        startGameButton = new JButton("Choose Programme");
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Initialize the player with the chosen language and student type
                 String language = (String) languageComboBox.getSelectedItem();
-                String studentType = (String) studentTypeComboBox.getSelectedItem();
                 Player player = Player.getInstance();
                 player.setLanguage(language);
-                player.chooseProgramme(studentType);
-                frame.dispose();
+                ChooseProgramme();
+                //frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
-                SetUp setUp = new SetUp();
-                setUp.start(languageManager, game);
+                //SetUp setUp = new SetUp();
+                //setUp.start(languageManager, game);
                 //callback.run();
             }
         });
@@ -132,6 +135,118 @@ public class Beginning {
      */
     public void show() {
         frame.setVisible(true);
+    }
+
+    /**
+     * @author Robert Hielkema
+     */
+    public void ChooseProgramme() {
+        frame.remove(languageComboBox);
+        frame.remove(startGameButton);
+        frame.setSize(800, 400);
+        frame.setLayout(new GridLayout(0,1));
+        listener = new ChooseProgrammeController(this);
+        JLabel explanation = new JLabel("<html>Choose the programme you want to follow<br/>(Choose wisely the programme you choose will influence the game)<html>", SwingConstants.CENTER);
+        frame.add(explanation);
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(2,4, 5, 0));
+
+        JButton AIButton = new JButton("Artificial Intelligence");
+        AIButton.setActionCommand("Artificial Intelligence");
+        AIButton.addActionListener(listener);
+        buttons.add(AIButton);
+
+        JButton APButton = new JButton("Applied Physics");
+        APButton.setActionCommand("Applied Physics");
+        APButton.addActionListener(listener);
+        buttons.add(APButton);
+
+        JButton CSButton = new JButton("Computing Science");
+        CSButton.setActionCommand("Computing Science");
+        CSButton.addActionListener(listener);
+        buttons.add(CSButton);
+
+        customButton = new JButton("Custom");
+        customButton.setActionCommand("Custom");
+        customButton.addActionListener(listener);
+        buttons.add(customButton);
+
+        JLabel AILabel = new JLabel("<html>Intelligence: 70<br/>Social: 60<html>", SwingConstants.CENTER);
+        buttons.add(AILabel);
+
+        JLabel APLabel = new JLabel("<html>Intelligence: 85<br/>Social: 40<html>", SwingConstants.CENTER);
+        buttons.add(APLabel);
+
+        JLabel CSLabel = new JLabel("<html>Intelligence: 100<br/>Social: 20<html>", SwingConstants.CENTER);
+        buttons.add(CSLabel);
+
+        frame.add(buttons);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    /**
+     * @author Robert Hielkema
+     */
+    public void createCustomProgramme(){
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        frame.setLayout(new GridLayout(0,1));
+
+        JLabel choiceOne = new JLabel("<html>Choose the name for your custom programme<html>", SwingConstants.CENTER);
+        frame.add(choiceOne);
+
+        TextField textField = new TextField();
+        Dimension dimension = new Dimension(50, 30);
+        textField.setMaximumSize(dimension);
+        frame.add(textField);
+
+        JLabel choiceTwo = new JLabel("<html>Choose the stats for your custom programme<html>", SwingConstants.CENTER);
+        frame.add(choiceTwo);
+
+        JSlider customSlider = new JSlider(JSlider.HORIZONTAL, 10, 120, customIntelligence);
+        customSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                customIntelligence = ((JSlider)e.getSource()).getValue();
+                customSocial = (int)(155.6662-(float)(customIntelligence*1.36));
+                customLabel.setText("<html>Intelligence: <html>" + customIntelligence + "<html><br/>Social: <html>" + customSocial);
+            }
+        });
+        customSlider.setPaintLabels(true);
+        customSlider.setPaintTrack(true);
+        customSlider.setPaintTicks(true);
+        customSlider.setMajorTickSpacing(30);
+        customSlider.setMinorTickSpacing(10);
+        frame.add(customSlider);
+
+        customLabel = new JLabel("<html>Intelligence: <html>" + customIntelligence + "<html><br/>Social: <html>" + customSocial, SwingConstants.CENTER);
+        frame.add(customLabel);
+
+        customButton = new JButton("Create programme");
+        customButton.setActionCommand("create custom");
+        customButton.addActionListener(listener);
+        frame.add(customButton);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    public int getCustomIntelligence() {
+        return customIntelligence;
+    }
+
+    public int getCustomSocial() {
+        return customSocial;
+    }
+
+    public String getCustomProgrammeName() {
+        return customProgrammeName;
+    }
+
+    public void startSetup(){
+        frame.dispose();
+        SetUp setUp = new SetUp();
+        setUp.start(languageManager, game);
     }
 }
 
