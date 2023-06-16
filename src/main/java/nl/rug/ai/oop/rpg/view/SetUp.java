@@ -1,9 +1,11 @@
 package nl.rug.ai.oop.rpg.view;
 
+import nl.rug.ai.oop.rpg.controller.GameController;
 import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
 import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
+import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.NPC.Npc;
 import nl.rug.ai.oop.rpg.model.NPC.NpcManager;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
@@ -22,9 +24,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Setup {
-    //Main class for the JFrame which should include everyone's panes
-    public String chosenLanguage;
+public class SetUp {
+    //Setting up the main frame
 
 
     /**
@@ -32,7 +33,7 @@ public class Setup {
      * @param
      */
 
-    public void start(languageManager languageManager) {
+    public void start(languageManager languageManager, Game game) {
         // Create a player
         Player player = Player.getInstance();
 
@@ -117,20 +118,22 @@ public class Setup {
         c.gridy = 0;
         frame.add(locationView, c); // adds the game panel
 
+        GameController gameController = new GameController(game, manager);
+        //SavePanel saveGamePanel = new SavePanel(gameController);
+        SavePanel savePanel = new SavePanel(gameController);
+        c.fill = GridBagConstraints.VERTICAL;
+        c.weightx = 0.0;
+        c.gridheight = 2;
+        c.gridx = 0;
+        c.gridy = 0;
+        frame.add(savePanel, c);
+
+        //frame.add(saveGamePanel);
+
         frame.revalidate();
 
         frame.setSize(800, 600);
         frame.setVisible(true);
     }
 
-
-    public void saveGame(LocationManager locManager) {
-        RoomStateManager.saveRoomState(locManager, "room_state.ser");
-        Player.getInstance().save("player");
-    }
-
-    public void loadSavedGame(LocationManager locManager){
-        Player.getInstance().loadSaveFile("player");
-        locManager = RoomStateManager.loadRoomState("room_state.ser");
-    }
 }
