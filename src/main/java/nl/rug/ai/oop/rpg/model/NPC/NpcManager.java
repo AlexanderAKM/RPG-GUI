@@ -10,6 +10,8 @@ import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
 

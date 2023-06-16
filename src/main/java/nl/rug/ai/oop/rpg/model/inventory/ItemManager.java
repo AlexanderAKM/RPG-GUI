@@ -2,6 +2,8 @@ package nl.rug.ai.oop.rpg.model.inventory;
 
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.items.*;
+
+import java.io.Serializable;
 import java.util.Random;
 
 import java.util.*;
@@ -9,7 +11,7 @@ import java.util.*;
 /**
  * @author Alexander Müller
  */
-public class ItemManager {
+public class ItemManager implements Serializable {
     private Map<String, Item> items;
 
     public ItemManager() {
