@@ -18,7 +18,7 @@ import java.util.List;
  * This class represents the visual display of the player's inventory in the game.
  * @author Alexander Müller
  */
-public class InventoryView extends JPanel implements PropertyChangeListener {
+public class InventoryView extends JPanel implements PropertyChangeListener, InventoryViewInterface {
     private final Inventory inventory;
     private final languageManager languageManager;
     private final JPanel itemsPanel;
@@ -55,41 +55,45 @@ public class InventoryView extends JPanel implements PropertyChangeListener {
      *
      * @param itemListener the item listener to set
      */
+    @Override
     public void setItemListener(ItemListener itemListener) {
         this.itemListener = itemListener;
     }
-
     /**
      * Loads items into the inventory.
      */
-    private void loadInventory(languageManager languageManager) {
+    @Override
+    public void loadInventory(languageManager languageManager) {
         itemsPanel.removeAll();
         List<Item> items = this.inventory.getItems();
         for (Item item : items) {
-            URL resourceUrl = getClass().getClassLoader().getResource(item.getName() + ".png");
-            if (resourceUrl == null) {
-                System.out.println(languageManager.getTranslation("Image_Fail") + languageManager.getTranslation(item.getName()));
-                continue;
-            }
-            ImageIcon imageIcon = new ImageIcon(resourceUrl);
-            ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
-            JButton button = new JButton(languageManager.getTranslation(item.getName()), resizedIcon);
-            button.setActionCommand(languageManager.getTranslation(item.getName()));
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //String itemName = e.getActionCommand();
-                    //Item item = inventory.getItemByName(itemName);
-                    if (item != null && itemListener != null) {
-                        itemListener.onItemClicked(item);
-                    }
+            try {
+                URL resourceUrl = getClass().getClassLoader().getResource(item.getName() + ".png");
+                if (resourceUrl == null) {
+                    throw new ImageLoadException("Failed to load image for item: " + item.getName());
                 }
-            });
-            itemsPanel.add(button);
+                ImageIcon imageIcon = new ImageIcon(resourceUrl);
+                ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
+                JButton button = new JButton(languageManager.getTranslation(item.getName()), resizedIcon);
+                button.setActionCommand(languageManager.getTranslation(item.getName()));
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (item != null && itemListener != null) {
+                            itemListener.onItemClicked(item);
+                        }
+                    }
+                });
+                itemsPanel.add(button);
+            } catch (ImageLoadException e) {
+                System.err.println(e.getMessage());
+                JOptionPane.showMessageDialog(this, "The item couldn't get loaded", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         itemsPanel.revalidate();
         itemsPanel.repaint();
     }
+
 
     /**
      * Returns the panel of items.

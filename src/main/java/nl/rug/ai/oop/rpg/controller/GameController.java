@@ -28,6 +28,10 @@ public class GameController implements ActionListener {
                     System.out.println("game saved!");
                     model.saveGame(locManager);
                     break;
+                case "load":
+                    System.out.println("game loaded!");
+                    model.loadSavedGame(locManager);
+                    break;
 
             }
         }
