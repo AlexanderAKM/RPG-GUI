@@ -15,9 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Objects;
 
 /**
@@ -25,7 +23,7 @@ import java.util.Objects;
  *
  * @author Victoria Polaka
  */
-public class GamePanelGUI {
+public class GamePanelGUI implements Serializable {
     private JPanel panel;
     private JPanel gamePanel;
     private JLabel textLabel;
@@ -143,6 +141,29 @@ public class GamePanelGUI {
         searchItemButton.setForeground(textColor);
         interactNpcButton.setBackground(buttonColor);
         interactNpcButton.setForeground(textColor);
+    }
+
+    public void saveGamePanelState(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(gamePanel); // Serialize the game panel
+            System.out.println("Game panel state saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Load the game panel's state from a file
+    public void loadGamePanelState(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            JPanel savedGamePanel = (JPanel) ois.readObject(); // Deserialize the game panel
+            panel.removeAll(); // Clear the current panel
+            panel.add(savedGamePanel); // Add the saved game panel
+            panel.revalidate();
+            panel.repaint();
+            System.out.println("Game panel state loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
