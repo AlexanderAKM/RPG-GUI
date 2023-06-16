@@ -5,5 +5,5 @@ import nl.rug.ai.oop.rpg.model.location.languageManager;
 
 public interface InventoryViewInterface {
     void setItemListener(ItemListener itemListener);
-    void loadInventory(languageManager languageManager) throws ImageLoadException;
+    void loadInventory(languageManager languageManager);
 }
