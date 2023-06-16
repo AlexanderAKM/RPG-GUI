@@ -89,7 +89,7 @@ public class Beginning {
 
     /**
      * This method shows new game options.
-     * It adds a combo box for languages and student types
+     * It adds a combo box for languages
      * and a button to start the game.
      * @author Victoria Polaka (only included room language)
      */
@@ -139,6 +139,7 @@ public class Beginning {
 
     /**
      * @author Robert Hielkema
+     * This method gives different options to choose a programme to follow in university
      */
     public void ChooseProgramme() {
         frame.remove(languageComboBox);
@@ -188,6 +189,7 @@ public class Beginning {
 
     /**
      * @author Robert Hielkema
+     * This method shows a textfield and a slider to choose the name and stats of a custom programme.
      */
     public void createCustomProgramme(){
         frame.getContentPane().removeAll();
@@ -231,6 +233,10 @@ public class Beginning {
         frame.repaint();
     }
 
+    /**
+     * @author Robert Hielkema
+     *
+     */
     public int getCustomIntelligence() {
         return customIntelligence;
     }

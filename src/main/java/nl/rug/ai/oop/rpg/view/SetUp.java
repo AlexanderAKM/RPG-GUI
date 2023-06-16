@@ -22,11 +22,13 @@ import nl.rug.ai.oop.rpg.view.players.PlayerStatsPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class SetUp {
+public class SetUp implements PropertyChangeListener{
     //Setting up the main frame
-
+    private JFrame frame;
 
     /**
      * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kikis Hjikakou
@@ -45,10 +47,12 @@ public class SetUp {
         new InventoryController(inventory, inventoryView, player);
 
         // Create the main frame and add the inventory view and PlayerStatsPane
-        JFrame frame = new JFrame("RPG Game");
+        frame = new JFrame("RPG Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+
+        player.addChangeListener(this);
 
         //setup GridBagLayout for inventory view
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -136,4 +140,18 @@ public class SetUp {
         frame.setVisible(true);
     }
 
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if(evt.getPropertyName().equals("lowWellbeing")){
+            frame.getContentPane().removeAll();
+            frame.repaint();
+            frame.setLayout(new BorderLayout());
+            JLabel message = new JLabel("YOU DIED", SwingConstants.CENTER);
+            message.setFont(new Font("Serif", Font.BOLD, 50));
+            frame.add(message, BorderLayout.CENTER);
+            frame.revalidate();
+            frame.repaint();
+        }
+    }
 }

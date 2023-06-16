@@ -107,7 +107,7 @@ public class Player implements Serializable {
             throw new ArithmeticException("Intelligence can't go lower than 0");
         }
         this.intelligence += change;
-        support.firePropertyChange("player", null, null);
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public void changeSocial(int change){
@@ -115,15 +115,15 @@ public class Player implements Serializable {
             throw new ArithmeticException("Social can't go lower than 0");
         }
         this.social += change;
-        support.firePropertyChange("player", null, null);
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public void changeWellbeing(int change){
         if (-change > this.wellbeing){
-            throw new ArithmeticException("Wellbeing can't go lower than 0");
+            support.firePropertyChange("lowWellbeing", null, null);
         }
         this.wellbeing += change;
-        support.firePropertyChange("player", null, null);
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public void changeMoney(int change){
@@ -131,7 +131,7 @@ public class Player implements Serializable {
             throw new ArithmeticException("Money can't go lower than 0");
         }
         this.money += change;
-        support.firePropertyChange("player", null, null);
+        support.firePropertyChange("playerstat", null, null);
     }
 
     public int getIntelligence() {

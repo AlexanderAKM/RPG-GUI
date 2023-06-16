@@ -73,6 +73,8 @@ public class PlayerStatsPane extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        this.revalidate();
+        if(evt.getPropertyName().equals("playerstat")) {
+            this.revalidate();
+        }
     }
 }
