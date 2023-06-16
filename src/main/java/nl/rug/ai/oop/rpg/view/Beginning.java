@@ -29,7 +29,6 @@ public class Beginning {
     private JComboBox<String> studentTypeComboBox;
     private Runnable callback;  // Added this field
     private languageManager languageManager;
-    //private InventoryLanguageManager inventoryLanguageManager;
     private String selectedLanguage;
 
 
@@ -91,15 +90,12 @@ public class Beginning {
         frame.add(languageComboBox);
         languageManager = new languageManager();
         languageManager.loadLanguage("english", "roomTranslations.roomTranslations"); //sets default language
-        //inventoryLanguageManager = new InventoryLanguageManager();
-        //inventoryLanguageManager.loadLanguage("english"); //sets default language
         // Add an ActionListener to the languageComboBox
         languageComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedLanguage = (String)languageComboBox.getSelectedItem();
                 languageManager.loadLanguage((String)languageComboBox.getSelectedItem(), "roomTranslations.roomTranslations");
-                //inventoryLanguageManager.loadLanguage(selectedLanguage);
             }
         });
 
