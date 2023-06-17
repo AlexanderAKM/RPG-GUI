@@ -3,7 +3,7 @@ package nl.rug.ai.oop.rpg.view.inventory;
 import nl.rug.ai.oop.rpg.controller.inventory.ItemListener;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
-import nl.rug.ai.oop.rpg.model.location.languageManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class InventoryView extends JPanel implements PropertyChangeListener, InventoryViewInterface {
     private final Inventory inventory;
-    private final languageManager languageManager;
+    private final LanguageManager languageManager;
     private final JPanel itemsPanel;
     private ItemListener itemListener;
     private JLabel inventoryLabel;
@@ -34,7 +34,7 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
      *
      * @param inventory the inventory to display
      */
-    public InventoryView(Inventory inventory, languageManager languageManager) {
+    public InventoryView(Inventory inventory, LanguageManager languageManager) {
         this.inventory = inventory;
         this.languageManager = languageManager;
         itemsPanel = new JPanel();
@@ -63,7 +63,7 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
      * Loads items into the inventory.
      */
     @Override
-    public void loadInventory(languageManager languageManager) {
+    public void loadInventory(LanguageManager languageManager) {
         itemsPanel.removeAll();
         List<Item> items = this.inventory.getItems();
         for (Item item : items) {

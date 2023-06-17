@@ -3,7 +3,9 @@ package nl.rug.ai.oop.rpg.model.npc;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationBuilder;
 import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationChain;
 import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationEvent;
 import nl.rug.ai.oop.rpg.model.players.Player;
@@ -21,14 +23,14 @@ public class NpcManager {
 
     private ItemManager itemManager;
 
-    NpcLanguageManager npcLanguageManager;
+    LanguageManager languageManager;
 
-    public NpcManager(LocationManager locationManager, String directory, ItemManager itemManager) {
+    public NpcManager(LocationManager locationManager, ItemManager itemManager, LanguageManager languageManager) {
         allNpcs  = new ArrayList<Npc>();
         this.locationManager = locationManager;
         //System.out.println(language);
         //npcLanguageManager = new NpcLanguageManager(language, directory);
-        this.npcLanguageManager = npcLanguageManager;
+        this.languageManager = languageManager;
         this.itemManager = itemManager;
         initialiseNpcs();
     }
@@ -52,7 +54,7 @@ public class NpcManager {
         answers.add("3");
 
         Npc Bob = new Npc("Bob", 90);
-        Npc Harmen = new Npc("Harmen", 90);
+        Npc Harmen = new Npc(languageManager.getTranslation("npc.name.harmen"), 90);
         Npc Michael = new Npc("Michael",2);
 
         Npc humanMan = new Npc("Human man", 2);
@@ -74,25 +76,16 @@ public class NpcManager {
         ArrayList<String> ThirdOption = new ArrayList<>(List.of("Hehe.", "Why not?"));
         ArrayList<String> home = new ArrayList<>(List.of("Ok."));
 
-        ConversationChain conversationChain = new ConversationChain();
-
-        conversationChain.addToConversationChain(Harmen.getName(), ZeroOption);
-
-        // Yo I'm in your house -> Dang. Why?
-        conversationChain.addToConversationChain(ZeroOption.get(0), FirstOption);
-        // Connection: Dang. - > Hehe
-        conversationChain.addToDialogueConnections(FirstOption.get(0), ThirdOption.get(0));
-        // Hehe -> Ok. (Home)
-        conversationChain.addToConversationChain(ThirdOption.get(0),home);
-        conversationChain.setFinalText(home);
-
-        // Connection: Why? - > I need friends.
-        conversationChain.addToDialogueConnections(FirstOption.get(1), ThirdOption.get(1));
-        // I need fiends. -> Ok. (Home)
-        conversationChain.addToConversationChain(ThirdOption.get(1), home);
+        ConversationBuilder conversationBuilder = new ConversationBuilder()
+                .addToConversationChain(Harmen.getName(), ZeroOption)
+                .addToConversationChain("Yo I'm in your house", FirstOption)
+                .addToDialogueConnections("Dang.", "Hehe.")
+                .setFinalText(home)
+                .addToConversationChain("Hehe.", home)
+                .addToDialogueConnections("Why?", "Why not?");
 
 
-
+        ConversationChain conversationChain = conversationBuilder.build();
 
         EventBuilder eventBuilder3 = new EventBuilder()
                 .setInteractionName("introduction")

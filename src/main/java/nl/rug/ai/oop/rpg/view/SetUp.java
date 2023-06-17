@@ -12,7 +12,7 @@ import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
-import nl.rug.ai.oop.rpg.model.location.languageManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
 import nl.rug.ai.oop.rpg.view.inventory.InventoryView;
@@ -34,15 +34,23 @@ public class SetUp implements PropertyChangeListener{
      * @param
      */
 
-    public void start(languageManager languageManager, Game game) {
+    public void start(String chosenLanguage, Game game) {
         // Create a player
         Player player = Player.getInstance();
 
         // Create an inventory and add some items
         Inventory inventory = player.getInventory();
 
+        //LanguageManager languageManager =
+
         // Create the inventory view and controller
-        InventoryView inventoryView = new InventoryView(inventory, languageManager);
+        LanguageManager roomLanguageManager = new LanguageManager();
+        LanguageManager npcLanguageManager = new LanguageManager();
+
+        roomLanguageManager.loadLanguage(chosenLanguage, "roomTranslations.roomTranslations");
+        npcLanguageManager.loadLanguage(chosenLanguage, "npcLocalisations.npcLocalisations");
+
+        InventoryView inventoryView = new InventoryView(inventory, roomLanguageManager);
         new InventoryController(inventory, inventoryView, player);
 
         // Create the main frame and add the inventory view and PlayerStatsPane
@@ -71,16 +79,16 @@ public class SetUp implements PropertyChangeListener{
         frame.add(playerStatsPane, c);
 
         ItemManager itemManager = new ItemManager();
-        LocationManager manager = new LocationManager(itemManager, languageManager);
-        LocationController controller = new LocationController(manager, languageManager);
-        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, languageManager);
+        LocationManager manager = new LocationManager(itemManager, roomLanguageManager);
+        LocationController controller = new LocationController(manager, roomLanguageManager);
+        GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, roomLanguageManager);
 
         RoomItemsController roomItemsController = new RoomItemsController(inventory, gamePanel, player, manager);
 
         // Connect the RoomItemsController to the GamePanelGUI
         gamePanel.setItemListener(roomItemsController);
 
-        NpcManager model = new NpcManager(manager, "npcLocalisation.npcLocalisation", itemManager);
+        NpcManager model = new NpcManager(manager, itemManager, npcLanguageManager);
         NpcController npcController = new NpcController(model);
 
         // Test

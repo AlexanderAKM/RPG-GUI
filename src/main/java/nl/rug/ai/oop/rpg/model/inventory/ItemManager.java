@@ -39,7 +39,8 @@ public class ItemManager implements Serializable {
     public Collection<Item> getAllItems() {
         return new ArrayList<>(items.values());
     }
-
-
+    public Item getItemByName(String itemName) {
+        return items.get(itemName);
+    }
 }
 

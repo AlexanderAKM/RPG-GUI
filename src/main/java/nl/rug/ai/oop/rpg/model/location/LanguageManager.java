@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  *
  * @author Victoria Polaka
  */
-public class languageManager implements Serializable {
+public class LanguageManager implements Serializable {
     private transient ResourceBundle resourceBundle;
 
     //private transient ResourceBundle resourceBundle;

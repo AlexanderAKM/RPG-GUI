@@ -1,6 +1,6 @@
 package nl.rug.ai.oop.rpg.controller.location;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
-import nl.rug.ai.oop.rpg.model.location.languageManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
  */
 public class LocationController implements ActionListener {
     private LocationManager model;
-    private languageManager languageManager;
+    private LanguageManager languageManager;
 
     /**
      * Constructs a LocationController.
@@ -20,7 +20,7 @@ public class LocationController implements ActionListener {
      * @param model                The LocationManager instance.
      * @param languageManager  The RoomLanguageManager instance.
      */
-    public LocationController(LocationManager model, languageManager languageManager) {
+    public LocationController(LocationManager model, LanguageManager languageManager) {
         this.model = model;
         this.languageManager = languageManager;
     }

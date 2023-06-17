@@ -23,7 +23,7 @@ public class LocationManager implements LocationInterface, Serializable {
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
 
-    private languageManager languageManager;
+    private LanguageManager languageManager;
 
     private ItemManager manager;
     private transient ArrayList<PropertyChangeListener> listeners;
@@ -34,7 +34,7 @@ public class LocationManager implements LocationInterface, Serializable {
      * @param manager             The ItemManager for managing items.
      * @param languageManager The RoomLanguageManager for managing room language translations.
      */
-    public LocationManager(ItemManager manager, languageManager languageManager){
+    public LocationManager(ItemManager manager, LanguageManager languageManager){
         this.manager = manager;
         map = new ArrayList<Room>();
         listeners = new ArrayList();
