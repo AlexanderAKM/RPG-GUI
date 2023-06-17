@@ -1,9 +1,13 @@
 package nl.rug.ai.oop.rpg.view;
 
 import nl.rug.ai.oop.rpg.controller.players.ChooseProgrammeController;
+import nl.rug.ai.oop.rpg.controller.players.CreateCustomProgrammeController;
 import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.location.LanguageManager;
+import nl.rug.ai.oop.rpg.model.players.ChooseProgramme;
 import nl.rug.ai.oop.rpg.model.players.Player;
+import nl.rug.ai.oop.rpg.view.players.ChooseProgrammeView;
+import nl.rug.ai.oop.rpg.view.players.CreateCustomProgrammeView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -117,7 +121,7 @@ public class Beginning {
                 String language = (String) languageComboBox.getSelectedItem();
                 Player player = Player.getInstance();
                 player.setLanguage(language);
-                ChooseProgramme();
+                game.chooseProgramme();
                 //frame.dispose();
                 // Code here to start the game with the new frame -> view.Main
                 //SetUp setUp = new SetUp();
@@ -138,131 +142,23 @@ public class Beginning {
         frame.setVisible(true);
     }
 
-    /**
-     * @author Robert Hielkema
-     * Displays different programmes options to choose from in university.
-     */
-    public void ChooseProgramme() {
-        chooseProgrammeLanguageManager = new LanguageManager();
-        chooseProgrammeLanguageManager.loadLanguage(Player.getInstance().getLanguage(), "chooseProgrammeTranslations.chooseProgrammeTranslations");
-        frame.remove(languageComboBox);
-        frame.remove(startGameButton);
-        frame.setSize(800, 400);
-        frame.setLayout(new GridLayout(0,1));
-        listener = new ChooseProgrammeController(this);
-        JLabel explanation = new JLabel(chooseProgrammeLanguageManager.getTranslation("explanation"), SwingConstants.CENTER);
-        frame.add(explanation);
-
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(2,4, 5, 0));
-
-        JButton AIButton = new JButton(chooseProgrammeLanguageManager.getTranslation("AIButton"));
-        AIButton.setActionCommand("Artificial Intelligence");
-        AIButton.addActionListener(listener);
-        buttons.add(AIButton);
-
-        JButton APButton = new JButton(chooseProgrammeLanguageManager.getTranslation("APButton"));
-        APButton.setActionCommand("Applied Physics");
-        APButton.addActionListener(listener);
-        buttons.add(APButton);
-
-        JButton CSButton = new JButton(chooseProgrammeLanguageManager.getTranslation("CSButton"));
-        CSButton.setActionCommand("Computing Science");
-        CSButton.addActionListener(listener);
-        buttons.add(CSButton);
-
-        JButton customButton = new JButton(chooseProgrammeLanguageManager.getTranslation("customButton"));
-        customButton.setActionCommand("Custom");
-        customButton.addActionListener(listener);
-        buttons.add(customButton);
-
-        JLabel AILabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("AILabel"), SwingConstants.CENTER);
-        buttons.add(AILabel);
-
-        JLabel APLabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("APLabel"), SwingConstants.CENTER);
-        buttons.add(APLabel);
-
-        JLabel CSLabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("CSLabel"), SwingConstants.CENTER);
-        buttons.add(CSLabel);
-
-        frame.add(buttons);
-        frame.revalidate();
-        frame.repaint();
-    }
-
-    /**
-     * @author Robert Hielkema
-     * Displays a text field and a slider to choose the name and stats of a custom programmes.
-     */
-    public void createCustomProgramme(){
+    public void chooseProgramme(ChooseProgrammeController controller){
         frame.getContentPane().removeAll();
         frame.repaint();
-        frame.setLayout(new GridLayout(0,1));
+        frame.setSize(800,400);
+        ChooseProgrammeView chooseProgrammeView = new ChooseProgrammeView(controller);
+        frame.add(chooseProgrammeView);
+    }
 
-        JLabel choiceOne = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceOne"), SwingConstants.CENTER);
-        frame.add(choiceOne);
-
-        customProgrammetextField = new TextField();
-        Dimension dimension = new Dimension(50, 30);
-        customProgrammetextField.setMaximumSize(dimension);
-        frame.add(customProgrammetextField);
-
-        JLabel choiceTwo = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceTwo"), SwingConstants.CENTER);
-        frame.add(choiceTwo);
-
-        JSlider customSlider = new JSlider(JSlider.HORIZONTAL, 10, 120, customIntelligence);
-        customSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                customIntelligence = ((JSlider)e.getSource()).getValue();
-                customSocial = (int)(155.6662-(float)(customIntelligence*1.36));
-                customLabel.setText(chooseProgrammeLanguageManager.getTranslation("customLabel1") + customIntelligence + chooseProgrammeLanguageManager.getTranslation("customLabel2") + customSocial);
-            }
-        });
-        customSlider.setPaintLabels(true);
-        customSlider.setPaintTrack(true);
-        customSlider.setPaintTicks(true);
-        customSlider.setMajorTickSpacing(30);
-        customSlider.setMinorTickSpacing(10);
-        frame.add(customSlider);
-
-        customLabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("customLabel1") + customIntelligence + chooseProgrammeLanguageManager.getTranslation("customLabel2") + customSocial, SwingConstants.CENTER);
-        frame.add(customLabel);
-
-        JButton createProgrammeButton = new JButton(chooseProgrammeLanguageManager.getTranslation("createProgrammeButton"));
-        createProgrammeButton.setActionCommand("create custom");
-        createProgrammeButton.addActionListener(listener);
-        frame.add(createProgrammeButton);
-        frame.revalidate();
+    public void createCustomProgramme(CreateCustomProgrammeController controller){
+        frame.getContentPane().removeAll();
         frame.repaint();
-    }
-    /**
-     * @return The intelligence value of the custom programme.
-     */
-    public int getCustomIntelligence() {
-        return customIntelligence;
+        CreateCustomProgrammeView createCustomProgrammeView = new CreateCustomProgrammeView(controller);
+        frame.add(createCustomProgrammeView);
     }
 
-    /**
-     * @return The social value of the custom programme.
-     */
-    public int getCustomSocial() {
-        return customSocial;
-    }
-
-    /**
-     * @return The name of the custom programme.
-     */
-    public String getCustomProgrammeName() {
-        return customProgrammetextField.getText();
-    }
-
-    /**
-     * Starts the setup process.
-     */
-    public void startSetup() {
+    public void disposeFrame(){
         frame.dispose();
-        SetUp setUp = new SetUp();
-        setUp.start(selectedLanguage, game);
     }
 }
 
