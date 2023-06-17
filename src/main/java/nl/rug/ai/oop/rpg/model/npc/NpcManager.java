@@ -13,6 +13,7 @@ import nl.rug.ai.oop.rpg.model.npc.events.conversations.ConversationChain;
 import nl.rug.ai.oop.rpg.model.npc.events.conversations.ConversationEvent;
 import nl.rug.ai.oop.rpg.model.npc.events.EventBuilder;
 import nl.rug.ai.oop.rpg.model.npc.events.Events;
+import nl.rug.ai.oop.rpg.model.npc.events.worldevents.WorldEvent;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import java.util.*;
@@ -118,7 +119,7 @@ public class NpcManager {
                 .setNpcSource(max)
                 .setSpeechText("Hello, there!");
 
-        ConversationEvent conversationEventMax = eventBuilderMax.buildIntroductionEvent(conversationChainMax);
+        ConversationEvent conversationEventMax = eventBuilderMax.buildConversationEvent(conversationChainMax);
         max.setEvent(conversationEventMax);
         max.setNpcIntroductionEvents(conversationEventMax);
 
@@ -142,7 +143,7 @@ public class NpcManager {
                 .setNpcSource(securityGuard)
                 .setSpeechText("...");
 
-        ConversationEvent conversationEventSecurityGuard = eventBuilderSecurityGuard.buildIntroductionEvent(conversationChainSecurityGuard);
+        ConversationEvent conversationEventSecurityGuard = eventBuilderSecurityGuard.buildConversationEvent(conversationChainSecurityGuard);
         securityGuard.setEvent(conversationEventSecurityGuard);
         securityGuard.setNpcIntroductionEvents(conversationEventSecurityGuard);
 
@@ -176,7 +177,7 @@ public class NpcManager {
                 .setNpcSource(averageCoverMember)
                 .setSpeechText("Ah, a newcomer! I hope you like board games.");
 
-        ConversationEvent conversationEventAverageCoverMember = eventBuilderAverageCoverMember.buildIntroductionEvent(conversationChainAverageCoverMember);
+        ConversationEvent conversationEventAverageCoverMember = eventBuilderAverageCoverMember.buildConversationEvent(conversationChainAverageCoverMember);
         averageCoverMember.setEvent(conversationEventAverageCoverMember);
         averageCoverMember.setNpcIntroductionEvents(conversationEventAverageCoverMember);
 
@@ -187,7 +188,7 @@ public class NpcManager {
                 .setInteractionName("introduction")
                 .setNpcSource(roomMate)
                 .setSpeechText("Yeah, it's me. In your home.");
-        ConversationEvent conversationEvent = eventBuilder3.buildIntroductionEvent(conversationChain);
+        ConversationEvent conversationEvent = eventBuilder3.buildConversationEvent(conversationChain);
         roomMate.setEvent(conversationEvent);
         roomMate.setNpcIntroductionEvents(conversationEvent);
 

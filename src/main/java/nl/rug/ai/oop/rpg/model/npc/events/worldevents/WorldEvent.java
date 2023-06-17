@@ -1,6 +1,7 @@
-package nl.rug.ai.oop.rpg.model.npc;
+package nl.rug.ai.oop.rpg.model.npc.events.worldevents;
 
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.npc.Npc;
 import nl.rug.ai.oop.rpg.model.npc.events.Events;
 
 import java.io.Serial;
@@ -12,13 +13,13 @@ public class WorldEvent extends Events implements Serializable {
     public enum effectOnWorld {
         UNLOCK
     }
-    String speechText;
 
     private int condition;
 
     private String successText;
 
     private String failText;
+
     private boolean hasFinishedEventChain;
 
     private LocationManager locationManager;
