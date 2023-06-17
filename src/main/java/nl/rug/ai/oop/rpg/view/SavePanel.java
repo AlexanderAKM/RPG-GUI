@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.view;
 
 import nl.rug.ai.oop.rpg.controller.GameController;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 
 import javax.swing.*;
 
@@ -17,11 +18,11 @@ public class SavePanel extends JPanel {
      * Constructs a SavePanel object.
      * @param controller the GameController object for handling save and load actions
      */
-    public SavePanel(GameController controller){
-        saveGameButton = new JButton("Save Game");
+    public SavePanel(GameController controller, LanguageManager languageManager){
+        saveGameButton = new JButton(languageManager.getTranslation("save_game"));
         saveGameButton.addActionListener(controller);
         saveGameButton.setActionCommand("save");
-        loadGameButton = new JButton("Load Game");
+        loadGameButton = new JButton(languageManager.getTranslation("load_game"));
         loadGameButton.addActionListener(controller);
         loadGameButton.setActionCommand("load");
         add(saveGameButton);

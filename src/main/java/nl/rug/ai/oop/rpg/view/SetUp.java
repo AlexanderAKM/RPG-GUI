@@ -113,7 +113,7 @@ public class SetUp implements PropertyChangeListener{
 
 
         GameController gameController = new GameController(gameManager, manager, gamePanel);
-        SavePanel savePanel = new SavePanel(gameController);
+        SavePanel savePanel = new SavePanel(gameController, roomLanguageManager);
         c.fill = GridBagConstraints.VERTICAL;
         c.weightx = 0.0;
         c.gridheight = 1;
