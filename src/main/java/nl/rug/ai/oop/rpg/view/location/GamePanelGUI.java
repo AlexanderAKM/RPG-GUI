@@ -70,7 +70,7 @@ public class GamePanelGUI implements Serializable {
 
     }
 
-    public void gamePanelSetUp(LocationManager manager, LocationController controller, languageManager languageManager){
+    public void gamePanelSetUp(LocationManager manager, LocationController controller, LanguageManager languageManager){
         GridBagConstraints gbc = new GridBagConstraints();
         searchItemButton = new JButton(languageManager.getTranslation("search_item_button"));
         searchItemButton.setPreferredSize(new Dimension(230, 30));
