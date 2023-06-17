@@ -30,6 +30,7 @@ public class CreateCustomProgrammeView extends JPanel{
     public CreateCustomProgrammeView(CreateCustomProgrammeController listener){
         chooseProgrammeLanguageManager = new LanguageManager();
         chooseProgrammeLanguageManager.loadLanguage(Player.getInstance().getLanguage(), "chooseProgrammeTranslations.chooseProgrammeTranslations");
+        this.setSize(800,400);
         this.setLayout(new GridLayout(0,1));
 
         JLabel choiceOne = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceOne"), SwingConstants.CENTER);
