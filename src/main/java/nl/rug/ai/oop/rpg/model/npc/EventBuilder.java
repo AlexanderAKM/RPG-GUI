@@ -1,8 +1,10 @@
 package nl.rug.ai.oop.rpg.model.npc;
 
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
-import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationChain;
-import nl.rug.ai.oop.rpg.model.npc.conversation.ConversationEvent;
+import nl.rug.ai.oop.rpg.model.npc.battles.BattleEvent;
+import nl.rug.ai.oop.rpg.model.npc.battles.BattleQuestions;
+import nl.rug.ai.oop.rpg.model.npc.conversations.ConversationChain;
+import nl.rug.ai.oop.rpg.model.npc.conversations.ConversationEvent;
 
 public class EventBuilder {
     private String interactionName;

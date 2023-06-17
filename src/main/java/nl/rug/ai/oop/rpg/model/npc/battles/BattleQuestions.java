@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.npc;
+package nl.rug.ai.oop.rpg.model.npc.battles;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ public class BattleQuestions implements Serializable {
     HashMap<String, ArrayList<String>> questionsAnswers   = new HashMap<String, ArrayList<String>>();
     String correctAnswer;
     String question;
-
     String victoryText;
     String losingText;
     public BattleQuestions(String question, ArrayList<String> possibleAnswers, String correctAnswer, String victoryText, String losingText){
@@ -26,6 +25,10 @@ public class BattleQuestions implements Serializable {
 
     public String getQuestion(){
         return question;
+    }
+
+    public String getCorrectAnswer(){
+        return  correctAnswer;
     }
 
     public String getVictoryText(){
