@@ -1,6 +1,6 @@
-package nl.rug.ai.oop.rpg.model.npc.battles;
+package nl.rug.ai.oop.rpg.model.npc.events.battles;
 
-import nl.rug.ai.oop.rpg.model.npc.Events;
+import nl.rug.ai.oop.rpg.model.npc.events.Events;
 import nl.rug.ai.oop.rpg.model.npc.Npc;
 
 import java.io.Serial;

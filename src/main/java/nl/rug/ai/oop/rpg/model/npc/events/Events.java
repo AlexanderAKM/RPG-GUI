@@ -1,4 +1,6 @@
-package nl.rug.ai.oop.rpg.model.npc;
+package nl.rug.ai.oop.rpg.model.npc.events;
+
+import nl.rug.ai.oop.rpg.model.npc.Npc;
 
 import java.io.Serializable;
 
