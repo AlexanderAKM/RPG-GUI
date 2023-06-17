@@ -71,7 +71,7 @@ public class NpcManager {
      * Initialises all NPCs in the game. And their associated events.
      */
     public void initialiseNpcs(){
-        Npc roomMate = createAndPlaceNpc(languageManager.getTranslation("Roommate"), 90, locationManager.getRoom(0));
+        Npc roomMate = createAndPlaceNpc(languageManager.getTranslation("npc.roommate.name"), 90, locationManager.getRoom(0));
         Npc coverHead = createAndPlaceNpc("Head of Cover", 90, locationManager.getRoom(1));
         Npc coverGuy = createAndPlaceNpc("That one Cover guy", 90, locationManager.getRoom(5));
         Npc eugene = createAndPlaceNpc("Eugene", 90, locationManager.getRoom(2));
