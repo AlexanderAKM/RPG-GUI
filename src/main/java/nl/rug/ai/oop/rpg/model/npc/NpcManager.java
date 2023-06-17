@@ -71,43 +71,43 @@ public class NpcManager {
      * Initialises all NPCs in the game. And their associated events.
      */
     public void initialiseNpcs(){
-        Npc roomMate = createAndPlaceNpc(languageManager.getTranslation("Roommate"), 90, locationManager.getRoom(0));
-        Npc coverHead = createAndPlaceNpc("Head of Cover", 90, locationManager.getRoom(1));
-        Npc coverGuy = createAndPlaceNpc("That one Cover guy", 90, locationManager.getRoom(5));
-        Npc eugene = createAndPlaceNpc("Eugene", 90, locationManager.getRoom(2));
-        Npc vlad = createAndPlaceNpc("Vlad", 90, locationManager.getRoom(3));
-        Npc vlad2 = createAndPlaceNpc("Vlad2", 90, locationManager.getRoom(4));
-        Npc max = createAndPlaceNpc("Max", 90, locationManager.getRoom(4));
-        Npc securityGuard = createAndPlaceNpc("Security Guard", 90, locationManager.getRoom(2));
-        Npc averageCoverMember = createAndPlaceNpc("Average Cover Member", 90, locationManager.getRoom(5));
+        Npc roomMate = createAndPlaceNpc(languageManager.getTranslation("npc.roommate.name"), 90, locationManager.getRoom(0));
+        Npc coverHead = createAndPlaceNpc(languageManager.getTranslation("npc.coverhead.name"), 90, locationManager.getRoom(1));
+        Npc coverGuy = createAndPlaceNpc(languageManager.getTranslation("npc.coverguy.name"), 90, locationManager.getRoom(5));
+        Npc eugene = createAndPlaceNpc(languageManager.getTranslation("npc.eugene.name"), 90, locationManager.getRoom(2));
+        Npc vlad = createAndPlaceNpc(languageManager.getTranslation("npc.vlad.name"), 90, locationManager.getRoom(3));
+        Npc vlad2 = createAndPlaceNpc(languageManager.getTranslation("npc.vlad2.name"), 90, locationManager.getRoom(4));
+        Npc max = createAndPlaceNpc(languageManager.getTranslation("npc.max.name"), 90, locationManager.getRoom(4));
+        Npc securityGuard = createAndPlaceNpc(languageManager.getTranslation("npc.securityguard.name"), 90, locationManager.getRoom(2));
+        Npc averageCoverMember = createAndPlaceNpc(languageManager.getTranslation("npc.averagecovermember.name"), 90, locationManager.getRoom(5));
 
 
         // Conversation Chains
         // The first key is always the NPC's name
-        ArrayList<String> ZeroOption = new ArrayList<>(List.of("Hello I am your roommate that you 100% do not hate. \n Wanna party tonight? Oh wait you can't because I've got a lot of free-time unlike you."));
-        ArrayList<String> FirstOption = new ArrayList<>(List.of("You forgot to do the dishes.", "Why are you like this."));
-        ArrayList<String> home = new ArrayList<>(List.of("Eh. Nevermind."));
+        ArrayList<String> ZeroOption = new ArrayList<>(List.of(languageManager.getTranslation("roommate.conversation.zerooption")));
+        ArrayList<String> FirstOption = new ArrayList<>(List.of(languageManager.getTranslation("roommate.conversation.firstoption1"), languageManager.getTranslation("roommate.conversation.firstoption2")));
+        ArrayList<String> home = new ArrayList<>(List.of(languageManager.getTranslation("roommate.conversation.home")));
 
         ConversationBuilder conversationBuilder = new ConversationBuilder()
                 .addToConversationChain(roomMate.getName(), ZeroOption)
-                .addToConversationChain("Hello I am your roommate that you 100% do not hate. \n Wanna party tonight? Oh wait you can't because I've got a lot of free-time unlike you.", FirstOption)
-                .addToDialogueConnections("You forgot to do the dishes.", "....")
-                .addToConversationChain("....", home)
-                .addToDialogueConnections("Why are you like this.", "I pitty you.")
-                .addToConversationChain("I pitty you.", home)
+                .addToConversationChain(languageManager.getTranslation("roommate.conversation.zerooption"), FirstOption)
+                .addToDialogueConnections(languageManager.getTranslation("roommate.conversation.firstoption1"), languageManager.getTranslation("roommate.conversation.response1") )
+                .addToConversationChain(languageManager.getTranslation("roommate.conversation.response1") , home)
+                .addToDialogueConnections(languageManager.getTranslation("roommate.conversation.firstoption2"), languageManager.getTranslation("roommate.conversation.response2") )
+                .addToConversationChain(languageManager.getTranslation("roommate.conversation.response2") , home)
                 .setFinalText(home);
 
-        ArrayList<String> firstOptionMax = new ArrayList<>(List.of("Hello, I'm Max. Nice to meet you."));
-        ArrayList<String> secondOptionMax = new ArrayList<>(List.of("How are you today?", "What brings you here?"));
-        ArrayList<String> endOptionMax = new ArrayList<>(List.of("Good to hear!", "Interesting..."));
+        ArrayList<String> firstOptionMax = new ArrayList<>(List.of(languageManager.getTranslation("max.conversation.firstoption")));
+        ArrayList<String> secondOptionMax = new ArrayList<>(List.of(languageManager.getTranslation("max.conversation.secondoption1"), languageManager.getTranslation("max.conversation.secondoption2")));
+        ArrayList<String> endOptionMax = new ArrayList<>(List.of(languageManager.getTranslation("max.conversation.endoption1") , languageManager.getTranslation("max.conversation.endoption2")));
 
         ConversationBuilder conversationBuilderMax = new ConversationBuilder()
                 .addToConversationChain(max.getName(), firstOptionMax)
-                .addToConversationChain("Hello, I'm Max. Nice to meet you.", secondOptionMax)
-                .addToDialogueConnections("How are you today?", "I'm doing well, thank you.")
-                .addToConversationChain("I'm doing well, thank you.", endOptionMax)
-                .addToDialogueConnections("What brings you here?", "Just passing by.")
-                .addToConversationChain("Just passing by.", endOptionMax)
+                .addToConversationChain(languageManager.getTranslation("max.conversation.firstoption"), secondOptionMax)
+                .addToDialogueConnections(languageManager.getTranslation("max.conversation.secondoption1"), languageManager.getTranslation("max.conversation.response1"))
+                .addToConversationChain(languageManager.getTranslation("max.conversation.response1") , endOptionMax)
+                .addToDialogueConnections(languageManager.getTranslation("max.conversation.secondoption2"), languageManager.getTranslation("max.conversation.response2"))
+                .addToConversationChain(languageManager.getTranslation("max.conversation.response2"), endOptionMax)
                 .setFinalText(endOptionMax);
 
         ConversationChain conversationChainMax = conversationBuilderMax.build();
@@ -115,23 +115,23 @@ public class NpcManager {
         EventBuilder eventBuilderMax = new EventBuilder()
                 .setInteractionName("conversation")
                 .setNpcSource(max)
-                .setSpeechText("Hello, there!");
+                .setSpeechText(languageManager.getTranslation("max.introduction"));
 
         ConversationEvent conversationEventMax = eventBuilderMax.buildConversationEvent(conversationChainMax);
         max.setEvent(conversationEventMax);
         max.setNpcIntroductionEvents(conversationEventMax);
 
-        ArrayList<String> firstOptionSecurityGuard = new ArrayList<>(List.of("Hmph?"));
-        ArrayList<String> secondOptionSecurityGuard = new ArrayList<>(List.of("Can I ask a question?", "Where are the bathrooms?"));
-        ArrayList<String> endOptionSecurityGuard = new ArrayList<>(List.of(";("));
+        ArrayList<String> firstOptionSecurityGuard = new ArrayList<>(List.of(languageManager.getTranslation("securityguard.conversation.firstoption")));
+        ArrayList<String> secondOptionSecurityGuard = new ArrayList<>(List.of(languageManager.getTranslation("securityguard.conversation.secondoption1"), languageManager.getTranslation("securityguard.conversation.secondoption2")));
+        ArrayList<String> endOptionSecurityGuard = new ArrayList<>(List.of(languageManager.getTranslation("securityguard.conversation.endoption")));
 
         ConversationBuilder conversationBuilderSecurityGuard = new ConversationBuilder()
                 .addToConversationChain(securityGuard.getName(), firstOptionSecurityGuard)
-                .addToConversationChain("Hmph?", secondOptionSecurityGuard)
-                .addToDialogueConnections("Can I ask a question?", "NO TALKING IN THE HALLS")
-                .addToConversationChain("NO TALKING IN THE HALLS", endOptionSecurityGuard)
-                .addToDialogueConnections("Where are the bathrooms?", "NO TALKING IN THE HALLS")
-                .addToConversationChain("NO TALKING IN THE HALLS", endOptionSecurityGuard)
+                .addToConversationChain(languageManager.getTranslation("securityguard.conversation.firstoption"), secondOptionSecurityGuard)
+                .addToDialogueConnections(languageManager.getTranslation("securityguard.conversation.secondoption1"), languageManager.getTranslation("securityguard.conversation.response1") )
+                .addToConversationChain(languageManager.getTranslation("securityguard.conversation.response1") , endOptionSecurityGuard)
+                .addToDialogueConnections(languageManager.getTranslation("securityguard.conversation.secondoption2"), languageManager.getTranslation("securityguard.conversation.response1") )
+                .addToConversationChain(languageManager.getTranslation("securityguard.conversation.response1") , endOptionSecurityGuard)
                 .setFinalText(endOptionSecurityGuard);
 
         ConversationChain conversationChainSecurityGuard = conversationBuilderSecurityGuard.build();
@@ -139,33 +139,33 @@ public class NpcManager {
         EventBuilder eventBuilderSecurityGuard = new EventBuilder()
                 .setInteractionName("conversation")
                 .setNpcSource(securityGuard)
-                .setSpeechText("...");
+                .setSpeechText(languageManager.getTranslation("securityguard.introduction"));
 
         ConversationEvent conversationEventSecurityGuard = eventBuilderSecurityGuard.buildConversationEvent(conversationChainSecurityGuard);
         securityGuard.setEvent(conversationEventSecurityGuard);
         securityGuard.setNpcIntroductionEvents(conversationEventSecurityGuard);
 
-        ArrayList<String> firstOptionAverageCoverMember = new ArrayList<>(List.of("Hello there, I'm an average Cover member. You look like a fellow board game enthusiast!"));
-        ArrayList<String> secondOptionAverageCoverMember = new ArrayList<>(List.of("Do you enjoy playing Catan?", "Ever heard of Munchkin?"));
-        ArrayList<String> thirdOptionAverageCoverMemberCatan = new ArrayList<>(List.of("Do you prefer the Cities & Knights expansion or the Seafarers expansion?", "Do you enjoy trading or building roads more in Catan?"));
-        ArrayList<String> thirdOptionAverageCoverMemberMunchkin = new ArrayList<>(List.of("Do you like the fantasy genre of the original Munchkin or do you prefer one of its other versions?", "What's your strategy in Munchkin? Do you save up your cards or use them right away?"));
-        ArrayList<String> endOptionAverageCoverMember = new ArrayList<>(List.of("That's interesting!", "Nice! I'll have to try that next time."));
+        ArrayList<String> firstOptionAverageCoverMember = new ArrayList<>(List.of(languageManager.getTranslation("averagecovermember.conversation.firstoption")));
+        ArrayList<String> secondOptionAverageCoverMember = new ArrayList<>(List.of(languageManager.getTranslation("averagecovermember.conversation.secondoption1"), languageManager.getTranslation("averagecovermember.conversation.secondoption2")));
+        ArrayList<String> thirdOptionAverageCoverMemberCatan = new ArrayList<>(List.of(languageManager.getTranslation("averagecovermember.conversation.thirdoption1"), languageManager.getTranslation("averagecovermember.conversation.thirdoption2")));
+        ArrayList<String> thirdOptionAverageCoverMemberMunchkin = new ArrayList<>(List.of(languageManager.getTranslation("averagecovermember.conversation.thirdoption3"), languageManager.getTranslation("averagecovermember.conversation.thirdoption4")));
+        ArrayList<String> endOptionAverageCoverMember = new ArrayList<>(List.of(languageManager.getTranslation("averagecovermember.conversation.endoption1") , languageManager.getTranslation("averagecovermember.conversation.endoption2") ));
 
         ConversationBuilder conversationBuilderAverageCoverMember = new ConversationBuilder()
                 .addToConversationChain(averageCoverMember.getName(), firstOptionAverageCoverMember)
-                .addToConversationChain("Hello there, I'm an average Cover member. You look like a fellow board game enthusiast!", secondOptionAverageCoverMember)
-                .addToDialogueConnections("Do you enjoy playing Catan?", "Yes, I love it!")
-                .addToConversationChain("Yes, I love it!", thirdOptionAverageCoverMemberCatan)
-                .addToDialogueConnections("Ever heard of Munchkin?", "Yeah, it's a great game!")
-                .addToConversationChain("Yeah, it's a great game!", thirdOptionAverageCoverMemberMunchkin)
-                .addToDialogueConnections("Do you prefer the Cities & Knights expansion or the Seafarers expansion?", "I prefer Cities & Knights.")
-                .addToConversationChain("I prefer Cities & Knights.", endOptionAverageCoverMember)
-                .addToDialogueConnections("Do you enjoy trading or building roads more in Catan?", "I enjoy building roads.")
-                .addToConversationChain("I enjoy building roads.", endOptionAverageCoverMember)
-                .addToDialogueConnections("Do you like the fantasy genre of the original Munchkin or do you prefer one of its other versions?", "I prefer the original Munchkin.")
-                .addToConversationChain("I prefer the original Munchkin.", endOptionAverageCoverMember)
-                .addToDialogueConnections("What's your strategy in Munchkin? Do you save up your cards or use them right away?", "I save up my cards.")
-                .addToConversationChain("I save up my cards.", endOptionAverageCoverMember)
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.firstoption") , secondOptionAverageCoverMember)
+                .addToDialogueConnections(languageManager.getTranslation("averagecovermember.conversation.secondoption1"), languageManager.getTranslation("averagecovermember.conversation.response1"))
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.response1") , thirdOptionAverageCoverMemberCatan)
+                .addToDialogueConnections(languageManager.getTranslation("averagecovermember.conversation.secondoption2"), languageManager.getTranslation("averagecovermember.conversation.response2"))
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.response2"), thirdOptionAverageCoverMemberMunchkin)
+                .addToDialogueConnections(languageManager.getTranslation("averagecovermember.conversation.thirdoption1"), languageManager.getTranslation("averagecovermember.conversation.response3"))
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.response3") , endOptionAverageCoverMember)
+                .addToDialogueConnections(languageManager.getTranslation("averagecovermember.conversation.thirdoption2"), languageManager.getTranslation("averagecovermember.conversation.response4") )
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.response4"), endOptionAverageCoverMember)
+                .addToDialogueConnections(languageManager.getTranslation("averagecovermember.conversation.thirdoption3") , languageManager.getTranslation("averagecovermember.conversation.response5"))
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.response5"), endOptionAverageCoverMember)
+                .addToDialogueConnections(languageManager.getTranslation("averagecovermember.conversation.thirdoption4"), languageManager.getTranslation("averagecovermember.conversation.response6") )
+                .addToConversationChain(languageManager.getTranslation("averagecovermember.conversation.response6") , endOptionAverageCoverMember)
                 .setFinalText(endOptionAverageCoverMember);
 
         ConversationChain conversationChainAverageCoverMember = conversationBuilderAverageCoverMember.build();
@@ -173,7 +173,7 @@ public class NpcManager {
         EventBuilder eventBuilderAverageCoverMember = new EventBuilder()
                 .setInteractionName("conversation")
                 .setNpcSource(averageCoverMember)
-                .setSpeechText("Ah, a newcomer! I hope you like board games.");
+                .setSpeechText(languageManager.getTranslation("averagecovermember.introduction"));
 
         ConversationEvent conversationEventAverageCoverMember = eventBuilderAverageCoverMember.buildConversationEvent(conversationChainAverageCoverMember);
         averageCoverMember.setEvent(conversationEventAverageCoverMember);
@@ -185,7 +185,7 @@ public class NpcManager {
         EventBuilder eventBuilder3 = new EventBuilder()
                 .setInteractionName("introduction")
                 .setNpcSource(roomMate)
-                .setSpeechText("Yeah, it's me. In your home.");
+                .setSpeechText(languageManager.getTranslation("roommate.introduction"));
         ConversationEvent conversationEvent = eventBuilder3.buildConversationEvent(conversationChain);
         roomMate.setEvent(conversationEvent);
         roomMate.setNpcIntroductionEvents(conversationEvent);
@@ -193,7 +193,7 @@ public class NpcManager {
         EventBuilder eventBuilder = new EventBuilder()
                 .setInteractionName("interactionName")
                 .setNpcSource(coverHead)
-                .setSpeechText("Hey kiddo. Want a cover membership? \n Psst, of course you do! Who doesn't. You get free coffee, free hangouts, endless drama and if you're lucky... cirrhosis of liver!");
+                .setSpeechText(languageManager.getTranslation("coverhead.introduction"));
         WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK, 20, "Congrats! You're not poor.", "Oh sorry. You're poor.", locationManager);
         coverHead.setEvent(worldEvent);
         coverHead.setNpcWorldEvents(worldEvent);
@@ -201,33 +201,33 @@ public class NpcManager {
         // BATTLES
         // Multiple Choice Questions
         ArrayList<String> answers =  new ArrayList<>();
-        answers.add("Cover.");
-        answers.add("Ibn Battuta.");
-        answers.add("Sirius A.");
-        answers.add("De Chemische Binding.");
+        answers.add(languageManager.getTranslation("answer.cover") );
+        answers.add(languageManager.getTranslation("answer.ibnBattuta"));
+        answers.add(languageManager.getTranslation("answer.siriusA") );
+        answers.add(languageManager.getTranslation("answer.deChemischeBinding"));
 
         ArrayList<String> answers1 = new ArrayList<>();
-        answers1.add("Neural Networks");
-        answers1.add("Decision Trees");
-        answers1.add("K-Nearest Neighbors");
-        answers1.add("Support Vector Machines");
+        answers1.add(languageManager.getTranslation("answer.neuralNetworks"));
+        answers1.add(languageManager.getTranslation("answer.decisionTrees") );
+        answers1.add(languageManager.getTranslation("answer.kNearestNeighbors"));
+        answers1.add(languageManager.getTranslation("answer.supportVectorMachines") );
 
         ArrayList<String> answers2 = new ArrayList<>();
-        answers2.add("Deep Learning");
-        answers2.add("Machine Learning");
-        answers2.add("Natural Language Processing");
-        answers2.add("Computer Vision");
+        answers2.add(languageManager.getTranslation("answer.deepLearning"));
+        answers2.add(languageManager.getTranslation("answer.machineLearning"));
+        answers2.add(languageManager.getTranslation("answer.naturalLanguageProcessing"));
+        answers2.add(languageManager.getTranslation("answer.computerVision"));
 
         ArrayList<String> answers3 = new ArrayList<>();
-        answers3.add("Gradient Descent");
-        answers3.add("Backpropagation");
-        answers3.add("Overfitting");
-        answers3.add("Underfitting");
+        answers3.add(languageManager.getTranslation("answer.gradientDescent") );
+        answers3.add(languageManager.getTranslation("answer.backpropagation") );
+        answers3.add(languageManager.getTranslation("answer.overfitting"));
+        answers3.add(languageManager.getTranslation("answer.underfitting") );
 
         EventBuilder eventBuilder1 = new EventBuilder()
                 .setInteractionName("EvilBattle")
                 .setNpcSource(coverGuy)
-                .setSpeechText("Death be upon you! \n");
+                .setSpeechText(languageManager.getTranslation("interaction.evilBattle"));
 
         BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
         BattleEvent coverBattle = eventBuilder1.buildBattleEvent(coverQuestion);
@@ -237,7 +237,7 @@ public class NpcManager {
         EventBuilder eventBuilderEugene = new EventBuilder()
                 .setInteractionName("AIQuiz")
                 .setNpcSource(eugene)
-                .setSpeechText("Yo yo yo I have no friends. But I do have knowledge!");
+                .setSpeechText(languageManager.getTranslation("interaction.aiQuiz") );
 
         BattleQuestions eugeneQuestion = new BattleQuestions("What is considered a supervised learning model?", answers1, "Neural Networks", "*Long claps*", "*Fast claps*");
         BattleEvent eugeneBattle = eventBuilderEugene.buildBattleEvent(eugeneQuestion);
@@ -247,7 +247,7 @@ public class NpcManager {
         EventBuilder eventBuilderVlad = new EventBuilder()
                 .setInteractionName("AIQuiz")
                 .setNpcSource(vlad)
-                .setSpeechText("Hi there, I'm Vlad. I'm under a lot of pressure right now so I'll take it out on you.");
+                .setSpeechText(languageManager.getTranslation("interaction.aiQuizVlad") );
 
         BattleQuestions vladQuestion = new BattleQuestions("What subfield of AI is primarily concerned with the creation of machines that can imitate human intelligence?", answers2, "Deep Learning", "Aw yeah that's right.", "Oops, doopsie. Nope.");
         BattleEvent vladBattle = eventBuilderVlad.buildBattleEvent(vladQuestion);
@@ -257,7 +257,7 @@ public class NpcManager {
         EventBuilder eventBuilderVlad2 = new EventBuilder()
                 .setInteractionName("AIQuiz")
                 .setNpcSource(vlad2)
-                .setSpeechText("Hi, I'm Vlad2. I'm not very good at small talk.");
+                .setSpeechText(languageManager.getTranslation("interaction.aiQuizVlad2") );
 
         BattleQuestions vlad2Question = new BattleQuestions("What is the process used to minimize the error function in a neural network?", answers3, "Gradient Descent", "Excellent!", "Nope, that's not right.");
         BattleEvent vlad2Battle = eventBuilderVlad2.buildBattleEvent(vlad2Question);
