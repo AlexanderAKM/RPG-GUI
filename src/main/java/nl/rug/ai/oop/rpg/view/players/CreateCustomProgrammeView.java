@@ -11,22 +11,27 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-
+/**
+ * @author Robert Hielkema
+ */
 public class CreateCustomProgrammeView extends JPanel{
     private JLabel customLabel;
     private int customIntelligence = 70;
     private int customSocial = 60;
     private TextField customProgrammetextField;
     private LanguageManager chooseProgrammeLanguageManager;
-    CreateCustomProgrammeController listener;
+
 
     /**
-     * @author Robert Hielkema
      * Displays a text field and a slider to choose the name and stats of a custom programmes.
+     *
+     * @param listener the controller for this view
      */
     public CreateCustomProgrammeView(CreateCustomProgrammeController listener){
+        listener.setCreateCustomProgrammeView(this);
         chooseProgrammeLanguageManager = new LanguageManager();
         chooseProgrammeLanguageManager.loadLanguage(Player.getInstance().getLanguage(), "chooseProgrammeTranslations.chooseProgrammeTranslations");
+        this.setSize(800,400);
         this.setLayout(new GridLayout(0,1));
 
         JLabel choiceOne = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceOne"), SwingConstants.CENTER);
@@ -59,11 +64,32 @@ public class CreateCustomProgrammeView extends JPanel{
         this.add(customLabel);
 
         JButton createProgrammeButton = new JButton(chooseProgrammeLanguageManager.getTranslation("createProgrammeButton"));
-        createProgrammeButton.setActionCommand("create custom");
+        createProgrammeButton.setActionCommand("create");
         createProgrammeButton.addActionListener(listener);
         this.add(createProgrammeButton);
         this.revalidate();
         this.repaint();
         this.setVisible(true);
+    }
+
+    /**
+     * Get the value of the custom intelligence stat
+     */
+    public int getCustomIntelligence() {
+        return customIntelligence;
+    }
+
+    /**
+     * Get the value of the custom social stat
+     */
+    public int getCustomSocial() {
+        return customSocial;
+    }
+
+    /**
+     * Get the name of the custom Programme
+     */
+    public String getCustomProgrammetextField() {
+        return customProgrammetextField.getText();
     }
 }

@@ -4,19 +4,19 @@ import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
-import nl.rug.ai.oop.rpg.view.inventory.InventoryView;
 import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
 
 /**
  * The RoomItemsController class handles interactions with room items in the game.
  * It implements the ItemListener interface to respond to item click events.
  * It allows the player to remove an item from the room and add it to their inventory.
+ * @author Alexander Müller
  */
 public class RoomItemsController implements ItemListener {
 
     private final Inventory inventory;
     private final Player player;
-    private final LocationManager locationManager; // New field
+    private final LocationManager locationManager;
 
     /**
      * Constructs a new RoomItemsController object.
@@ -29,7 +29,7 @@ public class RoomItemsController implements ItemListener {
     public RoomItemsController(Inventory inventory, GamePanelGUI gamePanelGUI, Player player, LocationManager locationManager) {
         this.inventory = inventory;
         this.player = player;
-        this.locationManager = locationManager; // Initialize the field
+        this.locationManager = locationManager;
         gamePanelGUI.setItemListener(this);
     }
 
@@ -40,9 +40,7 @@ public class RoomItemsController implements ItemListener {
      */
     @Override
     public void onItemClicked(Item item) {
-        // remove item from the room
         locationManager.removeItemActions(item, player.getCurrentRoom());
-        // add the item to the player's inventory
         inventory.addItem(item);
     }
 }

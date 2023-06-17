@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
  * The GameController class is responsible for handling user actions in the game, such as saving and loading the game.
  *
  * @author Victoria Polaka
+ * @author Alexander Müller & Robert Hielkema (only restructuring & Javadocs)
  */
 public class GameController implements ActionListener {
     private GameManager gameManager;
