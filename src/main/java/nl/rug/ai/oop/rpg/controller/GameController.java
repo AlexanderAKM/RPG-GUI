@@ -18,12 +18,24 @@ public class GameController implements ActionListener {
     private LocationManager locManager;
     private GamePanelGUI gamePanelGUI;
 
+    /**
+     *
+     * Constructs a new GameController instance.
+     * @param gameManager           the Game object representing the game
+     * @param locManager      the LocationManager object managing the game's locations
+     * @param gamePanelGUI    the GamePanelGUI object representing the game panel GUI
+     */
     public GameController(GameManager gameManager, LocationManager locManager, GamePanelGUI gamePanelGUI) {
         this.gameManager = gameManager;
         this.locManager = locManager;
         this.gamePanelGUI = gamePanelGUI;
     }
 
+    /**
+     * Handles the action performed by the user.
+     *
+     * @param e the ActionEvent object representing the user action
+     */
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
