@@ -63,9 +63,9 @@ public class SetUp implements PropertyChangeListener{
         //setup GridBagLayout for inventory view
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
-        c.gridheight = 3;
+        c.gridheight = 2;
         c.gridx = 2;
-        c.gridy = 2;
+        c.gridy = 1;
         frame.add(inventoryView, c);
 
         //setup GridBagLayout for PlayerStatsPane
@@ -131,7 +131,7 @@ public class SetUp implements PropertyChangeListener{
         SavePanel savePanel = new SavePanel(gameController);
         c.fill = GridBagConstraints.VERTICAL;
         c.weightx = 0.0;
-        c.gridheight = 2;
+        c.gridheight = 1;
         c.gridx = 2;  // Change the x grid position
         c.gridy = 0;
         frame.add(savePanel, c);
