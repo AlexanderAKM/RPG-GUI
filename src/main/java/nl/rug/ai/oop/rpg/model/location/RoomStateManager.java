@@ -4,6 +4,8 @@ import java.io.*;
 
 /**
  * This class provides functionality to save and load the state of the rooms using serialization.
+ *
+ * @author Victoria Polaka
  */
 public class RoomStateManager {
 

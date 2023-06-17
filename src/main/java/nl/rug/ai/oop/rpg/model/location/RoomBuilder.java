@@ -24,7 +24,7 @@ public class RoomBuilder {
      * @return The RoomBuilder object.
      */
     public RoomBuilder setName(String name) {
-        room.roomName = name;
+        room.setName(name);
         return this;
     }
 
@@ -35,7 +35,7 @@ public class RoomBuilder {
      * @return The RoomBuilder object.
      */
     public RoomBuilder setDescription(String description) {
-        room.roomDescription = description;
+        room.setDescription(description);
         return this;
     }
 
@@ -46,7 +46,7 @@ public class RoomBuilder {
      * @return The RoomBuilder object.
      */
     public RoomBuilder setNorth(int north) {
-        room.n = north;
+        room.setNorth(north);
         return this;
     }
 
@@ -57,7 +57,7 @@ public class RoomBuilder {
      * @return The RoomBuilder object.
      */
     public RoomBuilder setEast(int east) {
-        room.e = east;
+        room.setEast(east);
         return this;
     }
 
@@ -68,7 +68,7 @@ public class RoomBuilder {
      * @return The RoomBuilder object.
      */
     public RoomBuilder setSouth(int south) {
-        room.s = south;
+        room.setSouth(south);
         return this;
     }
 
@@ -79,7 +79,7 @@ public class RoomBuilder {
      * @return The RoomBuilder object.
      */
     public RoomBuilder setWest(int west) {
-        room.w = west;
+        room.setWest(west);
         return this;
     }
 
@@ -89,8 +89,8 @@ public class RoomBuilder {
      * @param isLocked The locked status of the room (true if locked, false if unlocked).
      * @return The RoomBuilder object.
      */
-    public RoomBuilder setIsLocked(boolean isLocked) {
-        room.isLocked = isLocked;
+    public RoomBuilder setLocked(boolean isLocked) {
+        room.setLocked(isLocked);
         return this;
     }
 

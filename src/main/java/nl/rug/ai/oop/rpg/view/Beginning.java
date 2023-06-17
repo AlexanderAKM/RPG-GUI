@@ -33,13 +33,13 @@ public class Beginning {
     private Runnable callback;  // Added this field
     //private LanguageManager languageManager;
     private String selectedLanguage;
-    private JButton customButton;
     private JLabel customLabel;
     private int customIntelligence = 70;
     private int customSocial = 60;
-    private String customProgrammeName;
+    TextField customProgrammetextField;
     private ChooseProgrammeController listener;
     private Game game;
+    LanguageManager chooseProgrammeLanguageManager;
 
 
     /**
@@ -140,47 +140,49 @@ public class Beginning {
 
     /**
      * @author Robert Hielkema
-     * This method gives different options to choose a programme to follow in university
+     * Displays different programmes options to choose from in university.
      */
     public void ChooseProgramme() {
+        chooseProgrammeLanguageManager = new LanguageManager();
+        chooseProgrammeLanguageManager.loadLanguage(Player.getInstance().getLanguage(), "chooseProgrammeTranslations.chooseProgrammeTranslations");
         frame.remove(languageComboBox);
         frame.remove(startGameButton);
         frame.setSize(800, 400);
         frame.setLayout(new GridLayout(0,1));
         listener = new ChooseProgrammeController(this);
-        JLabel explanation = new JLabel("<html>Choose the programme you want to follow<br/>(Choose wisely the programme you choose will influence the game)<html>", SwingConstants.CENTER);
+        JLabel explanation = new JLabel(chooseProgrammeLanguageManager.getTranslation("explanation"), SwingConstants.CENTER);
         frame.add(explanation);
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(2,4, 5, 0));
 
-        JButton AIButton = new JButton("Artificial Intelligence");
+        JButton AIButton = new JButton(chooseProgrammeLanguageManager.getTranslation("AIButton"));
         AIButton.setActionCommand("Artificial Intelligence");
         AIButton.addActionListener(listener);
         buttons.add(AIButton);
 
-        JButton APButton = new JButton("Applied Physics");
+        JButton APButton = new JButton(chooseProgrammeLanguageManager.getTranslation("APButton"));
         APButton.setActionCommand("Applied Physics");
         APButton.addActionListener(listener);
         buttons.add(APButton);
 
-        JButton CSButton = new JButton("Computing Science");
+        JButton CSButton = new JButton(chooseProgrammeLanguageManager.getTranslation("CSButton"));
         CSButton.setActionCommand("Computing Science");
         CSButton.addActionListener(listener);
         buttons.add(CSButton);
 
-        customButton = new JButton("Custom");
+        JButton customButton = new JButton(chooseProgrammeLanguageManager.getTranslation("customButton"));
         customButton.setActionCommand("Custom");
         customButton.addActionListener(listener);
         buttons.add(customButton);
 
-        JLabel AILabel = new JLabel("<html>Intelligence: 70<br/>Social: 60<html>", SwingConstants.CENTER);
+        JLabel AILabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("AILabel"), SwingConstants.CENTER);
         buttons.add(AILabel);
 
-        JLabel APLabel = new JLabel("<html>Intelligence: 85<br/>Social: 40<html>", SwingConstants.CENTER);
+        JLabel APLabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("APLabel"), SwingConstants.CENTER);
         buttons.add(APLabel);
 
-        JLabel CSLabel = new JLabel("<html>Intelligence: 100<br/>Social: 20<html>", SwingConstants.CENTER);
+        JLabel CSLabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("CSLabel"), SwingConstants.CENTER);
         buttons.add(CSLabel);
 
         frame.add(buttons);
@@ -190,22 +192,22 @@ public class Beginning {
 
     /**
      * @author Robert Hielkema
-     * This method shows a textfield and a slider to choose the name and stats of a custom programme.
+     * Displays a text field and a slider to choose the name and stats of a custom programmes.
      */
     public void createCustomProgramme(){
         frame.getContentPane().removeAll();
         frame.repaint();
         frame.setLayout(new GridLayout(0,1));
 
-        JLabel choiceOne = new JLabel("<html>Choose the name for your custom programme<html>", SwingConstants.CENTER);
+        JLabel choiceOne = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceOne"), SwingConstants.CENTER);
         frame.add(choiceOne);
 
-        TextField textField = new TextField();
+        customProgrammetextField = new TextField();
         Dimension dimension = new Dimension(50, 30);
-        textField.setMaximumSize(dimension);
-        frame.add(textField);
+        customProgrammetextField.setMaximumSize(dimension);
+        frame.add(customProgrammetextField);
 
-        JLabel choiceTwo = new JLabel("<html>Choose the stats for your custom programme<html>", SwingConstants.CENTER);
+        JLabel choiceTwo = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceTwo"), SwingConstants.CENTER);
         frame.add(choiceTwo);
 
         JSlider customSlider = new JSlider(JSlider.HORIZONTAL, 10, 120, customIntelligence);
@@ -213,7 +215,7 @@ public class Beginning {
             public void stateChanged(ChangeEvent e) {
                 customIntelligence = ((JSlider)e.getSource()).getValue();
                 customSocial = (int)(155.6662-(float)(customIntelligence*1.36));
-                customLabel.setText("<html>Intelligence: <html>" + customIntelligence + "<html><br/>Social: <html>" + customSocial);
+                customLabel.setText(chooseProgrammeLanguageManager.getTranslation("customLabel1") + customIntelligence + chooseProgrammeLanguageManager.getTranslation("customLabel2") + customSocial);
             }
         });
         customSlider.setPaintLabels(true);
@@ -223,34 +225,41 @@ public class Beginning {
         customSlider.setMinorTickSpacing(10);
         frame.add(customSlider);
 
-        customLabel = new JLabel("<html>Intelligence: <html>" + customIntelligence + "<html><br/>Social: <html>" + customSocial, SwingConstants.CENTER);
+        customLabel = new JLabel(chooseProgrammeLanguageManager.getTranslation("customLabel1") + customIntelligence + chooseProgrammeLanguageManager.getTranslation("customLabel2") + customSocial, SwingConstants.CENTER);
         frame.add(customLabel);
 
-        customButton = new JButton("Create programme");
-        customButton.setActionCommand("create custom");
-        customButton.addActionListener(listener);
-        frame.add(customButton);
+        JButton createProgrammeButton = new JButton(chooseProgrammeLanguageManager.getTranslation("createProgrammeButton"));
+        createProgrammeButton.setActionCommand("create custom");
+        createProgrammeButton.addActionListener(listener);
+        frame.add(createProgrammeButton);
         frame.revalidate();
         frame.repaint();
     }
-
     /**
-     * @author Robert Hielkema
-     *
+     * @return The intelligence value of the custom programme.
      */
     public int getCustomIntelligence() {
         return customIntelligence;
     }
 
+    /**
+     * @return The social value of the custom programme.
+     */
     public int getCustomSocial() {
         return customSocial;
     }
 
+    /**
+     * @return The name of the custom programme.
+     */
     public String getCustomProgrammeName() {
-        return customProgrammeName;
+        return customProgrammetextField.getText();
     }
 
-    public void startSetup(){
+    /**
+     * Starts the setup process.
+     */
+    public void startSetup() {
         frame.dispose();
         SetUp setUp = new SetUp();
         setUp.start(selectedLanguage, game);

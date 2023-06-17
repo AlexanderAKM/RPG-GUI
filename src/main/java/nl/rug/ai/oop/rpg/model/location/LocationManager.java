@@ -6,9 +6,9 @@ import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.inventory.items.StudentCard;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,11 +20,11 @@ import java.util.Iterator;
  * @author Victoria Polaka
  */
 public class LocationManager implements LocationInterface, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
-
     private LanguageManager languageManager;
-
     private ItemManager manager;
     private transient ArrayList<PropertyChangeListener> listeners;
 
@@ -72,7 +72,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(-1)
                 .setSouth(-1)
                 .setWest(-1)
-                .setIsLocked(false)
+                .setLocked(false)
                 .addAvailableItems(homeItems)
                 .build();
 
@@ -83,7 +83,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(-1)
                 .setSouth(0)
                 .setWest(2)
-                .setIsLocked(false)
+                .setLocked(false)
                 .addAvailableItems(outsideItems)
                 .build();
 
@@ -94,7 +94,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(1)
                 .setSouth(-1)
                 .setWest(-1)
-                .setIsLocked(false)
+                .setLocked(false)
                 .addAvailableItems(examHallItems)
                 .setRequiredItem(new StudentCard())
                 .build();
@@ -106,7 +106,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(-1)
                 .setSouth(1)
                 .setWest(4)
-                .setIsLocked(false)
+                .setLocked(false)
                 //.addAvailableItems(bbItems)
                 //.setRequiredItem()
                 .build();
@@ -118,7 +118,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(-1)
                 .setSouth(-1)
                 .setWest(2)
-                .setIsLocked(false)
+                .setLocked(false)
                 .addAvailableItems(canteenItems)
                 //.setRequiredItem()
                 .build();
@@ -130,7 +130,7 @@ public class LocationManager implements LocationInterface, Serializable {
                 .setEast(-1)
                 .setSouth(3)
                 .setWest(-1)
-                .setIsLocked(true)
+                .setLocked(true)
                 .addAvailableItems(coverItems)
                 .build();
 
@@ -146,6 +146,7 @@ public class LocationManager implements LocationInterface, Serializable {
         map.add(coverRoom);
 
     }
+
     /**
      * Adds an NPC to a room.
      *
@@ -154,7 +155,7 @@ public class LocationManager implements LocationInterface, Serializable {
      * @param room The room where the NPC will be added.
      */
     @Override
-    public void addNpcs(String npcName, Npc npc, Room room) {
+    public void addNPCs(String npcName, Npc npc, Room room) {
         room.getAvailableNpcs().add(npc);
     }
 
@@ -166,19 +167,8 @@ public class LocationManager implements LocationInterface, Serializable {
      * @param room The room where the NPC will be removed from.
      */
     @Override
-    public void removeNpcs(String npcName, Npc npc, Room room) {
+    public void removeNPCs(String npcName, Npc npc, Room room) {
         room.getAvailableNpcs().remove(npc);
-    }
-
-    /**
-     * Adds an item to a room.
-     *
-     * @param x The item to add.
-     * @param room The room where the item will be added.
-     */
-    @Override
-    public void addItemActions(Item x, Room room) {
-        room.getAvailableItems().add(x);
     }
 
     /**
@@ -191,6 +181,7 @@ public class LocationManager implements LocationInterface, Serializable {
     public void removeItemActions(Item x, Room room) {
         room.getAvailableItems().remove(x);
     }
+
     /**
      * Returns a list of available rooms adjacent to the current room.
      *
@@ -250,27 +241,41 @@ public class LocationManager implements LocationInterface, Serializable {
             // If the room requires an item
             if (Player.getInstance().getInventory().containsItem(destinationRoom.getRequiredItem())) {
                 // If the player has the required item, allow them to move
-                Player.getInstance().setCurrentRoom(destinationRoom);
-                PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
-                notifyListeners(payload);
+                movePlayerToRoom(destinationRoom);
             } else {
-                // The player doesn't have the required item, they go there
-                PropertyChangeEvent payload = new PropertyChangeEvent(this, "popUp", null, null);
-                notifyListeners(payload);
+                notifyListenersWithPopup();
             }
         } else {
             // If the room does not require an item
-            if (destinationRoom.getIsLocked()) {
-                // If the room is locked
-                PropertyChangeEvent payload = new PropertyChangeEvent(this, "popUp", null, null);
-                notifyListeners(payload);
+            if (destinationRoom.isLocked()) {
+                notifyListenersWithPopup();
             } else {
                 // If the room is not locked, allow the player to move
-                Player.getInstance().setCurrentRoom(destinationRoom);
-                PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
-                notifyListeners(payload);
+                movePlayerToRoom(destinationRoom);
             }
         }
+    }
+
+    /**
+     * Moves the player to the specified room and notifies all listeners
+     * about the new current room of the player.
+     *
+     * @param destinationRoom The room where the player is to be moved.
+     */
+    private void movePlayerToRoom(Room destinationRoom) {
+        Player.getInstance().setCurrentRoom(destinationRoom);
+        PropertyChangeEvent payload = new PropertyChangeEvent(this, "direction", null, Player.getInstance().getCurrentRoom().getRoomDescription());
+        notifyListeners(payload);
+    }
+
+    /**
+     * Notifies all registered listeners of a popup event.
+     * This method is used to signal that an action could not be performed,
+     * usually due to missing requirements such as an object in inventory.
+     */
+    private void notifyListenersWithPopup() {
+        PropertyChangeEvent payload = new PropertyChangeEvent(this, "popUp", null, null);
+        notifyListeners(payload);
     }
 
     /**
@@ -302,6 +307,6 @@ public class LocationManager implements LocationInterface, Serializable {
      */
     @Override
     public void unlockRoom(Room specificRoom) {
-        specificRoom.setIsLocked(false);
+        specificRoom.setLocked(false);
     }
 }

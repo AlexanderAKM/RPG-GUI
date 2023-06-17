@@ -30,18 +30,15 @@ public class SetUp implements PropertyChangeListener{
     private JFrame frame;
 
     /**
-     * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kikis Hjikakou
+     * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kyriakos Hjikakou
      * @param
      */
-
     public void start(String chosenLanguage, Game game) {
         // Create a player
         Player player = Player.getInstance();
 
         // Create an inventory and add some items
         Inventory inventory = player.getInventory();
-
-        //LanguageManager languageManager =
 
         // Create the inventory view and controller
         LanguageManager roomLanguageManager = new LanguageManager();
@@ -66,9 +63,9 @@ public class SetUp implements PropertyChangeListener{
         //setup GridBagLayout for inventory view
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
-        c.gridheight = 3;
+        c.gridheight = 2;
         c.gridx = 2;
-        c.gridy = 0;
+        c.gridy = 1;
         frame.add(inventoryView, c);
 
         //setup GridBagLayout for PlayerStatsPane
@@ -98,6 +95,7 @@ public class SetUp implements PropertyChangeListener{
 
         NpcView npcPanel = new NpcView(model, manager, playerStatsPane);
 
+
         JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
 
@@ -115,24 +113,25 @@ public class SetUp implements PropertyChangeListener{
         frame.add(locationView, c); // adds the game panel
 
         GameController gameController = new GameController(game, manager, gamePanel);
-        //SavePanel saveGamePanel = new SavePanel(gameController);
         SavePanel savePanel = new SavePanel(gameController);
         c.fill = GridBagConstraints.VERTICAL;
         c.weightx = 0.0;
-        c.gridheight = 2;
-        c.gridx = 0;
+        c.gridheight = 1;
+        c.gridx = 2;  // Change the x grid position
         c.gridy = 0;
         frame.add(savePanel, c);
 
-        //frame.add(saveGamePanel);
-
         frame.revalidate();
-
-        frame.setSize(800, 600);
+        frame.setSize(1000, 600);
         frame.setVisible(true);
     }
 
-
+    /**
+     * @author Robert Hielkema
+     * Responds to the wellbeing of the player going below zero.
+     *
+     * @param evt The PropertyChangeEvent object.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if(evt.getPropertyName().equals("lowWellbeing")){

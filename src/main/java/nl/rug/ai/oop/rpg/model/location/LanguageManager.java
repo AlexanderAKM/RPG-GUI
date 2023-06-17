@@ -1,33 +1,16 @@
 package nl.rug.ai.oop.rpg.model.location;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * Manages the language translations for the rooms and some of the gamepanel view in the RPG game.
+ * Manages the language translations.
  *
  * @author Victoria Polaka
  */
 public class LanguageManager implements Serializable {
     private transient ResourceBundle resourceBundle;
-
-    //private transient ResourceBundle resourceBundle;
-
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        // Serialize necessary data from resourceBundle, e.g., locale and translations
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        // Deserialize necessary data and reconstruct the resourceBundle
-    }
-
 
     /**
      * Loads the language translations for the specified language code.
