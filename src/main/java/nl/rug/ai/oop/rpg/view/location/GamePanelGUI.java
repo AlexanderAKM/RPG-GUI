@@ -291,7 +291,7 @@ public class GamePanelGUI implements Serializable {
         panel.removeAll();
         panel.add(roomNpcsPanel);
         gamePanel.setVisible(false);
-        npcView.updateNpcView("", Player.getInstance());
+        npcView.updateNpcView(Player.getInstance());
         roomNpcsPanel.setVisible(true);
         roomsPanel.setVisible(false);
         roomItemsPanel.setVisible(false);

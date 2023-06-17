@@ -3,22 +3,31 @@ package nl.rug.ai.oop.rpg.controller.NPC;
 import nl.rug.ai.oop.rpg.model.npc.Npc;
 import nl.rug.ai.oop.rpg.model.npc.NpcManager;
 
+/**
+ * The controller for any interaction with NPCs.
+ * It then delegates them to the model (NpcManager).
+ *
+ * @author Kyriakos Hjikakou
+ */
 public class NpcController implements NpcActionListener {
-    private NpcManager model;
+    private final NpcManager model;
 
-
+    /**
+     * Constructs a new NpcController with the given NpcManager model.
+     *
+     * @param model The NpcManager model to associate with the controller
+     */
     public NpcController(NpcManager model) {
         this.model = model;
     }
 
     /**
-     * Method to determine which action has been performed and delegate tasks to model.
-     * @param e The event to be processed.
+     * Handles NPC action events.
+     *
+     * @param e The NPC action event
      */
-
     @Override
     public void actionPerformed(NpcActionEvent e) {
-       // Object npc = e.getSource();
         Npc sourceNpc = e.getSourceNpc();
         String eventName = e.getEventName();
         String selectedText = e.getSelectedText();
