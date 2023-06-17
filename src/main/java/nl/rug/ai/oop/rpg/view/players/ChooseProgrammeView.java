@@ -8,7 +8,9 @@ import nl.rug.ai.oop.rpg.view.SetUp;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * @author Robert Hielkema
+ */
 public class ChooseProgrammeView extends JPanel{
     private String selectedLanguage;
     private JLabel customLabel;
@@ -19,8 +21,9 @@ public class ChooseProgrammeView extends JPanel{
     private ChooseProgrammeController listener;
 
     /**
-     * @author Robert Hielkema
      * Displays different programmes options to choose from in university.
+     *
+     * @param listener the controller for this view
      */
     public ChooseProgrammeView(ChooseProgrammeController listener) {
         chooseProgrammeLanguageManager = new LanguageManager();

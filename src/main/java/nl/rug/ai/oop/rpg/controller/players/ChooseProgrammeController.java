@@ -22,7 +22,7 @@ public class ChooseProgrammeController implements ActionListener {
     /**
      * Constructs a ChooseProgrammeController object.
      *
-     * @param model the Beginning object
+     * @param model the Game
      */
     public ChooseProgrammeController(Game model) {
         this.model = model;

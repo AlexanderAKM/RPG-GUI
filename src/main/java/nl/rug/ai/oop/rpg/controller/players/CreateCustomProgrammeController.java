@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The ChooseProgrammeController class is a controller that handles user actions for choosing a program.
+ * The CreateCustomProgrammeController class is a controller that handles user actions for creating a custom programme.
  * It implements the ActionListener interface.
  *
  * @author RobertHielkema
@@ -21,7 +21,7 @@ public class CreateCustomProgrammeController implements ActionListener {
     Game model;
 
     /**
-     * Constructs a ChooseProgrammeController object.
+     * Constructs a CreateCustomProgrammeController object.
      *
      * @param model the Beginning object
      */
@@ -35,12 +35,11 @@ public class CreateCustomProgrammeController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if (actionCommand.equals("create custom")) {
-            //String programme = model.getCustomProgrammeName();
-            //int intelligence = model.getCustomIntelligence();
-            //int social = model.getCustomSocial();
-            //Player.getInstance().customProgramme(programme, intelligence, social);
-            model.initialise();
-        }
+        String[] parts = actionCommand.split("\\.");
+        String programme = parts[0];
+        int intelligence = Integer.parseInt(parts[1]);
+        int social = Integer.parseInt(parts[2]);
+        Player.getInstance().customProgramme(programme, intelligence, social);
+        model.initialise();
     }
 }

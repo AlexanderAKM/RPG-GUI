@@ -11,18 +11,21 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-
+/**
+ * @author Robert Hielkema
+ */
 public class CreateCustomProgrammeView extends JPanel{
-    private JLabel customLabel;
-    private int customIntelligence = 70;
-    private int customSocial = 60;
+    private static JLabel customLabel;
+    private static int customIntelligence = 70;
+    private static int customSocial = 60;
     private TextField customProgrammetextField;
     private LanguageManager chooseProgrammeLanguageManager;
     CreateCustomProgrammeController listener;
 
     /**
-     * @author Robert Hielkema
      * Displays a text field and a slider to choose the name and stats of a custom programmes.
+     *
+     * @param listener the controller for this view
      */
     public CreateCustomProgrammeView(CreateCustomProgrammeController listener){
         chooseProgrammeLanguageManager = new LanguageManager();
@@ -59,7 +62,7 @@ public class CreateCustomProgrammeView extends JPanel{
         this.add(customLabel);
 
         JButton createProgrammeButton = new JButton(chooseProgrammeLanguageManager.getTranslation("createProgrammeButton"));
-        createProgrammeButton.setActionCommand("create custom");
+        createProgrammeButton.setActionCommand("create." + customLabel + "." + Integer.toString(customIntelligence) + "." + Integer.toString(customSocial));
         createProgrammeButton.addActionListener(listener);
         this.add(createProgrammeButton);
         this.revalidate();
