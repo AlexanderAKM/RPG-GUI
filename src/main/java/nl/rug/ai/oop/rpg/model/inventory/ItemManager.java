@@ -23,7 +23,7 @@ public class ItemManager implements Serializable {
         items.put("Alcohol", new Alcohol(10, 5));
         items.put("Books", new Books(15, 10));
         items.put("Coffee", new Coffee(5, 15));
-        items.put("Money", new Money(100));
+        items.put("Money", new Money(20));
         items.put("StudentCard", new StudentCard());
     }
 
