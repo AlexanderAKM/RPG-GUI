@@ -4,6 +4,7 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.RoomStateManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.Beginning;
+import nl.rug.ai.oop.rpg.view.location.GamePanelGUI;
 
 /**
  * This class represents the main game logic for the RPG.
@@ -39,14 +40,17 @@ public class Game {
         beginning.show();
     }
 
-    public void saveGame(LocationManager locManager) {
+    public void saveGame(LocationManager locManager, GamePanelGUI gamePanelGUI ) {
         RoomStateManager.saveRoomState(locManager, "room_state.ser");
         Player.getInstance().save("player");
+        gamePanelGUI.saveGamePanelState("gamePanelState");
     }
 
-    public void loadSavedGame(LocationManager locManager){
+    public void loadSavedGame(LocationManager locManager, GamePanelGUI gamePanelGUI){
         Player.getInstance().loadSaveFile("player");
         locManager = RoomStateManager.loadRoomState("room_state.ser");
+        gamePanelGUI.loadGamePanelState("gamePanelState");
+
     }
 
     /**

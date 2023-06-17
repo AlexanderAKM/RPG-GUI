@@ -129,7 +129,7 @@ public class SetUp implements PropertyChangeListener{
         c.gridy = 0;
         frame.add(locationView, c); // adds the game panel
 
-        GameController gameController = new GameController(game, manager);
+        GameController gameController = new GameController(game, manager, gamePanel);
         //SavePanel saveGamePanel = new SavePanel(gameController);
         SavePanel savePanel = new SavePanel(gameController);
         c.fill = GridBagConstraints.VERTICAL;

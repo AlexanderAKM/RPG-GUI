@@ -7,7 +7,7 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
-import nl.rug.ai.oop.rpg.model.location.LanguageManager;
+import nl.rug.ai.oop.rpg.model.location.languageManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,8 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 /**
@@ -24,7 +23,7 @@ import java.util.Objects;
  *
  * @author Victoria Polaka
  */
-public class GamePanelGUI {
+public class GamePanelGUI implements Serializable {
     private JPanel panel;
     private JPanel gamePanel;
     private JLabel textLabel;
@@ -43,7 +42,7 @@ public class GamePanelGUI {
     private JLabel mapLabel;
     private ItemListener itemListener;
     private JFrame frame;
-    private final LanguageManager languageManager;
+    private final languageManager languageManager;
 
     /**
      * Constructs a new GamePanelGUI instance.
@@ -52,7 +51,7 @@ public class GamePanelGUI {
      * @param controller          the LocationController object for handling location-related actions
      * @param languageManager the RoomLanguageManager object for managing room translations
      */
-    public GamePanelGUI(LocationManager manager, LocationController controller, LanguageManager languageManager) {
+    public GamePanelGUI(LocationManager manager, LocationController controller, languageManager languageManager) {
         this.frame = frame;
         this.languageManager = languageManager;
         panel = new JPanel();
@@ -142,6 +141,29 @@ public class GamePanelGUI {
         searchItemButton.setForeground(textColor);
         interactNpcButton.setBackground(buttonColor);
         interactNpcButton.setForeground(textColor);
+    }
+
+    public void saveGamePanelState(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(gamePanel); // Serialize the game panel
+            System.out.println("Game panel state saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Load the game panel's state from a file
+    public void loadGamePanelState(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            JPanel savedGamePanel = (JPanel) ois.readObject(); // Deserialize the game panel
+            panel.removeAll(); // Clear the current panel
+            panel.add(savedGamePanel); // Add the saved game panel
+            panel.revalidate();
+            panel.repaint();
+            System.out.println("Game panel state loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -329,7 +351,7 @@ public class GamePanelGUI {
      * @param frame               the JFrame object representing the parent frame
      * @param languageManager the RoomLanguageManager object for translation purposes
      */
-    private void showRoomNotAccessiblePopup(JFrame frame, LanguageManager languageManager) {
+    private void showRoomNotAccessiblePopup(JFrame frame, languageManager languageManager) {
         RoomPopup popup = new RoomPopup(frame, languageManager.getTranslation("popUp_warning"));
         popup.showDialog();
     }
