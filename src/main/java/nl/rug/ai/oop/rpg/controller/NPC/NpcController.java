@@ -46,7 +46,6 @@ public class NpcController implements NpcActionListener {
                 model.continueConversation(sourceNpc, eventName, selectedText);
                 break;
             default:
-                // Go through each one
                 break;
         }
     }

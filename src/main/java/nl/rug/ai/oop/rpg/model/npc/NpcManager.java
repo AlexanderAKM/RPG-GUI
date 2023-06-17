@@ -76,7 +76,6 @@ public class NpcManager {
         Npc coverGuy = createAndPlaceNpc("That one Cover guy", 90, locationManager.getRoom(5));
         Npc eugene = createAndPlaceNpc("Eugene", 90, locationManager.getRoom(2));
         Npc vlad = createAndPlaceNpc("Vlad", 90, locationManager.getRoom(3));
-        Npc vlad2 = createAndPlaceNpc("Vlad2", 90, locationManager.getRoom(4));
         Npc max = createAndPlaceNpc("Max", 90, locationManager.getRoom(4));
         Npc securityGuard = createAndPlaceNpc("Security Guard", 90, locationManager.getRoom(2));
         Npc averageCoverMember = createAndPlaceNpc("Average Cover Member", 90, locationManager.getRoom(5));
@@ -239,30 +238,20 @@ public class NpcManager {
                 .setNpcSource(eugene)
                 .setSpeechText("Yo yo yo I have no friends. But I do have knowledge!");
 
-        BattleQuestions eugeneQuestion = new BattleQuestions("What is considered a supervised learning model?", answers1, "Neural Networks", "*Long claps*", "*Fast claps*");
+        BattleQuestions eugeneQuestion = new BattleQuestions("What is considered a supervised learning model?", answers1, "Neural Networks", languageManager.getTranslation("eugeneQuestion.responseLongClaps="), languageManager.getTranslation("eugeneQuestion.responseFastClaps"));
         BattleEvent eugeneBattle = eventBuilderEugene.buildBattleEvent(eugeneQuestion);
         eugene.setEvent(eugeneBattle);
         eugene.setNpcBattleEvents(eugeneBattle);
 
         EventBuilder eventBuilderVlad = new EventBuilder()
-                .setInteractionName("AIQuiz")
+                .setInteractionName(languageManager.getTranslation("eventBuilderVlad.interactionName"))
                 .setNpcSource(vlad)
-                .setSpeechText("Hi there, I'm Vlad. I'm under a lot of pressure right now so I'll take it out on you.");
+                .setSpeechText(languageManager.getTranslation("eventBuilderVlad.speechText"));
 
-        BattleQuestions vladQuestion = new BattleQuestions("What subfield of AI is primarily concerned with the creation of machines that can imitate human intelligence?", answers2, "Deep Learning", "Aw yeah that's right.", "Oops, doopsie. Nope.");
+        BattleQuestions vladQuestion = new BattleQuestions(languageManager.getTranslation("vladQuestion.question"), answers2, languageManager.getTranslation("responseRight"), languageManager.getTranslation("vladQuestion.responseRight"), languageManager.getTranslation("vladQuestion.responseWrong"));
         BattleEvent vladBattle = eventBuilderVlad.buildBattleEvent(vladQuestion);
         vlad.setEvent(vladBattle);
         vlad.setNpcBattleEvents(vladBattle);
-
-        EventBuilder eventBuilderVlad2 = new EventBuilder()
-                .setInteractionName("AIQuiz")
-                .setNpcSource(vlad2)
-                .setSpeechText("Hi, I'm Vlad2. I'm not very good at small talk.");
-
-        BattleQuestions vlad2Question = new BattleQuestions("What is the process used to minimize the error function in a neural network?", answers3, "Gradient Descent", "Excellent!", "Nope, that's not right.");
-        BattleEvent vlad2Battle = eventBuilderVlad2.buildBattleEvent(vlad2Question);
-        vlad2.setEvent(vlad2Battle);
-        vlad2.setNpcBattleEvents(vlad2Battle);
     }
 
     /**
