@@ -17,7 +17,7 @@ public class ChooseProgrammeController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if (actionCommand.equals("Computing Science") || actionCommand.equals("Artificial Intelligence") || actionCommand.equals("Applied Science")){
+        if (actionCommand.equals("Computing Science") || actionCommand.equals("Artificial Intelligence") || actionCommand.equals("Applied Physics")){
             Player.getInstance().chooseProgramme(actionCommand);
             beginning.startSetup();
         } else if (actionCommand.equals("Custom")){
