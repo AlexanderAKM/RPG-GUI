@@ -52,7 +52,5 @@ public abstract class Item implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-        // Hash other fields as needed
     }
-
 }

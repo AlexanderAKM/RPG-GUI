@@ -33,9 +33,10 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
     public static int VIEWHEIGHT = 250;
 
     /**
-     * Creates an InventoryView with the given Inventory.
+     * Creates a new InventoryView with the given Inventory and LanguageManager.
      *
      * @param inventory the inventory to display
+     * @param languageManager the language manager to use for translations
      */
     public InventoryView(Inventory inventory, LanguageManager languageManager) {
         this.inventory = inventory;
@@ -62,8 +63,11 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
     public void setItemListener(ItemListener itemListener) {
         this.itemListener = itemListener;
     }
+
     /**
      * Loads items into the inventory.
+     *
+     * @param languageManager the language manager to use for translations
      */
     @Override
     public void loadInventory(LanguageManager languageManager) {

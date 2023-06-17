@@ -58,7 +58,7 @@ public class Inventory implements Serializable {
             Item item = iterator.next();
             if (item.getName().equals(itemName)) {
                 iterator.remove();
-                break; // Stop after removing the first occurrence
+                break;
             }
         }
         support.firePropertyChange("items", null, null);

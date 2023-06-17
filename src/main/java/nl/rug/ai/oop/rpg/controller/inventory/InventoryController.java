@@ -3,13 +3,8 @@ package nl.rug.ai.oop.rpg.controller.inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.players.Player;
-import nl.rug.ai.oop.rpg.view.inventory.InventoryView;
 import nl.rug.ai.oop.rpg.view.inventory.InventoryViewInterface;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 /**
