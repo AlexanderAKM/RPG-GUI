@@ -1,10 +1,7 @@
 package nl.rug.ai.oop.rpg.controller.players;
 
 import nl.rug.ai.oop.rpg.model.Game;
-import nl.rug.ai.oop.rpg.model.players.ChooseProgramme;
 import nl.rug.ai.oop.rpg.model.players.Player;
-import nl.rug.ai.oop.rpg.view.Beginning;
-import nl.rug.ai.oop.rpg.view.players.ChooseProgrammeView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
