@@ -194,7 +194,7 @@ public class NpcManager {
                 .setInteractionName("interactionName")
                 .setNpcSource(coverHead)
                 .setSpeechText(languageManager.getTranslation("coverhead.introduction"));
-        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK, 20, "Congrats! You're not poor.", "Oh sorry. You're poor.", locationManager);
+        WorldEvent worldEvent = eventBuilder.buildWorldEvent(WorldEvent.effectOnWorld.UNLOCK, 20, languageManager.getTranslation("worldevent.success1"), languageManager.getTranslation("worldevent.fail1"), locationManager);
         coverHead.setEvent(worldEvent);
         coverHead.setNpcWorldEvents(worldEvent);
 
