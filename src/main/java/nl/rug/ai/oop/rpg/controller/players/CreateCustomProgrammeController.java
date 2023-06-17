@@ -5,6 +5,7 @@ import nl.rug.ai.oop.rpg.model.players.ChooseProgramme;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.Beginning;
 import nl.rug.ai.oop.rpg.view.players.ChooseProgrammeView;
+import nl.rug.ai.oop.rpg.view.players.CreateCustomProgrammeView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,7 @@ import java.awt.event.ActionListener;
  *
  * @author RobertHielkema
  */
-public class ChooseProgrammeController implements ActionListener {
+public class CreateCustomProgrammeController implements ActionListener {
 
     Game model;
 
@@ -24,7 +25,7 @@ public class ChooseProgrammeController implements ActionListener {
      *
      * @param model the Beginning object
      */
-    public ChooseProgrammeController(Game model) {
+    public CreateCustomProgrammeController(Game model) {
         this.model = model;
     }
 
@@ -34,11 +35,12 @@ public class ChooseProgrammeController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if (actionCommand.equals("Computing Science") || actionCommand.equals("Artificial Intelligence") || actionCommand.equals("Applied Physics")) {
-            Player.getInstance().chooseProgramme(actionCommand);
+        if (actionCommand.equals("create custom")) {
+            //String programme = model.getCustomProgrammeName();
+            //int intelligence = model.getCustomIntelligence();
+            //int social = model.getCustomSocial();
+            //Player.getInstance().customProgramme(programme, intelligence, social);
             model.initialise();
-        } else if (actionCommand.equals("Custom")) {
-            model.createCustomProgramme();
         }
     }
 }
