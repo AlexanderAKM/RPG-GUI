@@ -16,29 +16,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class NpcView {
-    NpcButton testButton;
-    JButton backButton;
-    private JTextArea textArea;
+    private final JButton backButton;
+    private final JTextArea textArea;
+
+    private final JPanel npcView;
+
+    private final LocationManager locationManager;
     private JTextField textField;
-
-    private JPanel npcView;
-
-    private LocationManager locationManager;
 
     private PlayerStatsPane playerStatsPane;
 
     private ArrayList<Npc> npcList;
 
-
     // Temp
     NpcController cont;
 
     public NpcView(NpcManager npcManager, LocationManager locationManager, PlayerStatsPane playerStatsPane) {
-
-        /*JFrame frame = new JFrame("Test");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());*/
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Set the border
@@ -49,15 +42,9 @@ public class NpcView {
 
         backButton = new JButton("Go back");
 
-
-        //testButton = new NpcButton("Bob's Introduction", "NPC Introduction", npcManager.allNpcs.get(0));
-
         npcView = new JPanel(new GridLayout(10, 1, 10, 5));
 
         this.locationManager = locationManager;
-        //npcView.add(textField, BorderLayout.PAGE_END);
-        //frame.add(centerPanel, BorderLayout.CENTER);
-        //frame.setVisible(true);
     }
 
     private void setUpNpcs(ArrayList<Npc> npcs, String eventName, Player player){
@@ -68,7 +55,7 @@ public class NpcView {
         npcView.add(textArea, BorderLayout.CENTER);
         for (Npc npc : npcs) {
             String npcName = npc.getName();
-            NpcButton npcInteractionButton = new NpcButton(npcName, "Interaction", npc);
+            JButton npcInteractionButton = new JButton(npcName);
             npcInteractionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -79,55 +66,13 @@ public class NpcView {
                 }
             });
 
-
-            // Implement The NPC stuff
-            npcInteractionButton.setActionCommand("NPC Interaction"); // Set the action command as the room name
-            /*npcInteractionButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });*/
-
+            npcInteractionButton.setActionCommand("NPC Interaction");
             npcView.add(npcInteractionButton);
         }
 
         npcView.revalidate();
         npcView.repaint();
     }
-/*
-    private void setUpNpcs(ArrayList<Npc> npcs, String additonalText, String eventName, Player player){
-        npcView.removeAll();
-        textArea.setText("");
-        npcView.add(backButton);
-        npcView.add(textArea, BorderLayout.CENTER);
-        for (Npc npc : npcs) {
-            String npcName = npc.getName();
-            NpcButton npcInteractionButton = new NpcButton(npcName, "Interaction", npc);
-            npcInteractionButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(),npcName, eventName, -10, - 1, npc);
-                    cont.actionPerformed(customEvent);
-                    updateNpcView(eventName, player);
-                    System.out.println("This worked");
-                }
-            });
-
-
-            // Implement The NPC stuff
-            npcInteractionButton.setActionCommand("NPC Interaction"); // Set the action command as the room name
-            /*npcInteractionButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-
-            npcView.add(npcInteractionButton);
-        }
-        textArea.append(additonalText);
-        npcView.revalidate();
-        npcView.repaint();
-    } */
 
     private void setupBattle(ArrayList<String> answers, String speech, String eventName, Npc npc){
         npcView.removeAll();
@@ -135,7 +80,7 @@ public class NpcView {
         npcView.add(textArea, BorderLayout.CENTER);
         textArea.append(speech);
         for (String answer : answers) {
-            NpcButton answerButton = new NpcButton(answer, eventName,npc);
+            JButton answerButton = new JButton(answer);
             answerButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -159,30 +104,11 @@ public class NpcView {
         npcView.add(textArea, BorderLayout.CENTER);
 
         textArea.append(text);
-        //ConversationChain conversationChain = introductionEvent.getConversationChain();
-
-        //System.out.println(introductionEvent.getCurrentKey());
         System.out.println(options);
-
-        /*for (String option : options){
-            for(String finalText : conversationChain.getFinalTexts()){
-                if(Objects.equals(option, finalText)) {
-                    isNotFinal = false;
-                    NpcButton answerButton = new NpcButton(option, introductionEvent.getName(), introductionEvent.getNpcSource());
-                    answerButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            returnToHomePanel(home);
-                        }
-                    });
-                    npcView.add(answerButton);
-                }
-            }
-        }*/
 
         for (String option : options) {
 
-            NpcButton answerButton = new NpcButton(option, eventName, npcSource);
+            JButton answerButton = new JButton(option);
             answerButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -210,7 +136,7 @@ public class NpcView {
         npcView.add(textArea, BorderLayout.CENTER);
         textArea.append(speech);
 
-        NpcButton interactionButton = new NpcButton(Integer.toString(cost), eventName, npcSource);
+        JButton interactionButton = new JButton(Integer.toString(cost));
         // If statement here
         interactionButton.addActionListener(new ActionListener() {
             @Override

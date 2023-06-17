@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 /**
  * Generic Event class to create Event objects.
+ *
+ * @author Kyriakos Hjikakou
  */
 public abstract class Events implements Serializable {
     /**

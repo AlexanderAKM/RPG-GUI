@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 public class CreateCustomProgrammeController implements ActionListener {
 
     Game model;
+    CreateCustomProgrammeView view;
 
     /**
      * Constructs a CreateCustomProgrammeController object.
@@ -35,11 +36,19 @@ public class CreateCustomProgrammeController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        String[] parts = actionCommand.split("\\.");
-        String programme = parts[0];
-        int intelligence = Integer.parseInt(parts[1]);
-        int social = Integer.parseInt(parts[2]);
-        Player.getInstance().customProgramme(programme, intelligence, social);
-        model.initialise();
+        if (actionCommand.equals("create")){
+            String programmeName = view.getCustomProgrammetextField();
+            int intelligence = view.getCustomIntelligence();
+            int social = view.getCustomSocial();
+            Player.getInstance().customProgramme(programmeName, intelligence, social);
+            model.initialise();
+        }
+    }
+
+    /**
+     * @param createCustomProgrammeView set the view to be able to get the stats from the player input
+     */
+    public void setCreateCustomProgrammeView(CreateCustomProgrammeView createCustomProgrammeView) {
+        this.view = createCustomProgrammeView;
     }
 }

@@ -12,13 +12,7 @@ import java.awt.*;
  * @author Robert Hielkema
  */
 public class ChooseProgrammeView extends JPanel{
-    private String selectedLanguage;
-    private JLabel customLabel;
-    private int customIntelligence = 70;
-    private int customSocial = 60;
-    private TextField customProgrammetextField;
     private LanguageManager chooseProgrammeLanguageManager;
-    private ChooseProgrammeController listener;
 
     /**
      * Displays different programmes options to choose from in university.
@@ -28,14 +22,12 @@ public class ChooseProgrammeView extends JPanel{
     public ChooseProgrammeView(ChooseProgrammeController listener) {
         chooseProgrammeLanguageManager = new LanguageManager();
         chooseProgrammeLanguageManager.loadLanguage(Player.getInstance().getLanguage(), "chooseProgrammeTranslations.chooseProgrammeTranslations");
-        this.listener = listener;
-        this.setSize(800, 400);
-        this.setLayout(new GridLayout(0,1));
+        this.setLayout(new GridLayout(0,1,0,40));
         JLabel explanation = new JLabel(chooseProgrammeLanguageManager.getTranslation("explanation"), SwingConstants.CENTER);
         this.add(explanation);
 
         JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(2,4, 5, 0));
+        buttons.setLayout(new GridLayout(2,4, 5, 20));
 
         JButton AIButton = new JButton(chooseProgrammeLanguageManager.getTranslation("AIButton"));
         AIButton.setActionCommand("Artificial Intelligence");

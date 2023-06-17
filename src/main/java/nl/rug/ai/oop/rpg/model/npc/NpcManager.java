@@ -20,62 +20,58 @@ import nl.rug.ai.oop.rpg.model.players.Player;
 
 import java.util.*;
 
-
+/**
+ * This class manages all non-player character (NPC) related activities such as
+ * initialising NPCs, creating and placing NPCs, and managing NPC interactions.
+ *
+ * Each NPC can have different types of events, hence this acts as a bridge tlo both the model and controller,
+ * to correctly manage those events.
+ *
+ * @author Kyriakos Hjikakou
+ */
 public class NpcManager {
-    ArrayList<NpcPropertyChangeListener> listeners = new ArrayList<>();
+    private ArrayList<NpcPropertyChangeListener> listeners = new ArrayList<>();
 
-    // Fix this, shouldn't be public, should be encapsulated
     public ArrayList<Npc> allNpcs;
-    private LocationManager locationManager;
+    private final LocationManager locationManager;
 
-    private ItemManager itemManager;
+    private final ItemManager itemManager;
 
-    LanguageManager languageManager;
+    private LanguageManager languageManager;
+
+    /**
+     * Constructs a new NPC manager with given location manager, item manager, and language manager.
+     *
+     * @param locationManager  the location manager
+     * @param itemManager      the item manager
+     * @param languageManager  the language manager
+     */
 
     public NpcManager(LocationManager locationManager, ItemManager itemManager, LanguageManager languageManager) {
-        allNpcs  = new ArrayList<Npc>();
         this.locationManager = locationManager;
-        //System.out.println(language);
-        //npcLanguageManager = new NpcLanguageManager(language, directory);
         this.languageManager = languageManager;
         this.itemManager = itemManager;
+        allNpcs  = new ArrayList<Npc>();
         initialiseNpcs();
     }
 
+    /**
+     * Notifies all registered listeners about changes.
+     *
+     * @param payload  the NPC property change event
+     */
     private void notifyListeners(NpcPropertyChangeEvent payload) {
         Iterator<NpcPropertyChangeListener> allListeners = listeners.iterator();
-
         while (allListeners.hasNext()) {
             allListeners.next().propertyChange(payload);
         }
     }
 
+    /**
+     * Initialises all NPCs in the game. And their associated events.
+     */
     public void initialiseNpcs(){
-        ArrayList<String> answers =  new ArrayList<>();
-        answers.add("Cover.");
-        answers.add("Ibn Battuta.");
-        answers.add("Sirius A.");
-        answers.add("De Chemische Binding.");
-
-        ArrayList<String> answers1 = new ArrayList<>();
-        answers1.add("Neural Networks");
-        answers1.add("Decision Trees");
-        answers1.add("K-Nearest Neighbors");
-        answers1.add("Support Vector Machines");
-
-        ArrayList<String> answers2 = new ArrayList<>();
-        answers2.add("Deep Learning");
-        answers2.add("Machine Learning");
-        answers2.add("Natural Language Processing");
-        answers2.add("Computer Vision");
-
-        ArrayList<String> answers3 = new ArrayList<>();
-        answers3.add("Gradient Descent");
-        answers3.add("Backpropagation");
-        answers3.add("Overfitting");
-        answers3.add("Underfitting");
-
-        Npc roomMate = createAndPlaceNpc("Roommate", 90, locationManager.getRoom(0));
+        Npc roomMate = createAndPlaceNpc(languageManager.getTranslation("Roommate"), 90, locationManager.getRoom(0));
         Npc coverHead = createAndPlaceNpc("Head of Cover", 90, locationManager.getRoom(1));
         Npc coverGuy = createAndPlaceNpc("That one Cover guy", 90, locationManager.getRoom(5));
         Npc eugene = createAndPlaceNpc("Eugene", 90, locationManager.getRoom(2));
@@ -202,6 +198,32 @@ public class NpcManager {
         coverHead.setEvent(worldEvent);
         coverHead.setNpcWorldEvents(worldEvent);
 
+        // BATTLES
+        // Multiple Choice Questions
+        ArrayList<String> answers =  new ArrayList<>();
+        answers.add("Cover.");
+        answers.add("Ibn Battuta.");
+        answers.add("Sirius A.");
+        answers.add("De Chemische Binding.");
+
+        ArrayList<String> answers1 = new ArrayList<>();
+        answers1.add("Neural Networks");
+        answers1.add("Decision Trees");
+        answers1.add("K-Nearest Neighbors");
+        answers1.add("Support Vector Machines");
+
+        ArrayList<String> answers2 = new ArrayList<>();
+        answers2.add("Deep Learning");
+        answers2.add("Machine Learning");
+        answers2.add("Natural Language Processing");
+        answers2.add("Computer Vision");
+
+        ArrayList<String> answers3 = new ArrayList<>();
+        answers3.add("Gradient Descent");
+        answers3.add("Backpropagation");
+        answers3.add("Overfitting");
+        answers3.add("Underfitting");
+
         EventBuilder eventBuilder1 = new EventBuilder()
                 .setInteractionName("EvilBattle")
                 .setNpcSource(coverGuy)
@@ -243,26 +265,36 @@ public class NpcManager {
         vlad2.setNpcBattleEvents(vlad2Battle);
     }
 
-
-
-    /*public Npc getNpc(String npcName){
-        for(Npc npc : allNpcs){
-            if(Objects.equals(npc.getName(), npcName)){
-                return npc;
-            }
-        }
-        return null;
-    }*/
-
+    /**
+     * Creates a new NPC with the given name and money, and places it in the specified room.
+     *
+     * @param npcName  the name of the NPC
+     * @param money    the amount of money the NPC has
+     * @param room     the room to place the NPC
+     * @return the created NPC
+     */
     public Npc createAndPlaceNpc(String npcName, int money, Room room) {
         Npc newNpc = new Npc(npcName, money);
         locationManager.addNPCs(npcName, newNpc, room);
         return newNpc;
     }
+
+    /**
+     * Adds a new listener to the list of NPC property change listeners.
+     *
+     * @param listener  the listener to add
+     */
     public void addListener(NpcPropertyChangeListener listener) {
         listeners.add(listener);
     }
 
+
+    /**
+     * Handles the interaction with the given NPC.
+     *
+     * @param targetNpc         the target NPC
+     * @param interactionName   the name of the interaction
+     */
     public void npcInteraction(Npc targetNpc, String interactionName){
         Events event = targetNpc.findNpcEvent();
 
@@ -280,7 +312,6 @@ public class NpcManager {
                 notifyListeners(payload);
                 break;
             case INTRODUCTION:
-                //PropertyChangeListener();
                 ConversationEvent conversationEvent = targetNpc.getIntroductionEvent(event.getName());
                 conversationEvent.initialSetup();
                 ConversationChain conversationChain = conversationEvent.getConversationChain();
@@ -300,10 +331,17 @@ public class NpcManager {
         }
     }
 
-    public void checkAnswer(Npc targetNpc, String selectedText, int wellBeingEffect, int socialEffect){
+    /**
+     * Checks the answer provided by the player in a battle event.
+     *
+     * @param targetNpc         the target NPC
+     * @param selectedText      the selected text (answer) by the player
+     * @param wellBeingEffect   the effect on wellbeing
+     * @param socialEffect      the effect on social
+     */
+    public void checkBattleAnswer(Npc targetNpc, String selectedText, int wellBeingEffect, int socialEffect){
         System.out.println(selectedText);
         NpcPropertyChangeEvent payload;
-        //Npc npc = target.getNpc();
         Events event = targetNpc.findNpcEvent();
 
         BattleEvent battleEvent = targetNpc.getNpcBattleEvents(event.getName());
@@ -311,13 +349,7 @@ public class NpcManager {
 
         ArrayList<String> answers = battleQuestions.getAnswers();
 
-        // Check if it was the correct answer
         if(Objects.equals(selectedText, battleQuestions.getCorrectAnswer())){
-            //ADD Items to room
-            // We increase Player stats
-            // Reduce NPC stats
-            //payload = new NpcPropertyEvent(this, "Correct", battleQuestions.getVictoryText(), battleEvent);
-            // A random item gets added
             Player player = Player.getInstance();
             Inventory inventory = player.getInventory();
             ArrayList<String> arrayList = new ArrayList<>();
@@ -348,6 +380,13 @@ public class NpcManager {
         }
     }
 
+    /**
+     * Continues the conversation with the given NPC.
+     *
+     * @param npcTarget         the target NPC
+     * @param eventName         the name of the event
+     * @param optionSelected    the selected option in the conversation
+     */
     public void continueConversation(Npc npcTarget, String eventName, String optionSelected){
         NpcPropertyChangeEvent introductionPayload;
         Boolean isFinal = false;
@@ -377,6 +416,11 @@ public class NpcManager {
         notifyListeners(introductionPayload);
     }
 
+    /**
+     *Checks the conditions for a world event to go through with the given NPC.
+     *
+     * @param targetNpc the target NPC
+     */
     public void checkWorldEventCondition(Npc targetNpc){
         NpcPropertyChangeEvent payload;
         Events event = targetNpc.findNpcEvent();
@@ -391,7 +435,6 @@ public class NpcManager {
         } else {
             payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getFailText(), null, 0, targetNpc);
         }
-
         notifyListeners(payload);
     }
 }

@@ -32,11 +32,6 @@ public class Beginning {
     private JComboBox<String> languageComboBox;
     private Runnable callback;
     private String selectedLanguage;
-    private JLabel customLabel;
-    private int customIntelligence = 70;
-    private int customSocial = 60;
-    TextField customProgrammetextField;
-    private ChooseProgrammeController listener;
     private Game game;
 
 
@@ -133,8 +128,11 @@ public class Beginning {
         frame.getContentPane().removeAll();
         frame.repaint();
         frame.setSize(800,400);
+        frame.setLayout(new BorderLayout());
         ChooseProgrammeView chooseProgrammeView = new ChooseProgrammeView(controller);
         frame.add(chooseProgrammeView);
+        frame.revalidate();
+        frame.repaint();
     }
 
     /**
@@ -147,6 +145,8 @@ public class Beginning {
         frame.repaint();
         CreateCustomProgrammeView createCustomProgrammeView = new CreateCustomProgrammeView(controller);
         frame.add(createCustomProgrammeView);
+        frame.revalidate();
+        frame.repaint();
     }
 
     /**
