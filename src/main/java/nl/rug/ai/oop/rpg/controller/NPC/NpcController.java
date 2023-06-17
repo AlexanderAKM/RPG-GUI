@@ -2,9 +2,6 @@ package nl.rug.ai.oop.rpg.controller.NPC;
 
 import nl.rug.ai.oop.rpg.model.npc.Npc;
 import nl.rug.ai.oop.rpg.model.npc.NpcManager;
-import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
-
-import javax.swing.*;
 
 public class NpcController implements NpcActionListener {
     private NpcManager model;
@@ -31,7 +28,7 @@ public class NpcController implements NpcActionListener {
                 model.npcInteraction(sourceNpc, "Interaction");
                 break;
             case "Battle Answer":
-                model.checkAnswer(sourceNpc, selectedText, -10, -10);
+                model.checkBattleAnswer(sourceNpc, selectedText, -10, -10);
                 break;
             case "Continue World Event":
                 model.checkWorldEventCondition(sourceNpc);
