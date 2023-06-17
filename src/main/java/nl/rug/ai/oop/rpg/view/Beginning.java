@@ -36,7 +36,7 @@ public class Beginning {
     private JLabel customLabel;
     private int customIntelligence = 70;
     private int customSocial = 60;
-    private String customProgrammeName;
+    TextField customProgrammetextField;
     private ChooseProgrammeController listener;
     private Game game;
     LanguageManager chooseProgrammeLanguageManager;
@@ -140,7 +140,7 @@ public class Beginning {
 
     /**
      * @author Robert Hielkema
-     * This method gives different options to choose a programme to follow in university
+     * Displays different programmes options to choose from in university.
      */
     public void ChooseProgramme() {
         chooseProgrammeLanguageManager = new LanguageManager();
@@ -192,7 +192,7 @@ public class Beginning {
 
     /**
      * @author Robert Hielkema
-     * This method shows a textfield and a slider to choose the name and stats of a custom programme.
+     * Displays a text field and a slider to choose the name and stats of a custom programmes.
      */
     public void createCustomProgramme(){
         frame.getContentPane().removeAll();
@@ -202,10 +202,10 @@ public class Beginning {
         JLabel choiceOne = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceOne"), SwingConstants.CENTER);
         frame.add(choiceOne);
 
-        TextField textField = new TextField();
+        customProgrammetextField = new TextField();
         Dimension dimension = new Dimension(50, 30);
-        textField.setMaximumSize(dimension);
-        frame.add(textField);
+        customProgrammetextField.setMaximumSize(dimension);
+        frame.add(customProgrammetextField);
 
         JLabel choiceTwo = new JLabel(chooseProgrammeLanguageManager.getTranslation("choiceTwo"), SwingConstants.CENTER);
         frame.add(choiceTwo);
@@ -235,24 +235,31 @@ public class Beginning {
         frame.revalidate();
         frame.repaint();
     }
-
     /**
-     * @author Robert Hielkema
-     *
+     * @return The intelligence value of the custom programme.
      */
     public int getCustomIntelligence() {
         return customIntelligence;
     }
 
+    /**
+     * @return The social value of the custom programme.
+     */
     public int getCustomSocial() {
         return customSocial;
     }
 
+    /**
+     * @return The name of the custom programme.
+     */
     public String getCustomProgrammeName() {
-        return customProgrammeName;
+        return customProgrammetextField.getText();
     }
 
-    public void startSetup(){
+    /**
+     * Starts the setup process.
+     */
+    public void startSetup() {
         frame.dispose();
         SetUp setUp = new SetUp();
         setUp.start(selectedLanguage, game);

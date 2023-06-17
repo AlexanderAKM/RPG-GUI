@@ -141,6 +141,12 @@ public class SetUp implements PropertyChangeListener{
         frame.setVisible(true);
     }
 
+    /**
+     * @author Robert Hielkema
+     * Responds to the wellbeing of the player going below zero.
+     *
+     * @param evt The PropertyChangeEvent object.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if(evt.getPropertyName().equals("lowWellbeing")){
