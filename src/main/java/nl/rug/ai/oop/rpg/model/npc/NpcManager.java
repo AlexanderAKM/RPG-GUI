@@ -229,7 +229,7 @@ public class NpcManager {
                 .setNpcSource(coverGuy)
                 .setSpeechText(languageManager.getTranslation("interaction.evilBattle"));
 
-        BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
+        BattleQuestions coverQuestion = new BattleQuestions(languageManager.getTranslation("battleQuestion.bestAssociation"), answers, languageManager.getTranslation("answer.cover"), languageManager.getTranslation("feedback.positive1"), languageManager.getTranslation("feedback.negative1"));
         BattleEvent coverBattle = eventBuilder1.buildBattleEvent(coverQuestion);
         coverGuy.setEvent(coverBattle);
         coverGuy.setNpcBattleEvents(coverBattle);
@@ -239,7 +239,7 @@ public class NpcManager {
                 .setNpcSource(eugene)
                 .setSpeechText(languageManager.getTranslation("interaction.aiQuiz") );
 
-        BattleQuestions eugeneQuestion = new BattleQuestions("What is considered a supervised learning model?", answers1, "Neural Networks", "*Long claps*", "*Fast claps*");
+        BattleQuestions eugeneQuestion = new BattleQuestions(languageManager.getTranslation("battleQuestion.supervisedLearningModel") , answers1, languageManager.getTranslation("answer.neuralNetworks") , languageManager.getTranslation("feedback.positive2"), languageManager.getTranslation("feedback.negative2"));
         BattleEvent eugeneBattle = eventBuilderEugene.buildBattleEvent(eugeneQuestion);
         eugene.setEvent(eugeneBattle);
         eugene.setNpcBattleEvents(eugeneBattle);
@@ -249,7 +249,7 @@ public class NpcManager {
                 .setNpcSource(vlad)
                 .setSpeechText(languageManager.getTranslation("interaction.aiQuizVlad") );
 
-        BattleQuestions vladQuestion = new BattleQuestions(languageManager.getTranslation("battleQuestion.subfieldOfAI"), answers2, "Deep Learning", "Aw yeah that's right.", "Oops, doopsie. Nope.");
+        BattleQuestions vladQuestion = new BattleQuestions(languageManager.getTranslation("battleQuestion.subfieldOfAI"), answers2, languageManager.getTranslation("answer.deepLearning"), languageManager.getTranslation("feedback.positive3"), languageManager.getTranslation("feedback.negative3"));
         BattleEvent vladBattle = eventBuilderVlad.buildBattleEvent(vladQuestion);
         vlad.setEvent(vladBattle);
         vlad.setNpcBattleEvents(vladBattle);
