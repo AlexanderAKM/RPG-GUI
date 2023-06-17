@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Kyriakos Hjikakou
  */
 public class ConversationBuilder {
-    private ConversationChain conversationChain;
+    private final ConversationChain conversationChain;
 
     public ConversationBuilder() {
         this.conversationChain = new ConversationChain();

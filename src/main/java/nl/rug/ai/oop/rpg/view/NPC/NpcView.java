@@ -60,7 +60,7 @@ public class NpcView {
         //frame.setVisible(true);
     }
 
-    private void setUpNpcs(ArrayList<Npc> npcs, String eventName){
+    private void setUpNpcs(ArrayList<Npc> npcs, String eventName, Player player){
 
         npcView.removeAll();
         textArea.setText("");
@@ -73,7 +73,7 @@ public class NpcView {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(), npcName, eventName, -10, - 1, npc);
-                    updateNpcView(Player.getInstance().getCurrentRoom().getAvailableNpcs(), eventName);
+                    updateNpcView(eventName, player);
                     cont.actionPerformed(customEvent);
                     System.out.println("This worked");
                 }
@@ -94,8 +94,8 @@ public class NpcView {
         npcView.revalidate();
         npcView.repaint();
     }
-
-    private void setUpNpcs(ArrayList<Npc> npcs, String additonalText, String eventName){
+/*
+    private void setUpNpcs(ArrayList<Npc> npcs, String additonalText, String eventName, Player player){
         npcView.removeAll();
         textArea.setText("");
         npcView.add(backButton);
@@ -108,7 +108,7 @@ public class NpcView {
                 public void actionPerformed(ActionEvent e) {
                     NpcActionEvent customEvent = new NpcActionEvent(e.getSource(), e.getID(), e.getActionCommand(),npcName, eventName, -10, - 1, npc);
                     cont.actionPerformed(customEvent);
-                    updateNpcView(Player.getInstance().getCurrentRoom().getAvailableNpcs(), eventName);
+                    updateNpcView(eventName, player);
                     System.out.println("This worked");
                 }
             });
@@ -120,14 +120,14 @@ public class NpcView {
                 public void actionPerformed(ActionEvent e) {
 
                 }
-            });*/
+            });
 
             npcView.add(npcInteractionButton);
         }
         textArea.append(additonalText);
         npcView.revalidate();
         npcView.repaint();
-    }
+    } */
 
     private void setupBattle(ArrayList<String> answers, String speech, String eventName, Npc npc){
         npcView.removeAll();
@@ -229,10 +229,10 @@ public class NpcView {
         npcView.repaint();
     }
 
-    public void updateNpcView(ArrayList<Npc> npcs, String eventName){
+    public void updateNpcView(String eventName, Player player){
+        npcList = locationManager.getNpcList(player.getCurrentRoom());
         npcView.removeAll();
-        npcList = npcs;
-        setUpNpcs(npcs, eventName);
+        setUpNpcs(npcList, eventName, player);
     }
 
     public void returnToHomePanel(GamePanelGUI home){
@@ -243,9 +243,6 @@ public class NpcView {
         return npcView;
     }
 
-    private  void outputSpeech(String command){
-        textArea.append(command + "\n");
-    }
 
     public void finalResponseSetup(String text, GamePanelGUI home, String toolTip){
         npcView.removeAll();
@@ -258,7 +255,7 @@ public class NpcView {
         npcView.add(backButton);
     }
 
-    public void setup(NpcManager model, ArrayList<Npc> npcs, NpcController controller, GamePanelGUI home, JFrame frame) {
+    public void setup(NpcManager model, NpcController controller, GamePanelGUI home, JFrame frame) {
         Player player = Player.getInstance();
         //testButton.addActionListener(controller);
        // testButton.setActionCommand("NPC Interaction");
@@ -273,7 +270,7 @@ public class NpcView {
         //textField.addActionListener(controller);
         cont = controller;
 
-        setUpNpcs(npcs, "");
+        setUpNpcs(npcList,"", player);
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getEventType(), Npc.EventType.BATTLE)) {
@@ -283,7 +280,7 @@ public class NpcView {
 
         model.addListener(evt -> {
             if (Objects.equals(evt.getEventType(), Npc.EventType.RESET)) {
-                updateNpcView(npcList, evt.getEventName());
+                updateNpcView(evt.getEventName(), player);
             }
         });
 

@@ -3,6 +3,8 @@ package nl.rug.ai.oop.rpg.model.npc;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
+import nl.rug.ai.oop.rpg.model.listeners.NpcPropertyChangeEvent;
+import nl.rug.ai.oop.rpg.model.listeners.NpcPropertyChangeListener;
 import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
@@ -292,7 +294,7 @@ public class NpcManager {
             case WORLD_EVENT:
                 WorldEvent worldEvent = targetNpc.getWorldEvent(event.getName());
                 String worldEventSpeech = event.getSpeechText() + "\n";
-                NpcPropertyChangeEvent worldPayload = new NpcPropertyChangeEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCondition(), targetNpc);
+                NpcPropertyChangeEvent worldPayload = new NpcPropertyChangeEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCost(), targetNpc);
                 notifyListeners(worldPayload);
                 break;
         }
@@ -381,7 +383,7 @@ public class NpcManager {
         WorldEvent worldEvent = targetNpc.getWorldEvent(event.getName());
 
         Player player = Player.getInstance();
-        if(player.getMoney() >= worldEvent.getCondition()){
+        if(player.getMoney() >= worldEvent.getCost()){
             worldEvent.unlockRoom(5);
             player.changeMoney(-20);
             payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getSuccessText(), null, 0, targetNpc);

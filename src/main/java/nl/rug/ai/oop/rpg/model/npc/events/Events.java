@@ -16,10 +16,10 @@ public abstract class Events implements Serializable {
         INTRODUCTION,
         WORLD_EVENT
     }
-    private String interactionName;
-    private Npc npcSource;
-    private EventType eventType;
-    private String speechText;
+    private final String interactionName;
+    private final Npc npcSource;
+    private final EventType eventType;
+    private final String speechText;
 
     /**
      * Creates a generic Event object

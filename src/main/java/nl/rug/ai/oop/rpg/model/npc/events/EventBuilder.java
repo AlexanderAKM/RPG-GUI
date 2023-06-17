@@ -73,8 +73,7 @@ public class EventBuilder {
      * @return a new WorldEvent instance
      */
     public WorldEvent buildWorldEvent(WorldEvent.effectOnWorld effect, int cost, String successText, String failText, LocationManager locationManager) {
-        WorldEvent event = new WorldEvent(interactionName, npcSource, effect, speechText,cost, Events.EventType.WORLD_EVENT, successText, failText, locationManager);
-        return event;
+        return new WorldEvent(interactionName, npcSource, effect, speechText,cost, Events.EventType.WORLD_EVENT, successText, failText, locationManager);
     }
 
     /**
@@ -84,7 +83,6 @@ public class EventBuilder {
      * @return a new ConversationEvent instance
      */
     public ConversationEvent buildConversationEvent(ConversationChain conversationChain){
-        ConversationEvent event = new ConversationEvent(interactionName, npcSource, speechText, conversationChain);
-        return event;
+        return new ConversationEvent(interactionName, npcSource, speechText, conversationChain);
     }
 }
