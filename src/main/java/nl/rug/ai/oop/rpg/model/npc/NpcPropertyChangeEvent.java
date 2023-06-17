@@ -2,17 +2,16 @@ package nl.rug.ai.oop.rpg.model.npc;
 
 import java.util.ArrayList;
 
-public class NpcPropertyEvent {
-
+public class NpcPropertyChangeEvent {
     private Npc.EventType eventType;
+    private ArrayList<String> dialogueText;
     private String eventName;
     private String text;
-    private ArrayList<String> dialogueText;
     private Npc sourceNpc;
     private int cost;
     private String toolTipText;
 
-    public NpcPropertyEvent(Npc.EventType eventType, String eventName, String text, ArrayList<String> dialogueText, int cost, Npc sourceNpc) {
+    public NpcPropertyChangeEvent(Npc.EventType eventType, String eventName, String text, ArrayList<String> dialogueText, int cost, Npc sourceNpc) {
         this.eventType = eventType;
         this.eventName = eventName;
         this.text = text;

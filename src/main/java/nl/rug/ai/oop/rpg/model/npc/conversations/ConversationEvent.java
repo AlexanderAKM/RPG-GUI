@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.npc.conversation;
+package nl.rug.ai.oop.rpg.model.npc.conversations;
 
 import nl.rug.ai.oop.rpg.model.npc.Events;
 import nl.rug.ai.oop.rpg.model.npc.Npc;

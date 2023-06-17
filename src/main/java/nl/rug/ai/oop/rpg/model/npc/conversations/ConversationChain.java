@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.npc.conversation;
+package nl.rug.ai.oop.rpg.model.npc.conversations;
 
 import java.io.Serial;
 import java.io.Serializable;

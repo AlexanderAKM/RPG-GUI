@@ -1,7 +1,6 @@
-package nl.rug.ai.oop.rpg.model.npc.conversation;
+package nl.rug.ai.oop.rpg.model.npc.conversations;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ConversationBuilder {
     private ConversationChain conversationChain;
