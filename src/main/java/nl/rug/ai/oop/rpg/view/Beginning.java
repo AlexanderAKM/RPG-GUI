@@ -26,7 +26,6 @@ import java.awt.event.ActionListener;
 public class Beginning {
 
     private JFrame frame;
-    private JButton loadOldGameButton;
     private JButton startNewGameButton;
     private JButton startGameButton;
     private JComboBox<String> languageComboBox;
