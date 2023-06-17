@@ -28,7 +28,6 @@ public class Game {
         Beginning beginning = new Beginning(game);
         //RoomLanguageManager.loadLanguage("English");
 
-
         beginning.show();
     }
 
