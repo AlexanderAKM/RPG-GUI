@@ -84,7 +84,6 @@ public class NpcManager {
                 .setNpcSource(Harmen)
                 .setSpeechText("Yeah, it's me. In your home.");
         ConversationEvent conversationEvent = eventBuilder3.buildIntroductionEvent("Bye", conversationChain);
-        //introductionEvent.initialSetup();
         Harmen.setEvent(conversationEvent);
         Harmen.setNpcIntroductionEvents(conversationEvent);
 
@@ -114,6 +113,8 @@ public class NpcManager {
         allNpcs.add(EvilMan);
         allNpcs.add(humanMan);
     }
+
+
 
     public Npc getNpc(String npcName){
         for(Npc npc : allNpcs){

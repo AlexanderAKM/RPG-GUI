@@ -87,7 +87,6 @@ public class SetUp implements PropertyChangeListener{
 
         // Connect the RoomItemsController to the GamePanelGUI
         gamePanel.setItemListener(roomItemsController);
-
         NpcManager model = new NpcManager(manager, itemManager, npcLanguageManager);
         NpcController npcController = new NpcController(model);
 
