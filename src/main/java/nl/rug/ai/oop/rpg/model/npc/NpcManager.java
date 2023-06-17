@@ -197,7 +197,7 @@ public class NpcManager {
             inventory.addItem(item.get(0));
             String itemText = "\n Congrats you were witty and won: " + item.get(0).getName();
 
-            locationManager.removeNpcs("", npc, player.getCurrentRoom());
+            locationManager.removeNPCs("", npc, player.getCurrentRoom());
 
             payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.getVictoryText() + itemText, null,0, npc);
             payload.setToolTipText("Enjoy your prize.");

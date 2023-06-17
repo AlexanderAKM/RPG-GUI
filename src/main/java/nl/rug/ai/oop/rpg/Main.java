@@ -1,6 +1,5 @@
 package nl.rug.ai.oop.rpg;
 
-import nl.rug.ai.oop.rpg.controller.GameController;
 import nl.rug.ai.oop.rpg.model.Game;
 
 public class Main {

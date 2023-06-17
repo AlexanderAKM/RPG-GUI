@@ -63,7 +63,7 @@ public class SetUp implements PropertyChangeListener{
         c.weightx = 0.5;
         c.gridheight = 3;
         c.gridx = 2;
-        c.gridy = 0;
+        c.gridy = 2;
         frame.add(inventoryView, c);
 
         //setup GridBagLayout for PlayerStatsPane
@@ -90,18 +90,18 @@ public class SetUp implements PropertyChangeListener{
 
         // Test
         Npc bob = model.getNpc("Bob");
-        manager.addNpcs("Bob", bob, manager.getRoom(0));
+        manager.addNPCs("Bob", bob, manager.getRoom(0));
 
         Npc harmen = model.getNpc("Harmen");
-        manager.addNpcs("Harmen", harmen, manager.getRoom(0));
+        manager.addNPCs("Harmen", harmen, manager.getRoom(0));
 
         Npc michael = model.getNpc("Michael");
-        manager.addNpcs(michael.getName(), michael, manager.getRoom(1));
+        manager.addNPCs(michael.getName(), michael, manager.getRoom(1));
 
         Npc evilMan = model.getNpc("Evil Man");
-        manager.addNpcs(evilMan.getName(), evilMan, manager.getRoom(1));
+        manager.addNPCs(evilMan.getName(), evilMan, manager.getRoom(1));
 
-        manager.addNpcs("Human man", model.getNpc("Human man"), manager.getRoom(1));
+        manager.addNPCs("Human man", model.getNpc("Human man"), manager.getRoom(1));
 
         // We get the players current room
         Room currentRoom = player.getCurrentRoom();
@@ -131,12 +131,12 @@ public class SetUp implements PropertyChangeListener{
         c.fill = GridBagConstraints.VERTICAL;
         c.weightx = 0.0;
         c.gridheight = 2;
-        c.gridx = 0;
+        c.gridx = 2;  // Change the x grid position
         c.gridy = 0;
         frame.add(savePanel, c);
 
         frame.revalidate();
-        frame.setSize(800, 600);
+        frame.setSize(1000, 600);
         frame.setVisible(true);
     }
 

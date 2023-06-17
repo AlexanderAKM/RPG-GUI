@@ -89,8 +89,8 @@ public class RoomBuilder {
      * @param isLocked The locked status of the room (true if locked, false if unlocked).
      * @return The RoomBuilder object.
      */
-    public RoomBuilder setIsLocked(boolean isLocked) {
-        room.setIsLocked(isLocked);
+    public RoomBuilder setLocked(boolean isLocked) {
+        room.setLocked(isLocked);
         return this;
     }
 

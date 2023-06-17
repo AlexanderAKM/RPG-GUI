@@ -24,6 +24,7 @@ import java.util.Objects;
  * @author Victoria Polaka
  */
 public class GamePanelGUI implements Serializable {
+
     private JPanel panel;
     private JPanel gamePanel;
     private JLabel textLabel;
@@ -161,7 +162,7 @@ public class GamePanelGUI implements Serializable {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             String currentRoomDescription = textLabel.getText(); // Get the text from the description label
             oos.writeObject(currentRoomDescription); // Serialize the text
-            System.out.println("Game panel state saved successfully.");
+            System.out.println(languageManager.getTranslation("save_success_message"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -176,7 +177,7 @@ public class GamePanelGUI implements Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             String savedDescription = (String) ois.readObject(); // Deserialize the saved text
             textLabel.setText(savedDescription); // Update the description label with the saved text
-            System.out.println("Game panel state loaded successfully.");
+            System.out.println(languageManager.getTranslation("load_success_message"));
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

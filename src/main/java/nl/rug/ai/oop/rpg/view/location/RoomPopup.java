@@ -21,7 +21,7 @@ public class RoomPopup extends JDialog {
      * @param message the message to be displayed in the dialog
      */
     public RoomPopup(JFrame parent, String message) {
-        super(parent, "  ", true);
+        super(parent, "", true);
         setLayout(new FlowLayout());
 
         messageLabel = new JLabel(message);

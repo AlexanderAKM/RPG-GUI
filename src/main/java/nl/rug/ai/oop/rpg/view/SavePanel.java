@@ -10,8 +10,8 @@ import javax.swing.*;
  * @author Victoria Polaka
  */
 public class SavePanel extends JPanel {
-    JButton saveGameButton;
-    JButton loadGameButton;
+    private JButton saveGameButton;
+    private JButton loadGameButton;
 
     /**
      * Constructs a SavePanel object.

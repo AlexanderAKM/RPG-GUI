@@ -12,16 +12,16 @@ import java.util.ArrayList;
  * @author Victoria Polaka
  */
 public class Room implements Serializable {
-    String roomName;
-    String roomDescription;
-    int n;
-    int e;
-    int s;
-    int w;
+    private String roomName;
+    private String roomDescription;
+    private int northIndex;
+    private int eastIndex;
+    private int southIndex;
+    private int westIndex;
     private ArrayList<Item> availableItems;
     private ArrayList<Npc> availableNpcs;
-    boolean isLocked;
-    Item requiredItem;
+    private boolean isLocked;
+    private Item requiredItem;
 
     /**
      * Constructs a new Room object.
@@ -70,7 +70,7 @@ public class Room implements Serializable {
      * @param north The room index representing the north direction.
      */
     public void setNorth(int north) {
-        this.n = north;
+        this.northIndex = north;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Room implements Serializable {
      * @param east The room index representing the east direction.
      */
     public void setEast(int east) {
-        this.e = east;
+        this.eastIndex = east;
     }
 
     /**
@@ -88,7 +88,7 @@ public class Room implements Serializable {
      * @param south The room index representing the south direction.
      */
     public void setSouth(int south) {
-        this.s = south;
+        this.southIndex = south;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Room implements Serializable {
      * @param west The room index representing the west direction.
      */
     public void setWest(int west) {
-        this.w = west;
+        this.westIndex = west;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Room implements Serializable {
      * @return The room index representing the north direction.
      */
     public int getNorth() {
-        return this.n;
+        return this.northIndex;
     }
 
     /**
@@ -115,7 +115,7 @@ public class Room implements Serializable {
      * @return The room index representing the east direction.
      */
     public int getEast() {
-        return this.e;
+        return this.eastIndex;
     }
 
     /**
@@ -124,7 +124,7 @@ public class Room implements Serializable {
      * @return The room index representing the south direction.
      */
     public int getSouth() {
-        return this.s;
+        return this.southIndex;
     }
 
     /**
@@ -133,7 +133,7 @@ public class Room implements Serializable {
      * @return The room index representing the west direction.
      */
     public int getWest() {
-        return this.w;
+        return this.westIndex;
     }
 
 
@@ -142,7 +142,7 @@ public class Room implements Serializable {
      *
      * @param isLocked The locked status of the room (true if locked, false if unlocked).
      */
-    public void setIsLocked(boolean isLocked) {
+    public void setLocked(boolean isLocked) {
         this.isLocked = isLocked;
     }
 
@@ -151,7 +151,7 @@ public class Room implements Serializable {
      *
      * @return The locked status of the room (true if locked, false if unlocked).
      */
-    public boolean getIsLocked() {
+    public boolean isLocked() {
         return isLocked;
     }
 
