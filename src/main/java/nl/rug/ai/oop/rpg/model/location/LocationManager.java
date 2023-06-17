@@ -6,7 +6,6 @@ import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.inventory.items.StudentCard;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -22,9 +21,7 @@ import java.util.Iterator;
 public class LocationManager implements LocationInterface, Serializable {
     private ArrayList<Room> map;
     private ArrayList<Room> availableRooms;
-
     private LanguageManager languageManager;
-
     private ItemManager manager;
     private transient ArrayList<PropertyChangeListener> listeners;
 
@@ -146,6 +143,7 @@ public class LocationManager implements LocationInterface, Serializable {
         map.add(coverRoom);
 
     }
+
     /**
      * Adds an NPC to a room.
      *
@@ -171,17 +169,6 @@ public class LocationManager implements LocationInterface, Serializable {
     }
 
     /**
-     * Adds an item to a room.
-     *
-     * @param x The item to add.
-     * @param room The room where the item will be added.
-     */
-    @Override
-    public void addItemActions(Item x, Room room) {
-        room.getAvailableItems().add(x);
-    }
-
-    /**
      * Removes an item from a room.
      *
      * @param x The item to remove.
@@ -191,6 +178,7 @@ public class LocationManager implements LocationInterface, Serializable {
     public void removeItemActions(Item x, Room room) {
         room.getAvailableItems().remove(x);
     }
+
     /**
      * Returns a list of available rooms adjacent to the current room.
      *

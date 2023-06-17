@@ -37,14 +37,6 @@ public interface LocationInterface {
     public void removeNpcs(String npcName, Npc npc, Room roomName);
 
     /**
-     * Adds an item to a room.
-     *
-     * @param item     The item to add.
-     * @param roomName The name of the room where the item should be added.
-     */
-    public void addItemActions(Item item, Room roomName);
-
-    /**
      * Removes a particular item from a room.
      *
      * @param item     The item to remove.
@@ -61,7 +53,7 @@ public interface LocationInterface {
     public ArrayList<Room> roomsAvailable(Room currentRoom);
 
     /**
-     * Moves the player to the specified room in the given direction.
+     * Moves the player to a room in the given direction.
      *
      * @param direction The compass direction to move towards.
      */

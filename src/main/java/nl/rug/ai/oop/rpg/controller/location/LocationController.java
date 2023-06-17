@@ -4,6 +4,7 @@ import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * The LocationController class handles the actions related to location selection.
  * It implements the ActionListener interface to respond to user actions.

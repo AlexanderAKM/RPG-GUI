@@ -43,8 +43,6 @@ public class GamePanelGUI implements Serializable {
     private ItemListener itemListener;
     private JFrame frame;
     private final LanguageManager languageManager;
-    private LocationManager manager;
-    private LocationController controller;
 
     /**
      * Constructs a new GamePanelGUI instance.
@@ -55,21 +53,25 @@ public class GamePanelGUI implements Serializable {
      */
     public GamePanelGUI(LocationManager manager, LocationController controller, LanguageManager languageManager) {
         this.frame = frame;
-        this.manager = manager;
-        this.controller = controller;
         this.languageManager = languageManager;
         panel = new JPanel();
         gamePanel = new JPanel(new GridBagLayout());
         gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
-        //panel.setBackground(new Color(240, 240, 240));
+        panel.setBackground(new Color(240, 240, 240));
 
         roomItemsPanel = new JPanel();
         roomNpcsPanel = new JPanel();
         roomsPanel = new JPanel();
         gamePanelSetUp(manager,controller,languageManager);
-
     }
 
+    /**
+     * Sets up the game panel with buttons, labels, and listeners.
+     *
+     * @param manager          the LocationManager object representing the game model
+     * @param controller       the LocationController object for handling location-related actions
+     * @param languageManager  the LanguageManager object for managing translations
+     */
     public void gamePanelSetUp(LocationManager manager, LocationController controller, LanguageManager languageManager){
         GridBagConstraints gbc = new GridBagConstraints();
         searchItemButton = new JButton(languageManager.getTranslation("search_item_button"));
@@ -80,7 +82,6 @@ public class GamePanelGUI implements Serializable {
                 showRoomItemPanel();
             }
         });
-
 
         interactNpcButton = new JButton(languageManager.getTranslation("interact_npc_button"));
         interactNpcButton.setPreferredSize(new Dimension(230, 30));
@@ -140,8 +141,8 @@ public class GamePanelGUI implements Serializable {
         mapLabel = new JLabel(new ImageIcon(image));
 
         // Set the button colors
-        Color buttonColor = new Color(135, 206, 250); // Blue color
-        Color textColor = Color.WHITE; // White text color
+        Color buttonColor = new Color(135, 206, 250);
+        Color textColor = Color.WHITE;
 
         moveRoomsButton.setBackground(buttonColor);
         moveRoomsButton.setForeground(textColor);
@@ -151,6 +152,11 @@ public class GamePanelGUI implements Serializable {
         interactNpcButton.setForeground(textColor);
     }
 
+    /**
+     * Saves the state of the game panel to a file.
+     *
+     * @param fileName  the name of the file to save the state to
+     */
     public void saveGamePanelState(String fileName) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             String currentRoomDescription = textLabel.getText(); // Get the text from the description label
@@ -161,6 +167,11 @@ public class GamePanelGUI implements Serializable {
         }
     }
 
+    /**
+     * Loads the state of the game panel (description) from a file.
+     *
+     * @param fileName the name of the file to load the state from.
+     */
     public void loadGamePanelState(String fileName) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             String savedDescription = (String) ois.readObject(); // Deserialize the saved text
@@ -171,12 +182,11 @@ public class GamePanelGUI implements Serializable {
         }
     }
 
-
     /**
      * Sets the panel for displaying NPC interactions within the room.
      *
      * @param npcPanel the JPanel containing the NPC interactions
-     * @author Kikis Hjikakou
+     * @author Kyriakos Hjikakou
      */
     public void setNpcPanel(JPanel npcPanel){
         roomNpcsPanel = npcPanel;
@@ -186,6 +196,7 @@ public class GamePanelGUI implements Serializable {
      * Returns the view panel.
      *
      * @return the JPanel representing the locations view (GamePanelGUI)
+     * @ Kyriakos Hjikakou
      */
     public JPanel returnLocationView(){
         return panel;
@@ -208,7 +219,7 @@ public class GamePanelGUI implements Serializable {
      * Sets the NPC view for displaying NPC information in the room.
      *
      * @param npcView the NpcView object representing the NPC view
-     * @author Kikis Hjikakou
+     * @author Kyriakos Hjikakou
      */
     public void setNpcView(NpcView npcView){
         this.npcView = npcView;
@@ -226,8 +237,8 @@ public class GamePanelGUI implements Serializable {
         for (Room room : model.roomsAvailable(Player.getInstance().getCurrentRoom())) {
             JButton roomButton = new JButton(room.getRoomName());
             roomButton.addActionListener(controller);
-            Color buttonColor = new Color(135, 206, 250); // Blue color
-            Color textColor = Color.WHITE; // White text color
+            Color buttonColor = new Color(135, 206, 250);
+            Color textColor = Color.WHITE;
 
             roomButton.setBackground(buttonColor);
             roomButton.setForeground(textColor);
@@ -313,8 +324,8 @@ public class GamePanelGUI implements Serializable {
 
         for (Item item : model.getAvailableItemsList(Player.getInstance().getCurrentRoom())) {
             JButton itemButton = new JButton(languageManager.getTranslation(item.getName()));
-            Color buttonColor = new Color(135, 206, 250); // Blue color
-            Color textColor = Color.WHITE; // White text color
+            Color buttonColor = new Color(135, 206, 250);
+            Color textColor = Color.WHITE;
 
             itemButton.setBackground(buttonColor);
             itemButton.setForeground(textColor);
@@ -326,7 +337,6 @@ public class GamePanelGUI implements Serializable {
                     }
                 }
             });
-            itemButton.setActionCommand("item");
             roomItemsPanel.add(itemButton);
         }
         backButton = new JButton(languageManager.getTranslation("Go_Back"));

@@ -64,7 +64,6 @@ public class Room implements Serializable {
         return this.roomDescription;
     }
 
-
     /**
      * Sets the room index representing the north direction of the room.
      *
@@ -136,24 +135,7 @@ public class Room implements Serializable {
     public int getWest() {
         return this.w;
     }
-    public int getDirection(String direction){
-        int answer = 0;
-        switch(direction){
-            case "n" :
-                answer = getNorth();
-                break;
-            case "e" :
-                answer = getEast();
-                break;
-            case "s" :
-                answer = getSouth();
-                break;
-            case "w" :
-                answer = getWest();
-                break;
-        }
-        return answer;
-    }
+
 
     /**
      * Sets the locked status of the room.

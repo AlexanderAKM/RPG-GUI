@@ -22,15 +22,10 @@ public class RoomPopup extends JDialog {
      */
     public RoomPopup(JFrame parent, String message) {
         super(parent, "  ", true);
-
-        // Set the layout
         setLayout(new FlowLayout());
 
-        // Create and add the message label
         messageLabel = new JLabel(message);
         add(messageLabel);
-
-        // Create and add the close button
         closeButton = new JButton("Close");
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -38,8 +33,6 @@ public class RoomPopup extends JDialog {
             }
         });
         add(closeButton);
-
-        // Set the size and position of the dialog
         pack();
         setLocationRelativeTo(parent); // pops up in the middle
         setResizable(false);
