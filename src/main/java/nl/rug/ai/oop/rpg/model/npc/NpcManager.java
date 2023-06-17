@@ -117,7 +117,7 @@ public class NpcManager {
 
     public Npc createAndPlaceNpc(String npcName, int money, Room room) {
         Npc newNpc = new Npc(npcName, money);
-        locationManager.addNpcs(npcName, newNpc, room);
+        locationManager.addNPCs(npcName, newNpc, room);
         return newNpc;
     }
     public void addListener(NpcPropertyChangeListener listener) {
@@ -194,7 +194,7 @@ public class NpcManager {
             inventory.addItem(item.get(0));
             String itemText = "\n Congrats you were witty and won: " + item.get(0).getName();
 
-            locationManager.removeNpcs("", targetNpc, player.getCurrentRoom());
+            locationManager.removeNPCs("", targetNpc, player.getCurrentRoom());
 
             payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.getVictoryText() + itemText, null,0, targetNpc);
             payload.setToolTipText("Enjoy your prize.");
