@@ -73,7 +73,7 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
             try {
                 URL resourceUrl = getClass().getClassLoader().getResource(item.getName() + ".png");
                 if (resourceUrl == null) {
-                    throw new FileNotFoundException("Failed to load image for item: " + item.getName());
+                    throw new FileNotFoundException(languageManager.getTranslation("Image_Fail") + languageManager.getTranslation(item.getName()));
                 }
                 ImageIcon imageIcon = new ImageIcon(resourceUrl);
                 ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
@@ -90,7 +90,7 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
                 itemsPanel.add(button);
             } catch (FileNotFoundException e) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-                JOptionPane.showMessageDialog(this, "Failed to load image for item: " + item.getName(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, languageManager.getTranslation("Image_Fail") + languageManager.getTranslation(item.getName()), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         itemsPanel.revalidate();

@@ -47,7 +47,6 @@ public abstract class Item implements Serializable {
         }
         Item otherItem = (Item) obj;
         return Objects.equals(name, otherItem.name);
-        // Add more comparisons for other fields as needed
     }
 
     @Override

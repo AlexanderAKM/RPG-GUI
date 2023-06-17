@@ -46,11 +46,13 @@ public class SetUp implements PropertyChangeListener{
         // Create the inventory view and controller
         LanguageManager roomLanguageManager = new LanguageManager();
         LanguageManager npcLanguageManager = new LanguageManager();
+        LanguageManager inventoryLanguageManager = new LanguageManager();
 
         roomLanguageManager.loadLanguage(chosenLanguage, "roomTranslations.roomTranslations");
         npcLanguageManager.loadLanguage(chosenLanguage, "npcLocalisations.npcLocalisations");
+        inventoryLanguageManager.loadLanguage(chosenLanguage, "inventoryTranslations.inventoryTranslations");
 
-        InventoryView inventoryView = new InventoryView(inventory, roomLanguageManager);
+        InventoryView inventoryView = new InventoryView(inventory, inventoryLanguageManager);
         new InventoryController(inventory, inventoryView, player);
 
         // Create the main frame and add the inventory view and PlayerStatsPane
