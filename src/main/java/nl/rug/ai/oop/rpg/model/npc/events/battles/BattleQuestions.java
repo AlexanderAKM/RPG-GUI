@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.npc.battles;
+package nl.rug.ai.oop.rpg.model.npc.events.battles;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;

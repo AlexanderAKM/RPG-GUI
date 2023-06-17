@@ -1,4 +1,4 @@
-package nl.rug.ai.oop.rpg.model.npc.conversations;
+package nl.rug.ai.oop.rpg.model.npc.events.conversations;
 
 import java.util.ArrayList;
 

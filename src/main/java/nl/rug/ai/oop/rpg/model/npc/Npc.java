@@ -1,6 +1,7 @@
 package nl.rug.ai.oop.rpg.model.npc;
-import nl.rug.ai.oop.rpg.model.npc.battles.BattleEvent;
-import nl.rug.ai.oop.rpg.model.npc.conversations.ConversationEvent;
+import nl.rug.ai.oop.rpg.model.npc.events.battles.BattleEvent;
+import nl.rug.ai.oop.rpg.model.npc.events.conversations.ConversationEvent;
+import nl.rug.ai.oop.rpg.model.npc.events.Events;
 
 import java.io.Serial;
 import java.io.Serializable;
