@@ -7,7 +7,7 @@ import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
-import nl.rug.ai.oop.rpg.model.location.languageManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -44,7 +43,7 @@ public class GamePanelGUI {
     private JLabel mapLabel;
     private ItemListener itemListener;
     private JFrame frame;
-    private final languageManager languageManager;
+    private final LanguageManager languageManager;
 
     /**
      * Constructs a new GamePanelGUI instance.
@@ -53,7 +52,7 @@ public class GamePanelGUI {
      * @param controller          the LocationController object for handling location-related actions
      * @param languageManager the RoomLanguageManager object for managing room translations
      */
-    public GamePanelGUI(LocationManager manager, LocationController controller, languageManager languageManager) {
+    public GamePanelGUI(LocationManager manager, LocationController controller, LanguageManager languageManager) {
         this.frame = frame;
         this.languageManager = languageManager;
         panel = new JPanel();
@@ -330,7 +329,7 @@ public class GamePanelGUI {
      * @param frame               the JFrame object representing the parent frame
      * @param languageManager the RoomLanguageManager object for translation purposes
      */
-    private void showRoomNotAccessiblePopup(JFrame frame, languageManager languageManager) {
+    private void showRoomNotAccessiblePopup(JFrame frame, LanguageManager languageManager) {
         RoomPopup popup = new RoomPopup(frame, languageManager.getTranslation("popUp_warning"));
         popup.showDialog();
     }

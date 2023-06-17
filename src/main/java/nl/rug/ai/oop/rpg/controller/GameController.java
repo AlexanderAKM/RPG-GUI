@@ -2,7 +2,6 @@ package nl.rug.ai.oop.rpg.controller;
 
 import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
-import nl.rug.ai.oop.rpg.model.location.languageManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

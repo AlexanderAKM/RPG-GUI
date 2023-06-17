@@ -2,7 +2,7 @@ package nl.rug.ai.oop.rpg.view;
 
 import nl.rug.ai.oop.rpg.controller.players.ChooseProgrammeController;
 import nl.rug.ai.oop.rpg.model.Game;
-import nl.rug.ai.oop.rpg.model.location.languageManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class Beginning {
     private JButton startGameButton;
     private JComboBox<String> languageComboBox;
     private Runnable callback;  // Added this field
-    private languageManager languageManager;
+    //private LanguageManager languageManager;
     private String selectedLanguage;
     private JButton customButton;
     private JLabel customLabel;
@@ -97,14 +97,15 @@ public class Beginning {
         String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
-        languageManager = new languageManager();
-        languageManager.loadLanguage("english", "roomTranslations.roomTranslations"); //sets default language
+        //languageManager = new LanguageManager();
+        selectedLanguage = "english";
+        //languageManager.loadLanguage("english", "roomTranslations.roomTranslations"); //sets default language
         // Add an ActionListener to the languageComboBox
         languageComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedLanguage = (String)languageComboBox.getSelectedItem();
-                languageManager.loadLanguage((String)languageComboBox.getSelectedItem(), "roomTranslations.roomTranslations");
+                //languageManager.loadLanguage((String)languageComboBox.getSelectedItem(), "roomTranslations.roomTranslations");
             }
         });
 
@@ -252,7 +253,7 @@ public class Beginning {
     public void startSetup(){
         frame.dispose();
         SetUp setUp = new SetUp();
-        setUp.start(languageManager, game);
+        setUp.start(selectedLanguage, game);
     }
 }
 
