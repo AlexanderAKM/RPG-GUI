@@ -43,6 +43,8 @@ public class GamePanelGUI implements Serializable {
     private ItemListener itemListener;
     private JFrame frame;
     private final LanguageManager languageManager;
+    private LocationManager manager;
+    private LocationController controller;
 
     /**
      * Constructs a new GamePanelGUI instance.
@@ -53,17 +55,23 @@ public class GamePanelGUI implements Serializable {
      */
     public GamePanelGUI(LocationManager manager, LocationController controller, LanguageManager languageManager) {
         this.frame = frame;
+        this.manager = manager;
+        this.controller = controller;
         this.languageManager = languageManager;
         panel = new JPanel();
         gamePanel = new JPanel(new GridBagLayout());
         gamePanel.setBorder(BorderFactory.createLineBorder(new Color(135, 206, 250), 3)); // Set the light blue border
         //panel.setBackground(new Color(240, 240, 240));
-        GridBagConstraints gbc = new GridBagConstraints();
 
         roomItemsPanel = new JPanel();
         roomNpcsPanel = new JPanel();
         roomsPanel = new JPanel();
+        gamePanelSetUp(manager,controller,languageManager);
 
+    }
+
+    public void gamePanelSetUp(LocationManager manager, LocationController controller, LanguageManager languageManager){
+        GridBagConstraints gbc = new GridBagConstraints();
         searchItemButton = new JButton(languageManager.getTranslation("search_item_button"));
         searchItemButton.setPreferredSize(new Dimension(230, 30));
         searchItemButton.addActionListener(new ActionListener() {
@@ -145,21 +153,18 @@ public class GamePanelGUI implements Serializable {
 
     public void saveGamePanelState(String fileName) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(gamePanel); // Serialize the game panel
+            String currentRoomDescription = textLabel.getText(); // Get the text from the description label
+            oos.writeObject(currentRoomDescription); // Serialize the text
             System.out.println("Game panel state saved successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Load the game panel's state from a file
     public void loadGamePanelState(String fileName) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            JPanel savedGamePanel = (JPanel) ois.readObject(); // Deserialize the game panel
-            panel.removeAll(); // Clear the current panel
-            panel.add(savedGamePanel); // Add the saved game panel
-            panel.revalidate();
-            panel.repaint();
+            String savedDescription = (String) ois.readObject(); // Deserialize the saved text
+            textLabel.setText(savedDescription); // Update the description label with the saved text
             System.out.println("Game panel state loaded successfully.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

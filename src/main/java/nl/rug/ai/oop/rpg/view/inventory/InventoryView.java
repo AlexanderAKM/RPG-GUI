@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents the visual display of the player's inventory in the game.
@@ -70,7 +73,7 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
             try {
                 URL resourceUrl = getClass().getClassLoader().getResource(item.getName() + ".png");
                 if (resourceUrl == null) {
-                    throw new ImageLoadException("Failed to load image for item: " + item.getName());
+                    throw new FileNotFoundException("Failed to load image for item: " + item.getName());
                 }
                 ImageIcon imageIcon = new ImageIcon(resourceUrl);
                 ImageIcon resizedIcon = resizeImageIcon(imageIcon, ITEM_WIDTH, ITEM_LENGTH);
@@ -85,14 +88,15 @@ public class InventoryView extends JPanel implements PropertyChangeListener, Inv
                     }
                 });
                 itemsPanel.add(button);
-            } catch (ImageLoadException e) {
-                System.err.println(e.getMessage());
-                JOptionPane.showMessageDialog(this, "The item couldn't get loaded", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (FileNotFoundException e) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+                JOptionPane.showMessageDialog(this, "Failed to load image for item: " + item.getName(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         itemsPanel.revalidate();
         itemsPanel.repaint();
     }
+
 
 
     /**
