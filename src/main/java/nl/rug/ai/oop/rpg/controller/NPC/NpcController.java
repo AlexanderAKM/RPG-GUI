@@ -1,7 +1,10 @@
 package nl.rug.ai.oop.rpg.controller.NPC;
 
+import nl.rug.ai.oop.rpg.model.npc.Npc;
 import nl.rug.ai.oop.rpg.model.npc.NpcManager;
 import nl.rug.ai.oop.rpg.view.NPC.NpcButton;
+
+import javax.swing.*;
 
 public class NpcController implements NpcActionListener {
     private NpcManager model;
@@ -19,20 +22,22 @@ public class NpcController implements NpcActionListener {
     @Override
     public void actionPerformed(NpcActionEvent e) {
        // Object npc = e.getSource();
-        NpcButton npcButton = e.getSourceNpcButton();
+        Npc sourceNpc = e.getSourceNpc();
+        String eventName = e.getEventName();
+        String selectedText = e.getSelectedText();
+
         switch (e.getActionCommand()) {
             case "NPC Interaction":
-                model.npcInteraction(npcButton, "Interaction");
+                model.npcInteraction(sourceNpc, "Interaction");
                 break;
             case "Battle Answer":
-                model.checkAnswer(npcButton, -10, -10);
+                model.checkAnswer(sourceNpc, selectedText, -10, -10);
                 break;
             case "Continue World Event":
-                model.checkWorldEventCondition(npcButton);
+                model.checkWorldEventCondition(sourceNpc);
                 break;
             case "Continue Conversation":
-                // I need the event that ran it as well
-                model.continueConversation(npcButton, e.getEventName(), npcButton.getText());
+                model.continueConversation(sourceNpc, eventName, selectedText);
                 break;
             default:
                 // Go through each one

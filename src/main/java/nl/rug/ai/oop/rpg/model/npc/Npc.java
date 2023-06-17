@@ -21,8 +21,6 @@ public class Npc implements Serializable {
     private int money;
 
 
-
-    //private ArrayList<NpcInitiatedInteractions> npcInteractions;
     private ArrayList<Events> playerEvents;
     HashMap<String, BattleEvent> npcBattleEvents;
 

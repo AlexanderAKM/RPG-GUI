@@ -49,8 +49,8 @@ public class EventBuilder {
         return event;
     }
 
-    public ConversationEvent buildIntroductionEvent(String returnText, ConversationChain conversationChain){
-        ConversationEvent event = new ConversationEvent(interactionName, npcSource, speechText, returnText, conversationChain);
+    public ConversationEvent buildIntroductionEvent(ConversationChain conversationChain){
+        ConversationEvent event = new ConversationEvent(interactionName, npcSource, speechText, conversationChain);
         return event;
     }
 }

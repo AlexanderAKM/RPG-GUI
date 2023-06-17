@@ -5,6 +5,7 @@ import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
 import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
+import nl.rug.ai.oop.rpg.model.location.Room;
 import nl.rug.ai.oop.rpg.model.npc.battles.BattleEvent;
 import nl.rug.ai.oop.rpg.model.npc.battles.BattleQuestions;
 import nl.rug.ai.oop.rpg.model.npc.conversations.ConversationBuilder;
@@ -55,12 +56,9 @@ public class NpcManager {
         answers.add("2");
         answers.add("3");
 
-        Npc Bob = new Npc("Bob", 90);
-        Npc Harmen = new Npc(languageManager.getTranslation("npc.name.harmen"), 90);
-        Npc Michael = new Npc("Michael",2);
-
-        Npc humanMan = new Npc("Human man", 2);
-
+        Npc harmen = createAndPlaceNpc(languageManager.getTranslation("npc.name.harmen"), 90, locationManager.getRoom(0));
+        Npc humanMan = createAndPlaceNpc(languageManager.getTranslation("npc.name.humanMan"), 90, locationManager.getRoom(1));
+        Npc evilMan = createAndPlaceNpc(languageManager.getTranslation("npc.name.evilMan"), 90, locationManager.getRoom(1));
 
         // The first key is always the NPC's name
         ArrayList<String> ZeroOption = new ArrayList<>(List.of("Yo I'm in your house"));
@@ -69,23 +67,23 @@ public class NpcManager {
         ArrayList<String> home = new ArrayList<>(List.of("Ok."));
 
         ConversationBuilder conversationBuilder = new ConversationBuilder()
-                .addToConversationChain(Harmen.getName(), ZeroOption)
+                .addToConversationChain(harmen.getName(), ZeroOption)
                 .addToConversationChain("Yo I'm in your house", FirstOption)
                 .addToDialogueConnections("Dang.", "Hehe.")
                 .setFinalText(home)
                 .addToConversationChain("Hehe.", home)
-                .addToDialogueConnections("Why?", "Why not?");
-
+                .addToDialogueConnections("Why?", "Why not?")
+                .addToConversationChain("Why not?", home);
 
         ConversationChain conversationChain = conversationBuilder.build();
 
         EventBuilder eventBuilder3 = new EventBuilder()
                 .setInteractionName("introduction")
-                .setNpcSource(Harmen)
+                .setNpcSource(harmen)
                 .setSpeechText("Yeah, it's me. In your home.");
-        ConversationEvent conversationEvent = eventBuilder3.buildIntroductionEvent("Bye", conversationChain);
-        Harmen.setEvent(conversationEvent);
-        Harmen.setNpcIntroductionEvents(conversationEvent);
+        ConversationEvent conversationEvent = eventBuilder3.buildIntroductionEvent(conversationChain);
+        harmen.setEvent(conversationEvent);
+        harmen.setNpcIntroductionEvents(conversationEvent);
 
         EventBuilder eventBuilder = new EventBuilder()
                 .setInteractionName("interactionName")
@@ -95,89 +93,87 @@ public class NpcManager {
         humanMan.setEvent(worldEvent);
         humanMan.setNpcWorldEvents(worldEvent);
 
-
-        Npc EvilMan = new Npc("Evil Man", 2);
         EventBuilder eventBuilder1 = new EventBuilder()
                 .setInteractionName("EvilBattle")
-                .setNpcSource(EvilMan)
+                .setNpcSource(evilMan)
                 .setSpeechText("Death be upon you! \n");
 
         BattleQuestions coverQuestion = new BattleQuestions("What is the best association?", answers, "Cover", "Yo congrats!", "Boo");
         BattleEvent coverBattle = eventBuilder1.buildBattleEvent(coverQuestion);
-        EvilMan.setEvent(coverBattle);
-        EvilMan.setNpcBattleEvents(coverBattle);
-
-        allNpcs.add(Bob);
-        allNpcs.add(Harmen);
-        allNpcs.add(Michael);
-        allNpcs.add(EvilMan);
-        allNpcs.add(humanMan);
+        evilMan.setEvent(coverBattle);
+        evilMan.setNpcBattleEvents(coverBattle);
     }
 
 
 
-    public Npc getNpc(String npcName){
+    /*public Npc getNpc(String npcName){
         for(Npc npc : allNpcs){
             if(Objects.equals(npc.getName(), npcName)){
                 return npc;
             }
         }
         return null;
+    }*/
+
+    public Npc createAndPlaceNpc(String npcName, int money, Room room) {
+        Npc newNpc = new Npc(npcName, money);
+        locationManager.addNpcs(npcName, newNpc, room);
+        return newNpc;
     }
     public void addListener(NpcPropertyChangeListener listener) {
         listeners.add(listener);
     }
 
-    public void npcInteraction(NpcButton target, String interactionName){
-        Npc npc = target.getNpc();
-        Events event = npc.findNpcEvent();
+    public void npcInteraction(Npc targetNpc, String interactionName){
+        Events event = targetNpc.findNpcEvent();
 
         switch (event.getEventType()) {
             case BATTLE:
                 ArrayList<String> answers = new ArrayList<String>();
-                BattleEvent battleEvent = npc.getNpcBattleEvents(event.getName());
+                BattleEvent battleEvent = targetNpc.getNpcBattleEvents(event.getName());
                 BattleQuestions battleQuestions = battleEvent.getBattleQuestions();
 
                 answers = battleQuestions.getAnswers();
 
                 String battleSpeech = event.getSpeechText() + "\n" + battleQuestions.getQuestion();
-                NpcPropertyChangeEvent payload = new NpcPropertyChangeEvent(Npc.EventType.BATTLE, battleEvent.getName(), battleSpeech, answers, 0, npc);
+                NpcPropertyChangeEvent payload = new NpcPropertyChangeEvent(Npc.EventType.BATTLE, battleEvent.getName(), battleSpeech, answers, 0, targetNpc);
 
                 notifyListeners(payload);
                 break;
             case INTRODUCTION:
                 //PropertyChangeListener();
-                ConversationEvent conversationEvent = npc.getIntroductionEvent(event.getName());
+                ConversationEvent conversationEvent = targetNpc.getIntroductionEvent(event.getName());
                 conversationEvent.initialSetup();
                 ConversationChain conversationChain = conversationEvent.getConversationChain();
 
                 ArrayList<String> options = conversationChain.getOptions(conversationEvent.getCurrentKey());
 
                 String introductionEventSpeech = event.getSpeechText() + "\n";
-                NpcPropertyChangeEvent introductionPayload = new NpcPropertyChangeEvent(Npc.EventType.INTRODUCTION, conversationEvent.getName(), conversationEvent.getCurrentKey(), options, 0, npc);
+                NpcPropertyChangeEvent introductionPayload = new NpcPropertyChangeEvent(Npc.EventType.INTRODUCTION, conversationEvent.getName(), conversationEvent.getCurrentKey(), options, 0, targetNpc);
                 notifyListeners(introductionPayload);
                 break;
             case WORLD_EVENT:
-                WorldEvent worldEvent = npc.getWorldEvent(event.getName());
+                WorldEvent worldEvent = targetNpc.getWorldEvent(event.getName());
                 String worldEventSpeech = event.getSpeechText() + "\n";
-                NpcPropertyChangeEvent worldPayload = new NpcPropertyChangeEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCondition(), npc);
+                NpcPropertyChangeEvent worldPayload = new NpcPropertyChangeEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCondition(), targetNpc);
                 notifyListeners(worldPayload);
                 break;
         }
     }
 
-    public void checkAnswer(NpcButton target, int wellBeingEffect, int socialEffect){
+    public void checkAnswer(Npc targetNpc, String selectedText, int wellBeingEffect, int socialEffect){
+        System.out.println(selectedText);
         NpcPropertyChangeEvent payload;
-        Npc npc = target.getNpc();
-        Events event = npc.findNpcEvent();
+        //Npc npc = target.getNpc();
+        Events event = targetNpc.findNpcEvent();
 
-        BattleEvent battleEvent = npc.getNpcBattleEvents(event.getName());
+        BattleEvent battleEvent = targetNpc.getNpcBattleEvents(event.getName());
         BattleQuestions battleQuestions = battleEvent.getBattleQuestions();
 
         ArrayList<String> answers = battleQuestions.getAnswers();
 
         // Check if it was the correct answer
-        if(Objects.equals(target.getText(), battleQuestions.getCorrectAnswer())){
+        if(Objects.equals(selectedText, battleQuestions.getCorrectAnswer())){
             //ADD Items to room
             // We increase Player stats
             // Reduce NPC stats
@@ -198,9 +194,9 @@ public class NpcManager {
             inventory.addItem(item.get(0));
             String itemText = "\n Congrats you were witty and won: " + item.get(0).getName();
 
-            locationManager.removeNpcs("", npc, player.getCurrentRoom());
+            locationManager.removeNpcs("", targetNpc, player.getCurrentRoom());
 
-            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.getVictoryText() + itemText, null,0, npc);
+            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.getVictoryText() + itemText, null,0, targetNpc);
             payload.setToolTipText("Enjoy your prize.");
             notifyListeners(payload);
         } else {
@@ -208,18 +204,17 @@ public class NpcManager {
             player.changeWellbeing(wellBeingEffect);
             player.changeIntelligence(socialEffect);
             //String effectsTooltip = "Also you lost: " + Integer.toString(wellBeingEffect) + " Wellbeing, & " + Integer.toString(socialEffect) + " Social.";
-            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.getLosingText(), null,0, npc);
+            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, battleEvent.getName(), battleQuestions.getLosingText(), null,0, targetNpc);
             payload.setToolTipText("Well. You messed up. Wellbeing " +  Integer.toString(wellBeingEffect) + " Social " + Integer.toString(socialEffect));
             notifyListeners(payload);
         }
     }
 
-    public void continueConversation(NpcButton target, String eventName, String optionSelected){
+    public void continueConversation(Npc npcTarget, String eventName, String optionSelected){
         NpcPropertyChangeEvent introductionPayload;
         Boolean isFinal = false;
-        Npc npc = target.getNpc();
 
-        ConversationEvent conversationEvent = npc.getIntroductionEvent(eventName);
+        ConversationEvent conversationEvent = npcTarget.getIntroductionEvent(eventName);
         ConversationChain conversationChain = conversationEvent.getConversationChain();
 
 
@@ -236,28 +231,27 @@ public class NpcManager {
         }
 
         if(isFinal) {
-            introductionPayload= new NpcPropertyChangeEvent(Npc.EventType.RESET, eventName, null, null, 0, npc);
+            introductionPayload= new NpcPropertyChangeEvent(Npc.EventType.RESET, eventName, null, null, 0, npcTarget);
         } else {
-            introductionPayload = new NpcPropertyChangeEvent(Npc.EventType.INTRODUCTION, eventName, conversationEvent.getCurrentKey(), options, 0, npc);
+            introductionPayload = new NpcPropertyChangeEvent(Npc.EventType.INTRODUCTION, eventName, conversationEvent.getCurrentKey(), options, 0, npcTarget);
         }
 
         notifyListeners(introductionPayload);
     }
 
-    public void checkWorldEventCondition(NpcButton target){
+    public void checkWorldEventCondition(Npc targetNpc){
         NpcPropertyChangeEvent payload;
-        Npc npc = target.getNpc();
-        Events event = npc.findNpcEvent();
-        WorldEvent worldEvent = npc.getWorldEvent(event.getName());
+        Events event = targetNpc.findNpcEvent();
+        WorldEvent worldEvent = targetNpc.getWorldEvent(event.getName());
 
         Player player = Player.getInstance();
         if(player.getMoney() >= worldEvent.getCondition()){
             worldEvent.unlockRoom(5);
             player.changeMoney(-20);
-            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getSuccessText(), null, 0, npc);
+            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getSuccessText(), null, 0, targetNpc);
             worldEvent.setHasFinishedEventChain(false);
         } else {
-            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getFailText(), null, 0, npc);
+            payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getFailText(), null, 0, targetNpc);
         }
 
         notifyListeners(payload);

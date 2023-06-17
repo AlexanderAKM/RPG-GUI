@@ -92,27 +92,11 @@ public class SetUp implements PropertyChangeListener{
         NpcManager model = new NpcManager(manager, itemManager, npcLanguageManager);
         NpcController npcController = new NpcController(model);
 
-        // Test
-        Npc bob = model.getNpc("Bob");
-        manager.addNpcs("Bob", bob, manager.getRoom(0));
-
-        Npc harmen = model.getNpc("Harmen");
-        manager.addNpcs("Harmen", harmen, manager.getRoom(0));
-
-        Npc michael = model.getNpc("Michael");
-        manager.addNpcs(michael.getName(), michael, manager.getRoom(1));
-
-        Npc evilMan = model.getNpc("Evil Man");
-        manager.addNpcs(evilMan.getName(), evilMan, manager.getRoom(1));
-
-        manager.addNpcs("Human man", model.getNpc("Human man"), manager.getRoom(1));
-
         // We get the players current room
         Room currentRoom = player.getCurrentRoom();
         ArrayList<Npc> npcs = currentRoom.getAvailableNpcs();
 
         NpcView npcPanel = new NpcView(model, manager, playerStatsPane);
-
 
         JPanel npcThing = npcPanel.returnNpcView();
         JPanel locationView = gamePanel.returnLocationView();
