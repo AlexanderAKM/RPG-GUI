@@ -6,6 +6,7 @@ import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
 import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
 import nl.rug.ai.oop.rpg.model.Game;
+import nl.rug.ai.oop.rpg.model.GameManager;
 import nl.rug.ai.oop.rpg.model.npc.Npc;
 import nl.rug.ai.oop.rpg.model.npc.NpcManager;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
@@ -79,6 +80,7 @@ public class SetUp implements PropertyChangeListener{
 
         ItemManager itemManager = new ItemManager();
         LocationManager manager = new LocationManager(itemManager, roomLanguageManager);
+        GameManager gameManager = new GameManager();
         LocationController controller = new LocationController(manager, roomLanguageManager);
         GamePanelGUI gamePanel = new GamePanelGUI(manager, controller, roomLanguageManager);
 
@@ -112,7 +114,8 @@ public class SetUp implements PropertyChangeListener{
         c.gridy = 0;
         frame.add(locationView, c); // adds the game panel
 
-        GameController gameController = new GameController(game, manager, gamePanel);
+
+        GameController gameController = new GameController(gameManager, manager, gamePanel);
         SavePanel savePanel = new SavePanel(gameController);
         c.fill = GridBagConstraints.VERTICAL;
         c.weightx = 0.0;
