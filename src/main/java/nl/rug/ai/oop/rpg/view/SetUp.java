@@ -95,7 +95,7 @@ public class SetUp implements PropertyChangeListener{
 
         gamePanel.setNpcPanel(npcThing);
         gamePanel.setNpcView(npcPanel);
-        npcPanel.setup(model, npcs, npcController, gamePanel, frame);
+        npcPanel.setup(model, npcController, gamePanel, frame);
 
 
         c.fill = GridBagConstraints.HORIZONTAL;

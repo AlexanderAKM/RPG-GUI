@@ -3,6 +3,8 @@ package nl.rug.ai.oop.rpg.model.npc;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.Item;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
+import nl.rug.ai.oop.rpg.model.listeners.NpcPropertyChangeEvent;
+import nl.rug.ai.oop.rpg.model.listeners.NpcPropertyChangeListener;
 import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
@@ -13,6 +15,7 @@ import nl.rug.ai.oop.rpg.model.npc.events.conversations.ConversationChain;
 import nl.rug.ai.oop.rpg.model.npc.events.conversations.ConversationEvent;
 import nl.rug.ai.oop.rpg.model.npc.events.EventBuilder;
 import nl.rug.ai.oop.rpg.model.npc.events.Events;
+import nl.rug.ai.oop.rpg.model.npc.events.worldevents.WorldEvent;
 import nl.rug.ai.oop.rpg.model.players.Player;
 
 import java.util.*;
@@ -118,7 +121,7 @@ public class NpcManager {
                 .setNpcSource(max)
                 .setSpeechText("Hello, there!");
 
-        ConversationEvent conversationEventMax = eventBuilderMax.buildIntroductionEvent(conversationChainMax);
+        ConversationEvent conversationEventMax = eventBuilderMax.buildConversationEvent(conversationChainMax);
         max.setEvent(conversationEventMax);
         max.setNpcIntroductionEvents(conversationEventMax);
 
@@ -142,7 +145,7 @@ public class NpcManager {
                 .setNpcSource(securityGuard)
                 .setSpeechText("...");
 
-        ConversationEvent conversationEventSecurityGuard = eventBuilderSecurityGuard.buildIntroductionEvent(conversationChainSecurityGuard);
+        ConversationEvent conversationEventSecurityGuard = eventBuilderSecurityGuard.buildConversationEvent(conversationChainSecurityGuard);
         securityGuard.setEvent(conversationEventSecurityGuard);
         securityGuard.setNpcIntroductionEvents(conversationEventSecurityGuard);
 
@@ -176,7 +179,7 @@ public class NpcManager {
                 .setNpcSource(averageCoverMember)
                 .setSpeechText("Ah, a newcomer! I hope you like board games.");
 
-        ConversationEvent conversationEventAverageCoverMember = eventBuilderAverageCoverMember.buildIntroductionEvent(conversationChainAverageCoverMember);
+        ConversationEvent conversationEventAverageCoverMember = eventBuilderAverageCoverMember.buildConversationEvent(conversationChainAverageCoverMember);
         averageCoverMember.setEvent(conversationEventAverageCoverMember);
         averageCoverMember.setNpcIntroductionEvents(conversationEventAverageCoverMember);
 
@@ -187,7 +190,7 @@ public class NpcManager {
                 .setInteractionName("introduction")
                 .setNpcSource(roomMate)
                 .setSpeechText("Yeah, it's me. In your home.");
-        ConversationEvent conversationEvent = eventBuilder3.buildIntroductionEvent(conversationChain);
+        ConversationEvent conversationEvent = eventBuilder3.buildConversationEvent(conversationChain);
         roomMate.setEvent(conversationEvent);
         roomMate.setNpcIntroductionEvents(conversationEvent);
 
@@ -291,7 +294,7 @@ public class NpcManager {
             case WORLD_EVENT:
                 WorldEvent worldEvent = targetNpc.getWorldEvent(event.getName());
                 String worldEventSpeech = event.getSpeechText() + "\n";
-                NpcPropertyChangeEvent worldPayload = new NpcPropertyChangeEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCondition(), targetNpc);
+                NpcPropertyChangeEvent worldPayload = new NpcPropertyChangeEvent(Npc.EventType.WORLD_EVENT, worldEvent.getName(), worldEventSpeech, null, worldEvent.getCost(), targetNpc);
                 notifyListeners(worldPayload);
                 break;
         }
@@ -380,7 +383,7 @@ public class NpcManager {
         WorldEvent worldEvent = targetNpc.getWorldEvent(event.getName());
 
         Player player = Player.getInstance();
-        if(player.getMoney() >= worldEvent.getCondition()){
+        if(player.getMoney() >= worldEvent.getCost()){
             worldEvent.unlockRoom(5);
             player.changeMoney(-20);
             payload = new NpcPropertyChangeEvent(Npc.EventType.RESPONSE, worldEvent.getName(), worldEvent.getSuccessText(), null, 0, targetNpc);
