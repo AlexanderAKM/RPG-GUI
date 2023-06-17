@@ -52,7 +52,7 @@ public class NpcView {
         JTextField textField = new JTextField();
         textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Set the border
 
-        backButton = new JButton("Go back");
+        backButton = new JButton("<-");
 
         npcView = new JPanel(new GridLayout(10, 1, 10, 5));
 
