@@ -26,7 +26,6 @@ import java.awt.event.ActionListener;
 public class Beginning {
 
     private JFrame frame;
-    private JButton loadOldGameButton;
     private JButton startNewGameButton;
     private JButton startGameButton;
     private JComboBox<String> languageComboBox;
@@ -46,17 +45,7 @@ public class Beginning {
         frame = new JFrame("RPG Game");
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(2,1));
-
-        loadOldGameButton = new JButton("Load Old Game");
-        loadOldGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                removeInitialButtons();
-            }
-        });
-        frame.add(loadOldGameButton);
+        frame.setLayout(new BorderLayout());
 
         startNewGameButton = new JButton("Start New Game");
         startNewGameButton.addActionListener(new ActionListener() {
@@ -74,8 +63,7 @@ public class Beginning {
      * from the frame.
      */
     private void removeInitialButtons() {
-        frame.remove(loadOldGameButton);
-        frame.remove(startNewGameButton);
+        frame.getContentPane().removeAll();
         frame.setLayout(new GridLayout(2,1)); // Updated to accommodate an extra button
     }
 
@@ -157,4 +145,3 @@ public class Beginning {
         frame.dispose();
     }
 }
-

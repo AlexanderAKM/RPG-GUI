@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  * The CreateCustomProgrammeController class is a controller that handles user actions for creating a custom programme.
  * It implements the ActionListener interface.
  *
- * @author RobertHielkema
+ * @author Robert Hielkema
  */
 public class CreateCustomProgrammeController implements ActionListener {
 
