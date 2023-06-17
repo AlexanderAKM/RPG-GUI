@@ -38,7 +38,6 @@ public class Beginning {
     TextField customProgrammetextField;
     private ChooseProgrammeController listener;
     private Game game;
-    LanguageManager chooseProgrammeLanguageManager;
 
 
     /**
@@ -80,8 +79,7 @@ public class Beginning {
      * from the frame.
      */
     private void removeInitialButtons() {
-        frame.remove(loadOldGameButton);
-        frame.remove(startNewGameButton);
+        frame.getContentPane().removeAll();
         frame.setLayout(new GridLayout(2,1)); // Updated to accommodate an extra button
     }
 
@@ -158,4 +156,3 @@ public class Beginning {
         frame.dispose();
     }
 }
-
