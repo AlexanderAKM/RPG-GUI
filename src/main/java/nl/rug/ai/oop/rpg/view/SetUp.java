@@ -5,15 +5,14 @@ import nl.rug.ai.oop.rpg.controller.NPC.NpcController;
 import nl.rug.ai.oop.rpg.controller.inventory.InventoryController;
 import nl.rug.ai.oop.rpg.controller.inventory.RoomItemsController;
 import nl.rug.ai.oop.rpg.controller.location.LocationController;
-import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.GameManager;
-import nl.rug.ai.oop.rpg.model.npc.Npc;
-import nl.rug.ai.oop.rpg.model.npc.NpcManager;
 import nl.rug.ai.oop.rpg.model.inventory.Inventory;
 import nl.rug.ai.oop.rpg.model.inventory.ItemManager;
+import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.model.location.LocationManager;
 import nl.rug.ai.oop.rpg.model.location.Room;
-import nl.rug.ai.oop.rpg.model.location.LanguageManager;
+import nl.rug.ai.oop.rpg.model.npc.Npc;
+import nl.rug.ai.oop.rpg.model.npc.NpcManager;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.NPC.NpcView;
 import nl.rug.ai.oop.rpg.view.inventory.InventoryView;
@@ -26,14 +25,20 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ *  This class sets up the game's user interface and initializes the game's components.
+ *
+ * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kyriakos Hjikakou
+ */
 public class SetUp implements PropertyChangeListener{
     private JFrame frame;
 
     /**
-     * @author Alexander Müller & Robert Hielkema & Victoria Polaka & Kyriakos Hjikakou
-     * @param
+     * Starts the game by setting up the user interface and initializing the game's components.
+     *
+     * @param chosenLanguage the language chosen by the player
      */
-    public void start(String chosenLanguage, Game game) {
+    public void start(String chosenLanguage) {
         Player player = Player.getInstance();
 
         Inventory inventory = player.getInventory();

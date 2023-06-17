@@ -47,6 +47,6 @@ public class Game {
     public void initialise(){
         beginning.disposeFrame();
         SetUp setUp = new SetUp();
-        setUp.start(Player.getInstance().getLanguage(), this);
+        setUp.start(Player.getInstance().getLanguage());
     }
 }

@@ -1,12 +1,9 @@
 package nl.rug.ai.oop.rpg.model.players;
 
 import nl.rug.ai.oop.rpg.controller.players.ChooseProgrammeController;
-import nl.rug.ai.oop.rpg.controller.players.CreateCustomProgrammeController;
 import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.location.LanguageManager;
 import nl.rug.ai.oop.rpg.view.SetUp;
-import nl.rug.ai.oop.rpg.view.players.ChooseProgrammeView;
-import nl.rug.ai.oop.rpg.view.players.CreateCustomProgrammeView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +54,6 @@ public class ChooseProgramme {
      */
     public void startSetup() {
         SetUp setUp = new SetUp();
-        setUp.start(selectedLanguage, game);
+        setUp.start(selectedLanguage);
     }
 }
