@@ -4,7 +4,6 @@ import nl.rug.ai.oop.rpg.controller.players.ChooseProgrammeController;
 import nl.rug.ai.oop.rpg.controller.players.CreateCustomProgrammeController;
 import nl.rug.ai.oop.rpg.model.Game;
 import nl.rug.ai.oop.rpg.model.location.LanguageManager;
-import nl.rug.ai.oop.rpg.model.players.ChooseProgramme;
 import nl.rug.ai.oop.rpg.model.players.Player;
 import nl.rug.ai.oop.rpg.view.players.ChooseProgrammeView;
 import nl.rug.ai.oop.rpg.view.players.CreateCustomProgrammeView;
@@ -13,9 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 
 /**
@@ -34,8 +30,7 @@ public class Beginning {
     private JButton startNewGameButton;
     private JButton startGameButton;
     private JComboBox<String> languageComboBox;
-    private Runnable callback;  // Added this field
-    //private LanguageManager languageManager;
+    private Runnable callback;
     private String selectedLanguage;
     private JLabel customLabel;
     private int customIntelligence = 70;
@@ -49,6 +44,7 @@ public class Beginning {
     /**
      * Constructor for the Beginning class.
      * It initializes the frame and buttons.
+     * @param game the game to start
      */
     public Beginning(Game game) {
         this.game = game;
@@ -62,7 +58,6 @@ public class Beginning {
         loadOldGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add your code here to load the old game
 
                 removeInitialButtons();
             }
@@ -73,7 +68,6 @@ public class Beginning {
         startNewGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add your code here to start a new game
                 removeInitialButtons();
                 showNewGameOptions(game);
             }
@@ -101,15 +95,11 @@ public class Beginning {
         String[] languages = {"english", "nederlands"};
         languageComboBox = new JComboBox<>(languages);
         frame.add(languageComboBox);
-        //languageManager = new LanguageManager();
         selectedLanguage = "english";
-        //languageManager.loadLanguage("english", "roomTranslations.roomTranslations"); //sets default language
-        // Add an ActionListener to the languageComboBox
         languageComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedLanguage = (String)languageComboBox.getSelectedItem();
-                //languageManager.loadLanguage((String)languageComboBox.getSelectedItem(), "roomTranslations.roomTranslations");
             }
         });
 
@@ -117,16 +107,10 @@ public class Beginning {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Initialize the player with the chosen language and student type
                 String language = (String) languageComboBox.getSelectedItem();
                 Player player = Player.getInstance();
                 player.setLanguage(language);
                 game.chooseProgramme();
-                //frame.dispose();
-                // Code here to start the game with the new frame -> view.Main
-                //SetUp setUp = new SetUp();
-                //setUp.start(languageManager, game);
-                //callback.run();
             }
         });
         frame.add(startGameButton);
@@ -142,6 +126,11 @@ public class Beginning {
         frame.setVisible(true);
     }
 
+    /**
+     * Presents the player with the option to choose a programme.
+     *
+     * @param controller the controller for choosing a programme
+     */
     public void chooseProgramme(ChooseProgrammeController controller){
         frame.getContentPane().removeAll();
         frame.repaint();
@@ -150,6 +139,11 @@ public class Beginning {
         frame.add(chooseProgrammeView);
     }
 
+    /**
+     * Presents the player with the option to create a custom programme.
+     *
+     * @param controller the controller for creating a custom programme
+     */
     public void createCustomProgramme(CreateCustomProgrammeController controller){
         frame.getContentPane().removeAll();
         frame.repaint();
@@ -157,6 +151,9 @@ public class Beginning {
         frame.add(createCustomProgrammeView);
     }
 
+    /**
+     * Disposes of the current frame.
+     */
     public void disposeFrame(){
         frame.dispose();
     }
