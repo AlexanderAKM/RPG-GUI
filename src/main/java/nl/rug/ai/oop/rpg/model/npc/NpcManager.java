@@ -238,17 +238,17 @@ public class NpcManager {
                 .setNpcSource(eugene)
                 .setSpeechText("Yo yo yo I have no friends. But I do have knowledge!");
 
-        BattleQuestions eugeneQuestion = new BattleQuestions("What is considered a supervised learning model?", answers1, "Neural Networks", languageManager.getTranslation("eugeneQuestion.responseLongClaps="), languageManager.getTranslation("eugeneQuestion.responseFastClaps"));
+        BattleQuestions eugeneQuestion = new BattleQuestions("What is considered a supervised learning model?", answers1, "Neural Networks", "*Long claps*", "*Fast claps*");
         BattleEvent eugeneBattle = eventBuilderEugene.buildBattleEvent(eugeneQuestion);
         eugene.setEvent(eugeneBattle);
         eugene.setNpcBattleEvents(eugeneBattle);
 
         EventBuilder eventBuilderVlad = new EventBuilder()
-                .setInteractionName(languageManager.getTranslation("eventBuilderVlad.interactionName"))
+                .setInteractionName("AIQuiz")
                 .setNpcSource(vlad)
-                .setSpeechText(languageManager.getTranslation("eventBuilderVlad.speechText"));
+                .setSpeechText("Hi there, I'm Vlad. I'm under a lot of pressure right now so I'll take it out on you.");
 
-        BattleQuestions vladQuestion = new BattleQuestions(languageManager.getTranslation("vladQuestion.question"), answers2, languageManager.getTranslation("responseRight"), languageManager.getTranslation("vladQuestion.responseRight"), languageManager.getTranslation("vladQuestion.responseWrong"));
+        BattleQuestions vladQuestion = new BattleQuestions(languageManager.getTranslation("battleQuestion.subfieldOfAI"), answers2, "Deep Learning", "Aw yeah that's right.", "Oops, doopsie. Nope.");
         BattleEvent vladBattle = eventBuilderVlad.buildBattleEvent(vladQuestion);
         vlad.setEvent(vladBattle);
         vlad.setNpcBattleEvents(vladBattle);
