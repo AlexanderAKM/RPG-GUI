@@ -1,6 +1,7 @@
 # Role Playing Game
 
-In this project, we made a RPG with GUI to showcase OOP principles in Java. Our precious game is on exploring the university campus. 
+In this group project, we made a RPG with GUI to showcase OOP principles in Java. Our precious game is on exploring the university campus. The main authors are:
+Alexander Müller & Robert Hielkema & Victoria Polaka & Kyriakos Hjikakou
 
 Our RPG consists of an Inventory, Locations, Non-player characters (NPCs), and Player classes systems. In addition, the player is able to save and restore their game state at any time.
 
